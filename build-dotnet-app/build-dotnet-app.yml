@@ -12,5 +12,5 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: ${{ github.action_path }}/platform-cicd-scripts/builds/dotnet/build-dotnet-app.sh ${{ inputs.app-path }}
+    - run: ${{ github.action_path }}/../platform-cicd-scripts/builds/dotnet/build-dotnet-app.sh ${{ inputs.app-path }}
       shell: bash

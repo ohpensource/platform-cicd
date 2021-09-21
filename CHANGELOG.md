@@ -1,3 +1,9 @@
+# :confetti_ball: 0.4.1.0 (2021-09-21T16:15:22.599Z)
+- - -
+## :bug: Fixes
+* GMP-188 rename gh action (#6)
+- - -
+- - -
 # :confetti_ball: 0.4.0.0 (2021-09-21T16:11:04.690Z)
 - - -
 ## :hammer: Features

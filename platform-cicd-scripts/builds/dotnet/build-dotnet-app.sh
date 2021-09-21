@@ -1,6 +1,13 @@
 set -e 
 WORKING_FOLDER=$(pwd)
-source $WORKING_FOLDER/platform-cicd-scripts/_common/logging.sh
+
+log_action() {
+    echo "${1^^} ..."
+}
+
+log_key_value_pair() {
+    echo "    $1: $2"
+}
 
 log_action "building"
 SLN_FOLDER=$1

@@ -19,8 +19,9 @@ const baseBranch = process.argv[2];
 logger.logKeyValuePair("base-branch", baseBranch);
 const prBranch = process.argv[3];
 logger.logKeyValuePair("pr-branch", prBranch);
+
 let ok = git
-  .getCommitsInsidePullRequest(baseBranch, `origin/${prBranch}`)
+  .getCommitsInsidePullRequest(baseBranch, `upstream/${prBranch}`)
   .every((commit) => {
     logger.logAction("EVALUATING COMMIT");
     let commitMessageOk = acceptablePrefixes.some((prefix) =>

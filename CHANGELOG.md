@@ -1,3 +1,9 @@
+# :confetti_ball: 0.4.2.0 (2021-09-21T16:20:37.406Z)
+- - -
+## :bug: Fixes
+* GMP-188 remove _common folder dependency (#7)
+- - -
+- - -
 # :confetti_ball: 0.4.1.0 (2021-09-21T16:15:22.599Z)
 - - -
 ## :bug: Fixes

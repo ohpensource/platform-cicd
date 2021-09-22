@@ -10,5 +10,5 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: node ${{ github.action_path }}/../ensure-commits-message-jira-tickets.sh ${{ inputs.base-branch }} ${{ inputs.pr-branch }}
+    - run: node ${{ github.action_path }}/../ensure-commits-message-jira-tickets.js ${{ inputs.base-branch }} ${{ inputs.pr-branch }}
       shell: bash

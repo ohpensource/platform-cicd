@@ -1,0 +1,23 @@
+name: "download-artifact"
+description: "downloads the artifact(s) of an application and stores them locally into a folder"
+inputs:
+  version:
+    description: "version of the service"
+    required: true
+  service-name:
+    description: "name of the service"
+    required: true
+  bucket-name:
+    description: "bucket name where to store the artifact"
+    required: true
+  iac:
+    description: "name of the iac folder (usually terraform or cloudformation)"
+    required: true
+  destination-folder:
+    description: "local folder where to store the artifact(s)"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: ${{ github.action_path }}/../download-artifact.sh ${{ inputs.version }} ${{ inputs.service-name }} ${{ inputs.bucket-name }} ${{ inputs.iac }} ${{ inputs.destination-folder }}
+      shell: bash

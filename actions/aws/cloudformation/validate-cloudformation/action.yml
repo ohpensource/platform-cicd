@@ -1,0 +1,14 @@
+name: "validate-cloudformation"
+description: "validates (using aws api) a cloudformation yaml file"
+inputs:
+  cfn-template:
+    description: "cloudformation file"
+    required: true
+  aws-region:
+    description: "aws region name"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: ${{ github.action_path }}/../validate-cloudformation.sh ${{ inputs.cfn-template }} ${{ inputs.aws-region }}
+      shell: bash

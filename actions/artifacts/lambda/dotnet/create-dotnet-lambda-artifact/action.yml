@@ -1,0 +1,23 @@
+name: "create-dotnet-lambda-artifact"
+description: "creates the lambda artifact (.zip) for the provided dotnet application"
+inputs:
+  version:
+    description: "version of the service"
+    required: true
+  service-name:
+    description: "name of the service"
+    required: true
+  function-project-folder:
+    description: "folder where the function is located"
+    required: true
+  application-framework:
+    description: "dotnet framework version for compiling"
+    required: true
+  bucket-name:
+    description: "bucket name where to store the artifact"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: ${{ github.action_path }}/../create-dotnet-lambda-artifact.sh ${{ inputs.version }} ${{ inputs.service-name }} ${{ inputs.function-project-folder }} ${{ inputs.application-framework }} ${{ inputs.bucket-name }}
+      shell: bash

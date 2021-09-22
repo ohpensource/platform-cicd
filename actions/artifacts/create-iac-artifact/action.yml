@@ -1,0 +1,20 @@
+name: "create-iac-artifact"
+description: "creates the iac artifact (.zip) for the provided folder"
+inputs:
+  version:
+    description: "version of the service"
+    required: true
+  service-name:
+    description: "name of the service"
+    required: true
+  iac:
+    description: "Name of the iac folder (usually terraform or cloudformation)"
+    required: true
+  bucket-name:
+    description: "bucket name where to store the artifact"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: ${{ github.action_path }}/../create-iac-artifact.sh ${{ inputs.version }} ${{ inputs.service-name }} ${{ inputs.iac }} ${{ inputs.bucket-name }}
+      shell: bash

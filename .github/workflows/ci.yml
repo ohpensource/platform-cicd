@@ -10,7 +10,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: ensure-conventional-commits
-        run: node ./platform-cicd-scripts/git/ensure-conventional-commits.js $GITHUB_BASE_REF $GITHUB_HEAD_REF
+        run: node ./actions/git/ensure-conventional-commits.js $GITHUB_BASE_REF $GITHUB_HEAD_REF
   jira-tickets-commits:
     runs-on: ubuntu-latest
     steps:
@@ -18,4 +18,4 @@ jobs:
         with:
           fetch-depth: 0
       - name: ensure-jira-tickets-commits
-        run: node ./platform-cicd-scripts/git/ensure-commits-message-jira-ticket.js $GITHUB_BASE_REF $GITHUB_HEAD_REF
+        run: node ./actions/git/ensure-commits-message-jira-ticket.js $GITHUB_BASE_REF $GITHUB_HEAD_REF

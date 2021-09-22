@@ -1,4 +1,4 @@
-name: "ensure-commits-message-jira-tickets"
+name: "ensure-commits-message-jira-ticket"
 description: "checks that all commits in a pull request contain a jira ticket"
 inputs:
   base-branch:
@@ -10,5 +10,5 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: node ${{ github.action_path }}/../ensure-commits-message-jira-tickets.js ${{ inputs.base-branch }} ${{ inputs.pr-branch }}
+    - run: node ${{ github.action_path }}/../ensure-commits-message-jira-ticket.js ${{ inputs.base-branch }} ${{ inputs.pr-branch }}
       shell: bash

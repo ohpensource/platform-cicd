@@ -11,3 +11,4 @@ runs:
   using: "composite"
   steps:
     - run: node ${{ github.action_path }}/../generate-version-and-release-notes.sh
+      shell: bash

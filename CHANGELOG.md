@@ -1,3 +1,9 @@
+# :confetti_ball: 0.5.1.0 (2021-09-22T10:28:52.325Z)
+- - -
+## :bug: Fixes
+* GMP-158 add shell property to action.yml (s) (#10)
+- - -
+- - -
 # :confetti_ball: 0.5.0.0 (2021-09-22T10:18:07.935Z)
 - - -
 ## :hammer: Features

@@ -1,0 +1,38 @@
+name: "upload-lambda-artifact-to-s3"
+description: ""
+inputs:
+  region:
+    description: ""
+    required: true
+  access-key:
+    description: ""
+    required: true
+  secret-key:
+    description: ""
+    required: true
+  account:
+    description: ""
+    required: true
+  role-name:
+    description: ""
+    required: true
+  version:
+    description: ""
+    required: true
+  service-name:
+    description: ""
+    required: true
+  function-project-name:
+    description: ""
+    required: true
+  artifact-folder:
+    description: ""
+    required: true
+  s3-bucket:
+    description: ""
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: ${{ github.action_path }}/../upload-lambda-artifact-to-s3.sh ${{ inputs.region }} ${{ inputs.access-key }} ${{ inputs.secret-key }} ${{ inputs.account }} ${{ inputs.role-name }} ${{ inputs.version }} ${{ inputs.service-name }} ${{ inputs.function-project-name }} ${{ inputs.artifact-folder }} ${{ inputs.s3-bucket }}
+      shell: bash

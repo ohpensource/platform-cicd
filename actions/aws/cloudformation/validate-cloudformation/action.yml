@@ -4,11 +4,22 @@ inputs:
   cfn-template:
     description: "cloudformation file"
     required: true
-  aws-region:
+  region:
     description: "aws region name"
     required: true
+  access-key:
+    description: "access key"
+    required: true
+  secret-key:
+    description: "secret key"
+    required: true
+  destination-account:
+    description: "aws account id where to validate the cloudformation"
+    required: true
+  role-name:
+    description: "name of the role to assume in the destination account"
 runs:
   using: "composite"
   steps:
-    - run: ${{ github.action_path }}/../validate-cloudformation.sh ${{ inputs.cfn-template }} ${{ inputs.aws-region }}
+    - run: ${{ github.action_path }}/../validate-cloudformation.sh ${{ inputs.cfn-template }} ${{ inputs.region }} ${{ inputs.access-key }} ${{ inputs.secret-key }} ${{ inputs.destination-account }} ${{ inputs.role-name }}
       shell: bash

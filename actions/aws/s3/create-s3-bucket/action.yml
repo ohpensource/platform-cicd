@@ -1,14 +1,26 @@
 name: "create-s3-bucket"
 description: "sets up the credentials in the current shell for an aws user"
 inputs:
-  bucket-name:
-    description: "name of the bucket"
+  region:
+    description: "aws region name"
     required: true
-  aws-region:
-    description: "name of aws region"
+  access-key:
+    description: "access key"
+    required: true
+  secret-key:
+    description: "secret key"
+    required: true
+  account:
+    description: "aws account id"
+    required: true
+  role-name:
+    description: "role name"
+    required: true
+  s3-bucket:
+    description: "bucket name"
     required: true
 runs:
   using: "composite"
   steps:
-    - run: ${{ github.action_path }}/../create-s3-bucket.sh ${{ inputs.bucket-name }} ${{ inputs.aws-region }}
+    - run: ${{ github.action_path }}/../create-s3-bucket.sh ${{ inputs.region }} ${{ inputs.access-key }} ${{ inputs.secret-key }} ${{ inputs.account }} ${{ inputs.role-name }} ${{ inputs.s3-bucket }}
       shell: bash

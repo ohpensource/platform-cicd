@@ -1,6 +1,21 @@
 name: "create-dotnet-lambda-artifact"
 description: "creates the lambda artifact (.zip) for the provided dotnet application"
 inputs:
+  region:
+    description: "aws region name"
+    required: true
+  access-key:
+    description: "access key"
+    required: true
+  secret-key:
+    description: "secret key"
+    required: true
+  account:
+    description: "aws account id"
+    required: true
+  role-name:
+    description: "role to assume"
+    required: true
   version:
     description: "version of the service"
     required: true
@@ -9,6 +24,9 @@ inputs:
     required: true
   function-project-folder:
     description: "folder where the function is located"
+    required: true
+  function-project-name:
+    description: "name of the function (.csproj file)"
     required: true
   application-framework:
     description: "dotnet framework version for compiling"
@@ -19,5 +37,5 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: ${{ github.action_path }}/../create-dotnet-lambda-artifact.sh ${{ inputs.version }} ${{ inputs.service-name }} ${{ inputs.function-project-folder }} ${{ inputs.application-framework }} ${{ inputs.bucket-name }}
+    - run: ${{ github.action_path }}/../create-dotnet-lambda-artifact.sh ${{ inputs.region }} ${{ inputs.access-key }} ${{ inputs.secret-key }} ${{ inputs.account }} ${{ inputs.role-name }} ${{ inputs.version }} ${{ inputs.service-name }} ${{ inputs.function-project-folder }} ${{ inputs.function-project-name }} ${{ inputs.application-framework }} ${{ inputs.bucket-name }}
       shell: bash

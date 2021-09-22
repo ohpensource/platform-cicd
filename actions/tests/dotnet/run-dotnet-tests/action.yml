@@ -2,7 +2,7 @@ name: "run-dotnet-tests"
 description: "runs dotnet tests inside a .sln recursively"
 inputs:
   sln-folder:
-    description: "name of the branch where the pull request goes to"
+    description: "path where the .sln file is located"
     required: true
 runs:
   using: "composite"

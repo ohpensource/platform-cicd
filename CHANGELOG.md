@@ -1,3 +1,9 @@
+# :confetti_ball: 0.5.0.0 (2021-09-22T10:18:07.935Z)
+- - -
+## :hammer: Features
+* GMP-158 introduce actions for each script (#9)
+- - -
+- - -
 # :confetti_ball: 0.4.2.1 (2021-09-22T09:09:22.943Z)
 - - -
 ## :newspaper: Others

@@ -5,12 +5,8 @@ inputs:
     description: "the root path of the application (defaults to src)"
     required: true
     default: "src"
-# outputs:
-#   random-number:
-#     description: "Random number"
-#     value: ${{ steps.random-number-generator.outputs.random-id }}
 runs:
   using: "composite"
   steps:
-    - run: ${{ github.action_path }}/../platform-cicd-scripts/builds/dotnet/build-dotnet-app.sh ${{ inputs.app-path }}
+    - run: ${{ github.action_path }}/build-dotnet-app.sh ${{ inputs.app-path }}
       shell: bash

@@ -1,3 +1,9 @@
+# :confetti_ball: 0.5.2.0 (2021-09-22T10:33:05.467Z)
+- - -
+## :bug: Fixes
+* GMP-158 correct .js extensions in javascript files (#11)
+- - -
+- - -
 # :confetti_ball: 0.5.1.0 (2021-09-22T10:28:52.325Z)
 - - -
 ## :bug: Fixes

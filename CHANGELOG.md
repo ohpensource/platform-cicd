@@ -1,3 +1,9 @@
+# :confetti_ball: 0.4.2.1 (2021-09-22T09:09:22.943Z)
+- - -
+## :newspaper: Others
+* refactor: GMP-158 action next to script (#8)
+- - -
+- - -
 # :confetti_ball: 0.4.2.0 (2021-09-21T16:20:37.406Z)
 - - -
 ## :bug: Fixes

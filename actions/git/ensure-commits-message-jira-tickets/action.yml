@@ -1,0 +1,13 @@
+name: "ensure-commits-message-jira-tickets"
+description: "checks that all commits in a pull request contain a jira ticket"
+inputs:
+  base-branch:
+    description: "name of the branch where the pull request goes to"
+    required: true
+  pr-branch:
+    description: "name of the branch where the pull request comes from"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: node ${{ github.action_path }}/../ensure-commits-message-jira-tickets.sh ${{ inputs.base-branch }} ${{ inputs.pr-branch }}

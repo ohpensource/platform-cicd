@@ -10,5 +10,5 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: node ${{ github.action_path }}/../generate-version-and-release-notes.sh
+    - run: node ${{ github.action_path }}/../generate-version-and-release-notes.js
       shell: bash

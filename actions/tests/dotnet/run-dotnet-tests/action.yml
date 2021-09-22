@@ -8,3 +8,4 @@ runs:
   using: "composite"
   steps:
     - run: ${{ github.action_path }}/../run-dotnet-tests.sh ${{ inputs.sln-folder }}
+      shell: bash

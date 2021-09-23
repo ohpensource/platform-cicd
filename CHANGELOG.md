@@ -1,3 +1,9 @@
+# :confetti_ball: 0.5.4.0 (2021-09-23T09:16:59.365Z)
+- - -
+## :bug: Fixes
+* GMP-158 massive refactor and fixes (#13)
+- - -
+- - -
 # :confetti_ball: 0.5.3.0 (2021-09-22T10:54:35.741Z)
 - - -
 ## :bug: Fixes

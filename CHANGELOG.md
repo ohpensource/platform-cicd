@@ -1,3 +1,9 @@
+# :confetti_ball: 0.6.0.0 (2021-09-23T13:09:01.350Z)
+- - -
+## :hammer: Features
+* GMP-158 include generate-version-and-release-notes action (#14)
+- - -
+- - -
 # :confetti_ball: 0.5.4.0 (2021-09-23T09:16:59.365Z)
 - - -
 ## :bug: Fixes

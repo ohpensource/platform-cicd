@@ -1,14 +1,11 @@
 name: "generate-version-and-release-notes"
 description: "generates semver and changelog.md after a pull request has been merge"
-inputs:
-  base-branch:
-    description: "name of the branch where the pull request goes to"
-    required: true
-  pr-branch:
-    description: "name of the branch where the pull request comes from"
-    required: true
 runs:
   using: "composite"
   steps:
-    - run: node ${{ github.action_path }}/../generate-version-and-release-notes.js
+    - run: |
+        date > generated.txt
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        node ${{ github.action_path }}/../generate-version-and-release-notes.js
       shell: bash

@@ -44,11 +44,9 @@ log_key_value_pair "stack-name" $STACK_NAME
 TEMPLATE_BODY_PATH=$7
 log_key_value_pair "template-body-path" $TEMPLATE_BODY_PATH
 TEMPLATE_BODY="$WORKING_FOLDER/$TEMPLATE_BODY_PATH"
-# cat $TEMPLATE_BODY
 CFN_PARAMETERS_PATH=$8
 log_key_value_pair "cfn-parameters-path" $CFN_PARAMETERS_PATH
 CFN_PARAMETERS_FILE="$WORKING_FOLDER/$CFN_PARAMETERS_PATH"
-# cat $CFN_PARAMETERS_FILE
 
 set_up_aws_user_credentials $REGION $ACCESS_KEY $SECRET_KEY
 assume_role $ACCOUNT_ID $ROLE_NAME

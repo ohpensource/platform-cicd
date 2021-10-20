@@ -1,3 +1,9 @@
+# :confetti_ball: 1.0.0.0 (2021-10-20T11:59:01.267Z)
+- - -
+## :boom: BREAKING CHANGES
+* GMP-304 include PAT as required argument into generate-version-and-release-notes action (#15)
+- - -
+- - -
 # :confetti_ball: 0.6.0.0 (2021-09-23T13:09:01.350Z)
 - - -
 ## :hammer: Features

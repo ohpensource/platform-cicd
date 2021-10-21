@@ -1,15 +1,17 @@
 name: "generate-version-and-release-notes"
 description: "generates semver and changelog.md after a pull request has been merge"
 inputs:
-  token:
-    description: "token with rights to push on main branch"
+  user-email:
+    description: "email to sign the commit that will be pushed to main branch"
+    required: true
+  user-name:
+    description: "name to sign the commit that will be pushed to main branch"
     required: true
 runs:
   using: "composite"
   steps:
     - run: |
-        date > generated.txt
-        git config user.name github-actions
-        git config user.password ${{ inputs.token }}
+        git config user.email ${{ inputs.user-email }}
+        git config user.name ${{ inputs.user-name }}
         node ${{ github.action_path }}/../generate-version-and-release-notes.js
       shell: bash

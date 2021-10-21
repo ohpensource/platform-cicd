@@ -1,3 +1,9 @@
+# :confetti_ball: 2.1.0.0 (2021-10-21T16:05:32.907Z)
+- - -
+## :hammer: Features
+* GMP-303 include tfm-plan and tfm-apply actions (#19)
+- - -
+- - -
 # :confetti_ball: 2.0.1.0 (2021-10-21T08:23:49.941Z)
 - - -
 ## :bug: Fixes

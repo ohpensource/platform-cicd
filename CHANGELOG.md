@@ -1,3 +1,9 @@
+# :confetti_ball: 2.0.0.0 (2021-10-21T08:11:23.649Z)
+- - -
+## :boom: BREAKING CHANGES
+* GMP-304 incude user-name and user-email as mandatory parameters in semver action (#16)
+- - -
+- - -
 # :confetti_ball: 1.0.0.0 (2021-10-20T11:59:01.267Z)
 - - -
 ## :boom: BREAKING CHANGES

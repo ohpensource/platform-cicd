@@ -1,0 +1,32 @@
+name: "terraform-apply"
+description: "applies a terraform configuration"
+inputs:
+  region:
+    description: "aws region name"
+    required: true
+  access-key:
+    description: "access key"
+    required: true
+  secret-key:
+    description: "secret key"
+    required: true
+  account:
+    description: "aws account id"
+    required: true
+  role-name:
+    description: "role to assume"
+    required: true
+  terraform-folder:
+    description: "folder where your terraform configuration is"
+    required: true
+  backend-configuration:
+    description: "file with additional backend configuration"
+    required: true
+  terraform-plan-file:
+    description: "An terraform plan file (previously created)"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: ${{ github.action_path }}/../tfm-apply.sh ${{ inputs.region }} ${{ inputs.access-key }} ${{ inputs.secret-key }} ${{ inputs.account }} ${{ inputs.role-name }} ${{ inputs.terraform-folder }} ${{ inputs.backend-configuration }} ${{ inputs.terraform-plan-file }}
+      shell: bash

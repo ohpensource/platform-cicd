@@ -1,3 +1,9 @@
+# :confetti_ball: 2.0.1.0 (2021-10-21T08:23:49.941Z)
+- - -
+## :bug: Fixes
+* GMP-304 SKIP CI => skip ci. To avoid recursive calls in main branches (#17)
+- - -
+- - -
 # :confetti_ball: 2.0.0.0 (2021-10-21T08:11:23.649Z)
 - - -
 ## :boom: BREAKING CHANGES

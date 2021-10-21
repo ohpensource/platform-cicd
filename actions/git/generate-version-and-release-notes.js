@@ -176,7 +176,7 @@ function commitAndTag(newVersionAsText) {
   child.execSync(`git add ${versionFile}`);
   child.execSync(`git add ${changelogFile}`);
   child.execSync(
-    `git commit -m "[SKIP CI] Bump to version ${newVersionAsText}"`
+    `git commit -m "[skip ci] Bump to version ${newVersionAsText}"`
   );
   child.execSync(
     `git tag -a -m "Tag for version ${newVersionAsText}" ${newVersionAsText}`

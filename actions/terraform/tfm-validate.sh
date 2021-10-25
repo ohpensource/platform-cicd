@@ -15,7 +15,7 @@ log_key_value_pair "tfm-path" $TFM_PATH
 
 cd $WORKING_FOLDER/$TFM_PATH
 
-terraform init
+terraform init -backend=false
 terraform validate
 
 cd $WORKING_FOLDER

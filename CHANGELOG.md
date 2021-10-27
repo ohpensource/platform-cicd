@@ -1,3 +1,9 @@
+# :confetti_ball: 2.2.0.0 (2021-10-27T08:33:40.485Z)
+- - -
+## :hammer: Features
+* GMP-315 include terraform validate action (#20)
+- - -
+- - -
 # :confetti_ball: 2.1.0.0 (2021-10-21T16:05:32.907Z)
 - - -
 ## :hammer: Features

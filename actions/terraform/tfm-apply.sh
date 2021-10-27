@@ -35,25 +35,22 @@ log_key_value_pair "region" $REGION
 ACCESS_KEY=$2
 log_key_value_pair "access-key" $ACCESS_KEY
 SECRET_KEY=$3
-ACCOUNT_ID=$4
-log_key_value_pair "account-id" $ACCOUNT_ID
-ROLE_NAME=$5
-log_key_value_pair "role-name" $ROLE_NAME
-TFM_FOLDER=$6
+TFM_FOLDER=$4
 log_key_value_pair "terraform-folder" $TFM_FOLDER
-BACKEND_CONFIG_FILE=$7
+BACKEND_CONFIG_FILE=$5
 log_key_value_pair "backend-config-file" $BACKEND_CONFIG_FILE
-TERRAFORM_PLAN_FILE=$8
+TERRAFORM_PLAN_FILE=$6
 log_key_value_pair "terraform-plan-file" $TERRAFORM_PLAN_FILE
 
 set_up_aws_user_credentials $REGION $ACCESS_KEY $SECRET_KEY
-assume_role $ACCOUNT_ID $ROLE_NAME
+
+BACKEND_CONFIG_FILE="$WORKING_FOLDER/$BACKEND_CONFIG_FILE"
+PLAN="$WORKING_FOLDER/$TERRAFORM_PLAN_FILE"
 
 FOLDER="$WORKING_FOLDER/$TFM_FOLDER"
 cd $FOLDER
 
 terraform init -backend-config="$BACKEND_CONFIG_FILE"
-PLAN="$WORKING_FOLDER/$TERRAFORM_PLAN_FILE"
 terraform apply "$PLAN"
 
 cd "$WKDIR"

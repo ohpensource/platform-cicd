@@ -1,3 +1,9 @@
+# :confetti_ball: 2.2.2.0 (2021-10-27T13:05:28.341Z)
+- - -
+## :bug: Fixes
+* GMP-315 terraform plan+apply (#22)
+- - -
+- - -
 # :confetti_ball: 2.2.1.0 (2021-10-27T12:21:59.397Z)
 - - -
 ## :bug: Fixes

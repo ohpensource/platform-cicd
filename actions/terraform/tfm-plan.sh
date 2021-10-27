@@ -16,19 +16,6 @@ set_up_aws_user_credentials() {
     export AWS_SECRET_ACCESS_KEY=$3
 }
 
-assume_role() {
-    AWS_ACCOUNT_ID=$1
-    ROLE_NAME=$2
-
-    ROLE_ARN="arn:aws:iam::$AWS_ACCOUNT_ID:role/$ROLE_NAME"
-    CREDENTIALS_FILE_NAME="aws-credentials.json"
-    aws sts assume-role --role-arn $ROLE_ARN --role-session-name github-session >> $CREDENTIALS_FILE_NAME
-
-    export AWS_ACCESS_KEY_ID=$(jq -r '.Credentials.AccessKeyId' $CREDENTIALS_FILE_NAME)
-    export AWS_SECRET_ACCESS_KEY=$(jq -r '.Credentials.SecretAccessKey' $CREDENTIALS_FILE_NAME)
-    export AWS_SESSION_TOKEN=$(jq -r '.Credentials.SessionToken' $CREDENTIALS_FILE_NAME)
-}
-
 log_action "planning terraform"
 REGION=$1
 log_key_value_pair "region" $REGION
@@ -37,25 +24,25 @@ log_key_value_pair "access-key" $ACCESS_KEY
 SECRET_KEY=$3
 ACCOUNT_ID=$4
 log_key_value_pair "account-id" $ACCOUNT_ID
-ROLE_NAME=$5
-log_key_value_pair "role-name" $ROLE_NAME
-TFM_FOLDER=$6
+TFM_FOLDER=$5
 log_key_value_pair "terraform-folder" $TFM_FOLDER
-BACKEND_CONFIG_FILE=$7
+BACKEND_CONFIG_FILE=$6
 log_key_value_pair "backend-config-file" $BACKEND_CONFIG_FILE
-TFVARS_FILE=$8
+TFVARS_FILE=$7
 log_key_value_pair "tfvars-file" $TFVARS_FILE
-TFSTATE_OUTPUT=$9
+TFSTATE_OUTPUT=$8
 log_key_value_pair "tfstate-output" $TFSTATE_OUTPUT
 
 set_up_aws_user_credentials $REGION $ACCESS_KEY $SECRET_KEY
-assume_role $ACCOUNT_ID $ROLE_NAME
+
+BACKEND_CONFIG_FILE="$WORKING_FOLDER/$BACKEND_CONFIG_FILE"
+TFVARS_FILE="$WORKING_FOLDER/$TFVARS_FILE"
+TFSTATE_OUTPUT="$WORKING_FOLDER/$TFSTATE_OUTPUT"
 
 FOLDER="$WORKING_FOLDER/$TFM_FOLDER"
 cd $FOLDER
 
 terraform init -backend-config="$BACKEND_CONFIG_FILE"
-TFSTATE="$WORKING_FOLDER/$TFSTATE_OUTPUT"
 terraform plan -var-file="$TFVARS_FILE" -out="$TFSTATE"
 
 cd "$WKDIR"

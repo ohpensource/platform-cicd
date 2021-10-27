@@ -13,9 +13,6 @@ inputs:
   account:
     description: "aws account id"
     required: true
-  role-name:
-    description: "role to assume"
-    required: true
   terraform-folder:
     description: "folder where your terraform configuration is"
     required: true
@@ -31,5 +28,5 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: ${{ github.action_path }}/../tfm-plan.sh ${{ inputs.region }} ${{ inputs.access-key }} ${{ inputs.secret-key }} ${{ inputs.account }} ${{ inputs.role-name }} ${{ inputs.terraform-folder }} ${{ inputs.backend-configuration }} ${{ inputs.terraform-var-file }} ${{ inputs.terraform-state-file }}
+    - run: ${{ github.action_path }}/../tfm-plan.sh ${{ inputs.region }} ${{ inputs.access-key }} ${{ inputs.secret-key }} ${{ inputs.account }} ${{ inputs.terraform-folder }} ${{ inputs.backend-configuration }} ${{ inputs.terraform-var-file }} ${{ inputs.terraform-state-file }}
       shell: bash

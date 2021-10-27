@@ -41,16 +41,21 @@ BACKEND_CONFIG_FILE=$5
 log_key_value_pair "backend-config-file" $BACKEND_CONFIG_FILE
 TERRAFORM_PLAN_FILE=$6
 log_key_value_pair "terraform-plan-file" $TERRAFORM_PLAN_FILE
+TERRAFORM_OUTPUTS_FILE=$7
+log_key_value_pair "terraform-outputs-file" $TERRAFORM_OUTPUTS_FILE
 
 set_up_aws_user_credentials $REGION $ACCESS_KEY $SECRET_KEY
 
 BACKEND_CONFIG_FILE="$WORKING_FOLDER/$BACKEND_CONFIG_FILE"
 PLAN="$WORKING_FOLDER/$TERRAFORM_PLAN_FILE"
+TERRAFORM_OUTPUTS_FILE="$WORKING_FOLDER/$TERRAFORM_OUTPUTS_FILE"
+mkdir -p $(dirname $TERRAFORM_OUTPUTS_FILE)
 
 FOLDER="$WORKING_FOLDER/$TFM_FOLDER"
 cd $FOLDER
 
 terraform init -backend-config="$BACKEND_CONFIG_FILE"
 terraform apply "$PLAN"
+terraform output -json >> $TERRAFORM_OUTPUTS_FILE
 
 cd "$WKDIR"

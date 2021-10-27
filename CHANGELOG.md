@@ -1,3 +1,9 @@
+# :confetti_ball: 2.2.3.0 (2021-10-27T13:30:36.451Z)
+- - -
+## :bug: Fixes
+* GMP-315 expose outputs after tfm-apply (#23)
+- - -
+- - -
 # :confetti_ball: 2.2.2.0 (2021-10-27T13:05:28.341Z)
 - - -
 ## :bug: Fixes

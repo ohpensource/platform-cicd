@@ -1,3 +1,9 @@
+# :confetti_ball: 2.2.1.0 (2021-10-27T12:21:59.397Z)
+- - -
+## :bug: Fixes
+* GMP-315 use absolute paths in tfm-plan (#21)
+- - -
+- - -
 # :confetti_ball: 2.2.0.0 (2021-10-27T08:33:40.485Z)
 - - -
 ## :hammer: Features

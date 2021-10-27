@@ -22,15 +22,13 @@ log_key_value_pair "region" $REGION
 ACCESS_KEY=$2
 log_key_value_pair "access-key" $ACCESS_KEY
 SECRET_KEY=$3
-ACCOUNT_ID=$4
-log_key_value_pair "account-id" $ACCOUNT_ID
-TFM_FOLDER=$5
+TFM_FOLDER=$4
 log_key_value_pair "terraform-folder" $TFM_FOLDER
-BACKEND_CONFIG_FILE=$6
+BACKEND_CONFIG_FILE=$5
 log_key_value_pair "backend-config-file" $BACKEND_CONFIG_FILE
-TFVARS_FILE=$7
+TFVARS_FILE=$6
 log_key_value_pair "tfvars-file" $TFVARS_FILE
-TFSTATE_OUTPUT=$8
+TFSTATE_OUTPUT=$7
 log_key_value_pair "tfstate-output" $TFSTATE_OUTPUT
 
 set_up_aws_user_credentials $REGION $ACCESS_KEY $SECRET_KEY
@@ -38,11 +36,12 @@ set_up_aws_user_credentials $REGION $ACCESS_KEY $SECRET_KEY
 BACKEND_CONFIG_FILE="$WORKING_FOLDER/$BACKEND_CONFIG_FILE"
 TFVARS_FILE="$WORKING_FOLDER/$TFVARS_FILE"
 TFSTATE_OUTPUT="$WORKING_FOLDER/$TFSTATE_OUTPUT"
+mkdir -p $(dirname $TFSTATE_OUTPUT)
 
 FOLDER="$WORKING_FOLDER/$TFM_FOLDER"
 cd $FOLDER
 
 terraform init -backend-config="$BACKEND_CONFIG_FILE"
-terraform plan -var-file="$TFVARS_FILE" -out="$TFSTATE"
+terraform plan -var-file="$TFVARS_FILE" -out="$TFSTATE_OUTPUT"
 
 cd "$WKDIR"

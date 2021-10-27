@@ -12,10 +12,12 @@ log_key_value_pair() {
 log_action "validating terraform"
 TFM_PATH=$1
 log_key_value_pair "tfm-path" $TFM_PATH
+BACKEND=$2
+log_key_value_pair "use-backend" $BACKEND
 
 cd $WORKING_FOLDER/$TFM_PATH
 
-terraform init
+terraform init -backend=$BACKEND
 terraform validate
 
 cd $WORKING_FOLDER

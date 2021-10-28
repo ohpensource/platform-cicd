@@ -21,7 +21,7 @@ inputs:
     required: true
   terraform-outputs-file:
     description: "File where terraform will print the configuration outputs"
-    required: true
+    required: false
 runs:
   using: "composite"
   steps:

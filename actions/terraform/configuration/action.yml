@@ -1,0 +1,23 @@
+name: "terraform-configuration"
+description: "prepares tfvars files (backend and variables) before doing a terraform plan action"
+inputs:
+  backend-configuration-file:
+    description: "Location of backend configuration"
+    required: true
+  terraform-variables-file:
+    description: "Localtion of terraform variables file"
+    required: true
+  destination-folder:
+    description: "Folder where to store configuration for terraform plan"
+    required: true
+  backend-configuration-override:
+    description: "backend variables to override"
+    required: true
+  terraform-configuration-override:
+    description: "terraform variables to override"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: ${{ github.action_path }}/../configure.sh ${{ inputs.backend-configuration-file }} ${{ inputs.terraform-variables-file }} ${{ inputs.destination-folder }} ${{ inputs.backend-configuration-override }} ${{ inputs.terraform-configuration-override }}
+      shell: bash

@@ -1,3 +1,9 @@
+# :confetti_ball: 2.3.0.0 (2021-10-28T10:45:25.455Z)
+- - -
+## :hammer: Features
+* GMP-315 include -destroy option in terraform plan action (#24)
+- - -
+- - -
 # :confetti_ball: 2.2.3.0 (2021-10-27T13:30:36.451Z)
 - - -
 ## :bug: Fixes

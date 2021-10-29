@@ -1,3 +1,9 @@
+# :confetti_ball: 2.3.1.0 (2021-10-29T11:51:14.275Z)
+- - -
+## :bug: Fixes
+* GMP-320 specify artifacts prefix path (#27)
+- - -
+- - -
 # :confetti_ball: 2.3.0.1 (2021-10-29T08:37:03.024Z)
 - - -
 ## :newspaper: Others

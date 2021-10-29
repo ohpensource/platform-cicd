@@ -1,3 +1,9 @@
+# :confetti_ball: 2.3.0.1 (2021-10-29T08:37:03.024Z)
+- - -
+## :newspaper: Others
+* refactor: GMP-322 remove unused function inside tfm-apply.sh (#26)
+- - -
+- - -
 # :confetti_ball: 2.3.0.0 (2021-10-28T10:45:25.455Z)
 - - -
 ## :hammer: Features

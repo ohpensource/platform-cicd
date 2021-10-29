@@ -54,18 +54,8 @@ assume_role $ACCOUNT_ID $ROLE_NAME
 DESTINATION_IAC="./$SERVICE_NAME-$VERSION-$IAC.zip"
 log_key_value_pair "destination-iac" $DESTINATION_IAC
 zip -r $DESTINATION_IAC "./$IAC"
-S3_DESTINATION="s3://$BUCKET_NAME/$SERVICE_NAME/$VERSION/$SERVICE_NAME-$VERSION-$IAC.zip"
+S3_DESTINATION="s3://$BUCKET_NAME/artifacts/$SERVICE_NAME/$VERSION/$SERVICE_NAME-$VERSION-$IAC.zip"
 log_key_value_pair "s3-destination" $S3_DESTINATION
 aws s3 cp $DESTINATION_IAC $S3_DESTINATION
 
 cd $WORKING_FOLDER
-
-
-
-
-# run: |
-#           chmod +x -R ./platform-cicd-scripts
-#           source ./platform-cicd-scripts/aws/credentials/set-up-user-credentials.sh $REGION $COR_AWS_ACCESS_KEY_ID $COR_AWS_SECRET_ACCESS_KEY
-#           source ./platform-cicd-scripts/aws/credentials/assume-role.sh $ARTIFACTS_AWS_ACCOUNT_ID $COR_CICD_AUTOMATION_ROLE_NAME
-#           ./platform-cicd-scripts/artifacts/create-iac-artifact.sh $GITHUB_HEAD_REF $SERVICE_NAME cloudformation $ARTIFACTS_BUCKET_NAME
-#           ./platform-cicd-scripts/artifacts/lambda/dotnet/create-dotnet-lambda-artifact.sh $GITHUB_HEAD_REF $SERVICE_NAME src/Ohpen.LogCollector Ohpen.LogCollector netcoreapp3.1 $ARTIFACTS_BUCKET_NAME

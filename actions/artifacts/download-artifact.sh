@@ -54,7 +54,7 @@ log_key_value_pair "destination-folder" $DESTINATION_FOLDER
 set_up_aws_user_credentials $REGION $ACCESS_KEY $SECRET_KEY
 assume_role $ACCOUNT_ID $ROLE_NAME
 
-S3_ORIGIN="s3://$BUCKET_NAME/$SERVICE_NAME/$VERSION"
+S3_ORIGIN="s3://$BUCKET_NAME/artifacts/$SERVICE_NAME/$VERSION"
 log_key_value_pair "s3-origin" $S3_ORIGIN
 mkdir -p $DESTINATION_FOLDER
 aws s3 cp --recursive $S3_ORIGIN $DESTINATION_FOLDER

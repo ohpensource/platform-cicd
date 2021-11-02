@@ -1,3 +1,9 @@
+# :confetti_ball: 2.3.2.0 (2021-11-02T09:09:23.960Z)
+- - -
+## :bug: Fixes
+* GMP-323 improve feedback on ensure-conventional-commits script (#28)
+- - -
+- - -
 # :confetti_ball: 2.3.1.0 (2021-10-29T11:51:14.275Z)
 - - -
 ## :bug: Fixes

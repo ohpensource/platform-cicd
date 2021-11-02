@@ -1,3 +1,9 @@
+# :confetti_ball: 2.3.4.0 (2021-11-02T14:15:33.296Z)
+- - -
+## :bug: Fixes
+* GMP-323 improve feedback on ensure-commits-message-jira-ticket script (#30)
+- - -
+- - -
 # :confetti_ball: 2.3.3.0 (2021-11-02T10:29:35.600Z)
 - - -
 ## :bug: Fixes

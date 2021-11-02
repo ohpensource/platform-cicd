@@ -26,8 +26,12 @@ let ok = git
     let commitMessageOk = acceptablePrefixes.some((prefix) =>
       commit.subject.startsWith(prefix)
     );
-    let resultText = commitMessageOk ? "OK" : "WRONG";
-    logger.logKeyValuePair("result", resultText);
+    let result = {
+      result: commitMessageOk ? "OK" : "WRONG",
+      documentation: "https://www.conventionalcommits.org/en/v1.0.0/",
+      supportedPreffixes: acceptablePrefixes,
+    };
+    logger.logKeyValuePair("result", result);
     logger.logKeyValuePair("commit", commit);
 
     return commitMessageOk;

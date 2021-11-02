@@ -16,8 +16,19 @@ let ok = git
       /\d+-[A-Z]+(?!-?[a-zA-Z]{1,10})/g
     );
     let commitMessageOk = reversedTickets != null && reversedTickets.length > 0;
-    let resultText = commitMessageOk ? "OK" : "WRONG";
-    logger.logKeyValuePair("result", resultText);
+    let result = {
+      message: commitMessageOk ? "OK" : "WRONG",
+      documentation:
+        "https://stackoverflow.com/questions/19322669/regular-expression-for-a-jira-identifier",
+      guidelines: [
+        "Official JIRA Regex ONLY supports capital letters for ticket codes",
+      ],
+      examples: [
+        "feat: GMP-323 awesome new feature",
+        "break: removing GET /ping endpoint (LANZ-3456)",
+      ],
+    };
+    logger.logKeyValuePair("result", result);
     logger.logKeyValuePair("commit", commit);
     return commitMessageOk;
   });

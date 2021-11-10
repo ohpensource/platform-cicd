@@ -1,3 +1,9 @@
+# :confetti_ball: 2.3.4.1 (2021-11-10T12:10:01.727Z)
+- - -
+## :newspaper: Others
+* ci: GMP-336 autogenerate readme.md (#32)
+- - -
+- - -
 # :confetti_ball: 2.3.4.0 (2021-11-02T14:15:33.296Z)
 - - -
 ## :bug: Fixes

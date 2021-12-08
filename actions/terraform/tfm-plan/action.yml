@@ -22,7 +22,7 @@ inputs:
   terraform-var-file:
     description: "file with the terraform variables (.tfvars or .tfvars.json)"
     required: true
-  terraform-state-file:
+  terraform-plan-file:
     description: "file where terraform will put the proposed plan"
     required: true
   destroy-mode:

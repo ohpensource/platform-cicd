@@ -28,8 +28,8 @@ BACKEND_CONFIG_FILE=$5
 log_key_value_pair "backend-config-file" $BACKEND_CONFIG_FILE
 TFVARS_FILE=$6
 log_key_value_pair "tfvars-file" $TFVARS_FILE
-TFPLAN_PUTPUT=$7
-log_key_value_pair "tfplan-output" $TFPLAN_PUTPUT
+TFPLAN_OUTPUT=$7
+log_key_value_pair "tfplan-output" $TFPLAN_OUTPUT
 DESTROY_MODE=$8
 log_key_value_pair "destroy-mode" $DESTROY_MODE
 
@@ -37,8 +37,8 @@ set_up_aws_user_credentials $REGION $ACCESS_KEY $SECRET_KEY
 
 BACKEND_CONFIG_FILE="$WORKING_FOLDER/$BACKEND_CONFIG_FILE"
 TFVARS_FILE="$WORKING_FOLDER/$TFVARS_FILE"
-TFPLAN_PUTPUT="$WORKING_FOLDER/$TFPLAN_PUTPUT"
-mkdir -p $(dirname $TFPLAN_PUTPUT)
+TFPLAN_OUTPUT="$WORKING_FOLDER/$TFPLAN_OUTPUT"
+mkdir -p $(dirname $TFPLAN_OUTPUT)
 
 FOLDER="$WORKING_FOLDER/$TFM_FOLDER"
 cd $FOLDER
@@ -46,9 +46,9 @@ cd $FOLDER
 terraform init -backend-config="$BACKEND_CONFIG_FILE"
 
 if [ "$DESTROY_MODE" = "true" ]; then 
-    terraform plan -destroy -var-file="$TFVARS_FILE" -out="$TFPLAN_PUTPUT"
+    terraform plan -destroy -var-file="$TFVARS_FILE" -out="$TFPLAN_OUTPUT"
 else
-    terraform plan -var-file="$TFVARS_FILE" -out="$TFPLAN_PUTPUT"
+    terraform plan -var-file="$TFVARS_FILE" -out="$TFPLAN_OUTPUT"
 fi
 
 cd "$WKDIR"

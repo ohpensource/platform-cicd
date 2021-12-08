@@ -1,3 +1,9 @@
+# :confetti_ball: 2.3.6.0 (2021-12-08T18:58:16.609Z)
+- - -
+## :bug: Fixes
+* GMP-366 readme md syntax (#34)
+- - -
+- - -
 # :confetti_ball: 2.3.5.0 (2021-12-08T18:51:57.016Z)
 - - -
 ## :bug: Fixes

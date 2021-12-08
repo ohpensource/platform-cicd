@@ -1,4 +1,7 @@
+# Platform Services GitHub Actions
+
 ## create-iac-artifact
+
 creates the iac artifact (.zip) for the provided iac folder
 | name                | description                                  | required |
 | ------------------- | -------------------------------------------- | -------- |
@@ -12,7 +15,8 @@ creates the iac artifact (.zip) for the provided iac folder
 | iac                 | iac (terraform or cloudformation)            | true     |
 | butcket-name        | bucket name                                  | true     |
 Example:
-````
+
+````(yaml)
 - uses: ohpensource/platform-cicd/actions/artifacts/create-iac-artifact@2.0.1.0
   with:
       region: <your-input>
@@ -30,6 +34,7 @@ Example:
 - - -
 
 ## download-artifact
+
 downloads the artifact(s) of an application and stores them locally into a folder
 | name               | description                                  | required |
 | ------------------ | -------------------------------------------- | -------- |
@@ -44,7 +49,8 @@ downloads the artifact(s) of an application and stores them locally into a folde
 | bucket-name        | bucket name                                  | true     |
 | destination-folder | folder where to store the artifact           | true     |
 Example:
-````
+
+````(yaml)
 - uses: ohpensource/platform-cicd/actions/artifacts/download-artifact@2.0.1.0
   with:
       region: <your-input>
@@ -63,6 +69,7 @@ Example:
 - - -
 
 ## create-dotnet-lambda-artifact
+
 creates the lambda artifact (.zip) for the provided dotnet application
 | name                    | description                             | required |
 | ----------------------- | --------------------------------------- | -------- |
@@ -78,7 +85,8 @@ creates the lambda artifact (.zip) for the provided dotnet application
 | application-framework   | dotnet framework version for compiling  | true     |
 | bucket-name             | bucket name where to store the artifact | true     |
 Example:
-````
+
+````(yaml)
 - uses: ohpensource/platform-cicd/actions/artifacts/lambda/dotnet/create-dotnet-lambda-artifact@2.0.1.0
   with:
       region: <your-input>
@@ -112,7 +120,8 @@ Example:
 | artifact-folder       |             | true     |
 | s3-bucket             |             | true     |
 Example:
-````
+
+````(yaml)
 - uses: ohpensource/platform-cicd/actions/artifacts/lambda/upload-lambda-artifact-to-s3@2.0.1.0
   with:
       region: <your-input>
@@ -131,6 +140,7 @@ Example:
 - - -
 
 ## create-or-update-stack
+
 creates (or updates) an stack based on cfn inputs
 | name                | description                                            | required |
 | ------------------- | ------------------------------------------------------ | -------- |
@@ -143,7 +153,8 @@ creates (or updates) an stack based on cfn inputs
 | template-body-path  | path where the cloudformation template file is located | true     |
 | cfn-parameters-path | path where the cloudformation inputs are located       | true     |
 Example:
-````
+
+````(yaml)
 - uses: ohpensource/platform-cicd/actions/aws/cloudformation/create-or-update-stack@2.0.1.0
   with:
       region: <your-input>
@@ -160,6 +171,7 @@ Example:
 - - -
 
 ## validate-cloudformation
+
 validates (using aws api) a cloudformation yaml file
 | name                | description                                           | required |
 | ------------------- | ----------------------------------------------------- | -------- |
@@ -170,7 +182,8 @@ validates (using aws api) a cloudformation yaml file
 | destination-account | aws account id where to validate the cloudformation   | true     |
 | role-name           | name of the role to assume in the destination account |          |
 Example:
-````
+
+````(yaml)
 - uses: ohpensource/platform-cicd/actions/aws/cloudformation/validate-cloudformation@2.0.1.0
   with:
       cfn-template: <your-input>
@@ -185,6 +198,7 @@ Example:
 - - -
 
 ## create-s3-bucket
+
 sets up the credentials in the current shell for an aws user
 | name       | description     | required |
 | ---------- | --------------- | -------- |
@@ -195,7 +209,8 @@ sets up the credentials in the current shell for an aws user
 | role-name  | role name       | true     |
 | s3-bucket  | bucket name     | true     |
 Example:
-````
+
+````(yaml)
 - uses: ohpensource/platform-cicd/actions/aws/s3/create-s3-bucket@2.0.1.0
   with:
       region: <your-input>
@@ -210,12 +225,14 @@ Example:
 - - -
 
 ## build-dotnet-app
+
 builds the provided application (developed in dotnet)
 | name     | description                                        | required |
 | -------- | -------------------------------------------------- | -------- |
 | app-path | the root path of the application (defaults to src) | true     |
 Example:
-````
+
+````(yaml)
 - uses: ohpensource/platform-cicd/actions/builds/dotnet/build-dotnet-app@2.0.1.0
   with:
       app-path: <your-input>
@@ -225,13 +242,15 @@ Example:
 - - -
 
 ## ensure-commits-message-jira-ticket
+
 checks that all commits in a pull request contain a jira ticket
 | name        | description                                          | required |
 | ----------- | ---------------------------------------------------- | -------- |
 | base-branch | name of the branch where the pull request goes to    | true     |
 | pr-branch   | name of the branch where the pull request comes from | true     |
 Example:
-````
+
+````(yaml)
 - uses: ohpensource/platform-cicd/actions/git/ensure-commits-message-jira-ticket@2.0.1.0
   with:
       base-branch: <your-input>
@@ -242,13 +261,15 @@ Example:
 - - -
 
 ## ensure-conventional-commits
+
 checks that the commits in a pull request follow conventional commits
 | name        | description                                          | required |
 | ----------- | ---------------------------------------------------- | -------- |
 | base-branch | name of the branch where the pull request goes to    | true     |
 | pr-branch   | name of the branch where the pull request comes from | true     |
 Example:
-````
+
+````(yaml)
 - uses: ohpensource/platform-cicd/actions/git/ensure-conventional-commits@2.0.1.0
   with:
       base-branch: <your-input>
@@ -259,13 +280,15 @@ Example:
 - - -
 
 ## generate-version-and-release-notes
+
 generates semver and changelog.md after a pull request has been merge
 | name       | description                                                 | required |
 | ---------- | ----------------------------------------------------------- | -------- |
 | user-email | email to sign the commit that will be pushed to main branch | true     |
 | user-name  | name to sign the commit that will be pushed to main branch  | true     |
 Example:
-````
+
+````(yaml)
 - uses: ohpensource/platform-cicd/actions/git/generate-version-and-release-notes@2.0.1.0
   with:
       user-email: <your-input>
@@ -276,6 +299,7 @@ Example:
 - - -
 
 ## terraform-apply
+
 applies a terraform configuration
 | name                   | description                                               | required |
 | ---------------------- | --------------------------------------------------------- | -------- |
@@ -287,7 +311,8 @@ applies a terraform configuration
 | terraform-plan-file    | An terraform plan file (previously created)               | true     |
 | terraform-outputs-file | File where terraform will print the configuration outputs | false    |
 Example:
-````
+
+````(yaml)
 - uses: ohpensource/platform-cicd/actions/terraform/tfm-apply@2.0.1.0
   with:
       region: <your-input>
@@ -303,6 +328,7 @@ Example:
 - - -
 
 ## terraform-plan
+
 plans a terraform configuration
 | name                  | description                                                                    | required |
 | --------------------- | ------------------------------------------------------------------------------ | -------- |
@@ -316,7 +342,8 @@ plans a terraform configuration
 | terraform-plan-file   | file where terraform will put the proposed plan                                | true     |
 | destroy-mode          | Plans a destroy action. false(default value)=>normal flow, true=>destroy mode. | false    |
 Example:
-````
+
+````(yaml)
 - uses: ohpensource/platform-cicd/actions/terraform/tfm-plan@2.0.1.0
   with:
       region: <your-input>
@@ -334,13 +361,15 @@ Example:
 - - -
 
 ## terraform-validate
+
 validates a terraform configuration
 | name             | description                                                                                      | required |
 | ---------------- | ------------------------------------------------------------------------------------------------ | -------- |
 | terraform-folder | folder where your terraform configuration is                                                     | true     |
 | use-backend      | boolean to specify if backend configuration needs to be considered. Accepted values: true, false | true     |
 Example:
-````
+
+````(yaml)
 - uses: ohpensource/platform-cicd/actions/terraform/tfm-validate@2.0.1.0
   with:
       terraform-folder: <your-input>
@@ -351,12 +380,14 @@ Example:
 - - -
 
 ## run-dotnet-tests
+
 runs dotnet tests inside a .sln recursively
 | name       | description                         | required |
 | ---------- | ----------------------------------- | -------- |
 | sln-folder | path where the .sln file is located | true     |
 Example:
-````
+
+````(yaml)
 - uses: ohpensource/platform-cicd/actions/tests/dotnet/run-dotnet-tests@2.0.1.0
   with:
       sln-folder: <your-input>
@@ -364,4 +395,3 @@ Example:
 ````
   
 - - -
-

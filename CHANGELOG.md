@@ -1,3 +1,9 @@
+# :confetti_ball: 2.3.5.0 (2021-12-08T18:51:57.016Z)
+- - -
+## :bug: Fixes
+* GMP-366 var name, action input name (#33)
+- - -
+- - -
 # :confetti_ball: 2.3.4.1 (2021-11-10T12:10:01.727Z)
 - - -
 ## :newspaper: Others

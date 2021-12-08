@@ -313,7 +313,7 @@ plans a terraform configuration
 | terraform-folder      | folder where your terraform configuration is                                   | true     |
 | backend-configuration | file with additional backend configuration                                     | true     |
 | terraform-var-file    | file with the terraform variables (.tfvars or .tfvars.json)                    | true     |
-| terraform-state-file  | file where terraform will put the proposed plan                                | true     |
+| terraform-plan-file   | file where terraform will put the proposed plan                                | true     |
 | destroy-mode          | Plans a destroy action. false(default value)=>normal flow, true=>destroy mode. | false    |
 Example:
 ````
@@ -326,7 +326,7 @@ Example:
       terraform-folder: <your-input>
       backend-configuration: <your-input>
       terraform-var-file: <your-input>
-      terraform-state-file: <your-input>
+      terraform-plan-file: <your-input>
       destroy-mode: <your-input>
 
 ````

@@ -1,3 +1,9 @@
+# :confetti_ball: 2.3.7.0 (2021-12-08T21:02:19.664Z)
+- - -
+## :bug: Fixes
+* GMP-366 tfm plan action (#35)
+- - -
+- - -
 # :confetti_ball: 2.3.6.0 (2021-12-08T18:58:16.609Z)
 - - -
 ## :bug: Fixes

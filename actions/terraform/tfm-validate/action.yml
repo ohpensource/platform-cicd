@@ -4,9 +4,11 @@ inputs:
   terraform-folder:
     description: "folder where your terraform configuration is"
     required: true
+    default: 'terraform'
   use-backend:
     description: "boolean to specify if backend configuration needs to be considered. Accepted values: true, false"
     required: true
+    default: 'false'
 runs:
   using: "composite"
   steps:

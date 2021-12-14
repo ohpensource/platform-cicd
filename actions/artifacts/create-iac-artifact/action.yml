@@ -25,6 +25,7 @@ inputs:
   iac:
     description: "iac (terraform or cloudformation)"
     required: true
+    default: 'terraform'
   butcket-name:
     description: "bucket name"
     required: true

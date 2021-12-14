@@ -49,3 +49,5 @@ if [ "$TERRAFORM_OUTPUTS_FILE" != "" ]; then
 fi
 
 cd "$WORKING_FOLDER"
+
+echo "::set-output name=outputs_file::${TERRAFORM_OUTPUTS_FILE}"

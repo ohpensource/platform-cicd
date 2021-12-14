@@ -10,7 +10,7 @@ inputs:
   secret-key:
     description: "secret key"
     required: true
-  account:
+  account: #FIXME we can remove it because there is wrong order in script
     description: "aws account id"
     required: true
   terraform-folder:
@@ -28,6 +28,7 @@ inputs:
   destroy-mode:
     description: "Plans a destroy action. false(default value)=>normal flow, true=>destroy mode."
     required: false
+    default: 'false'
 runs:
   using: "composite"
   steps:

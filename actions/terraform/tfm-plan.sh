@@ -46,9 +46,9 @@ cd $FOLDER
 terraform init -backend-config="$BACKEND_CONFIG_FILE"
 
 if [ "$DESTROY_MODE" = "true" ]; then 
-    terraform plan -destroy -var-file="$TFVARS_FILE" -out="$TFPLAN_OUTPUT"
+    terraform plan -no-color -destroy -var-file="$TFVARS_FILE" -out="$TFPLAN_OUTPUT"
 else
-    terraform plan -var-file="$TFVARS_FILE" -out="$TFPLAN_OUTPUT"
+    terraform plan -no-color -var-file="$TFVARS_FILE" -out="$TFPLAN_OUTPUT"
 fi
 
 cd "$WKDIR"

@@ -18,6 +18,6 @@ log_key_value_pair "use-backend" $BACKEND
 cd $WORKING_FOLDER/$TFM_PATH
 
 terraform init -backend=$BACKEND
-terraform validate
+terraform validate -no-color
 
 cd $WORKING_FOLDER

@@ -23,7 +23,7 @@ const getCommitsInsidePullRequest = (destinationBranchName, branchName) => {
     .split("\n")[0];
   let commits = child
     .execSync(
-      `git log ${mergeBaseCommit}..${branchName} --pretty=format:"${prettyFormat.join(
+      `git log ${mergeBaseCommit}..${branchName} --no-merges --pretty=format:"${prettyFormat.join(
         splitText
       )}"`
     )

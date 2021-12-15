@@ -1,3 +1,9 @@
+# :confetti_ball: 2.4.0.0 (2021-12-15T15:57:40.824Z)
+- - -
+## :hammer: Features
+* GMP-392 omit merges in pull requests (#37)
+- - -
+- - -
 # :confetti_ball: 2.3.7.0 (2021-12-08T21:02:19.664Z)
 - - -
 ## :bug: Fixes

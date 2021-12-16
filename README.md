@@ -365,3 +365,50 @@ Example:
   
 - - -
 
+## nuget-pack-push
+Build, packs and publishes your application's nuGet packages to GitHub Packages feed easily.
+The action will:
+- authenticate with GitHub Packages
+- add the nuGet source
+- dotnet restore
+- dotnet build -c release
+- dotnet pack
+- dotnet push it into the GitHub Packages feed.
+
+| name              | description                                         | required |
+|-------------------|-----------------------------------------------------|----------|
+| nuget-feed-source | The source (repo) name of the NuGet feed to push to | true     |
+| nuget-feed-url    | The url of the NuGet feed to push to                | true     |
+| username          | The username to use for the NuGet feed              | true     |
+| password          | The password/token/PAT to use for the NuGet feed    | true     |
+| package-project   | The filename of the project to build the nuget from | true     |
+| package-folder    | The folder where the package project file is.       | true     |
+|                   | Defaults to /.                                      |          |
+| version-suffix    | The suffix to append to the package version.        | true     |
+Example:
+```
+- uses: ohpensource/platform-cicd/actions/packages/nuget/nuget-pack-push@2.5.0.0
+    with:
+        nuget-feed-source: "shared-pkg-dotnet"
+        nuget-feed-url: "https://nuget.pkg.github.com/ohpen/index.json"
+        username: ohp-github-svc
+        password: ${{ secrets.CICD_GITHUB_PACKAGES_TOKEN }}
+        package-project: "Ohpen.BusinessConfig.Client.csproj"
+        package-folder: "src/Ohpen.BusinessConfig.Client"
+        version-suffix: "preview"
+```
+The "**version-suffix**" parameter is optional, (_you can use it to generate preview packages in your branches like in the example. For stable packages just omit the parameter_)
+
+The package version control must be done from the .csproj file using the following settings:
+```
+<PropertyGroup>
+    <VersionPrefix>1.4.1</VersionPrefix>
+    <VersionSuffix>$(VersionSuffix)</VersionSuffix>
+    <RepositoryUrl>https://github.com/ohpen/shared-pkg-dotnet</RepositoryUrl>
+</PropertyGroup>
+```
+
+If you don't specify "**RepositoryUrl**" in your project file, the action will fail.
+If you don't specify "**VersionSuffix**" in your project file, the action will ignore the version suffix.
+
+When you change anything in your package source code, you should manually change "**VersionPrefix**" to the new package version you want. If you don't do that, the package won't be uploaded to the feed (the action will skip existing packages, check the workflow log to check wether it went well or not)

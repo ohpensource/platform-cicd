@@ -1,3 +1,9 @@
+# :confetti_ball: 2.5.0.0 (2021-12-16T10:51:44.566Z)
+- - -
+## :hammer: Features
+* SPT-148 Added new action nuget-pack-push (#38)
+- - -
+- - -
 # :confetti_ball: 2.4.0.0 (2021-12-15T15:57:40.824Z)
 - - -
 ## :hammer: Features

@@ -17,11 +17,11 @@ set_up_aws_user_credentials() {
 }
 
 log_action "planning terraform"
-REGION=$1
-log_key_value_pair "region" $REGION
-ACCESS_KEY=$2
-log_key_value_pair "access-key" $ACCESS_KEY
-SECRET_KEY=$3
+REGION="$1"
+log_key_value_pair "region" "$REGION"
+ACCESS_KEY="$2"
+log_key_value_pair "access-key" "$ACCESS_KEY"
+SECRET_KEY="$3"
 TFM_FOLDER=$4
 log_key_value_pair "terraform-folder" $TFM_FOLDER
 BACKEND_CONFIG_FILE=$5
@@ -51,4 +51,4 @@ else
     terraform plan -var-file="$TFVARS_FILE" -out="$TFPLAN_OUTPUT"
 fi
 
-cd "$WKDIR"
+cd "$WORKING_FOLDER"

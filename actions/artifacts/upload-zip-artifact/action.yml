@@ -1,0 +1,32 @@
+name: "create-zip-artifact"
+description: "creates an artifact (.zip) for the provided folder"
+inputs:
+  region:
+    description: "aws region name"
+    required: true
+  access-key:
+    description: "access key"
+    required: true
+  secret-key:
+    description: "secret key"
+    required: true
+  destination-account:
+    description: "where to store the artifact"
+    required: true
+  role-name:
+    description: "role to assume to grant access to the bucket"
+    required: true
+  version:
+    description: "service version"
+    required: true
+  service-name:
+    description: "service name"
+    required: true
+  butcket-name:
+    description: "bucket name"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: ${{ github.action_path }}/../upload-zip-artifact.sh ${{ inputs.region }} ${{ inputs.access-key }} ${{ inputs.secret-key }} ${{ inputs.destination-account }} ${{ inputs.role-name }} ${{ inputs.version }} ${{ inputs.service-name }} ${{ inputs.butcket-name }}
+      shell: bash

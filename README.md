@@ -1,5 +1,4 @@
 ## create-iac-artifact
-
 creates the iac artifact (.zip) for the provided iac folder
 | name                | description                                  | required |
 | ------------------- | -------------------------------------------- | -------- |
@@ -31,7 +30,6 @@ Example:
 - - -
 
 ## download-artifact
-
 downloads the artifact(s) of an application and stores them locally into a folder
 | name               | description                                  | required |
 | ------------------ | -------------------------------------------- | -------- |
@@ -57,6 +55,37 @@ Example:
       version: <your-input>
       service-name: <your-input>
       iac: <your-input>
+      bucket-name: <your-input>
+      destination-folder: <your-input>
+
+````
+  
+- - -
+
+## download-artifact
+downloads the artifact(s) of an application and stores them locally into a folder
+| name               | description                                  | required |
+| ------------------ | -------------------------------------------- | -------- |
+| region             | aws region name                              | true     |
+| access-key         | access key                                   | true     |
+| secret-key         | secret key                                   | true     |
+| account            | where to store the artifact                  | true     |
+| role-name          | role to assume to grant access to the bucket | true     |
+| version            | service version                              | true     |
+| service-name       | service name                                 | true     |
+| bucket-name        | bucket name                                  | true     |
+| destination-folder | folder where to store the artifact           | true     |
+Example:
+````
+- uses: ohpensource/platform-cicd/actions/artifacts/download-unzip-artifact@2.0.1.0
+  with:
+      region: <your-input>
+      access-key: <your-input>
+      secret-key: <your-input>
+      account: <your-input>
+      role-name: <your-input>
+      version: <your-input>
+      service-name: <your-input>
       bucket-name: <your-input>
       destination-folder: <your-input>
 
@@ -127,6 +156,35 @@ Example:
       function-project-name: <your-input>
       artifact-folder: <your-input>
       s3-bucket: <your-input>
+
+````
+  
+- - -
+
+## create-zip-artifact
+creates an artifact (.zip) for the provided folder
+| name                | description                                  | required |
+| ------------------- | -------------------------------------------- | -------- |
+| region              | aws region name                              | true     |
+| access-key          | access key                                   | true     |
+| secret-key          | secret key                                   | true     |
+| destination-account | where to store the artifact                  | true     |
+| role-name           | role to assume to grant access to the bucket | true     |
+| version             | service version                              | true     |
+| service-name        | service name                                 | true     |
+| butcket-name        | bucket name                                  | true     |
+Example:
+````
+- uses: ohpensource/platform-cicd/actions/artifacts/upload-zip-artifact@2.0.1.0
+  with:
+      region: <your-input>
+      access-key: <your-input>
+      secret-key: <your-input>
+      destination-account: <your-input>
+      role-name: <your-input>
+      version: <your-input>
+      service-name: <your-input>
+      butcket-name: <your-input>
 
 ````
   

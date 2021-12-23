@@ -1,3 +1,9 @@
+# :confetti_ball: 2.6.0.0 (2021-12-23T11:06:17.680Z)
+- - -
+## :hammer: Features
+* LANZ-1454 add generic zip artifact up/download (#40)
+- - -
+- - -
 # :confetti_ball: 2.5.0.0 (2021-12-16T10:51:44.566Z)
 - - -
 ## :hammer: Features

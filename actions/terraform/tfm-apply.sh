@@ -48,4 +48,4 @@ if [ "$TERRAFORM_OUTPUTS_FILE" != "" ]; then
     terraform output -json >> $TERRAFORM_OUTPUTS_FILE
 fi
 
-cd "$WKDIR"
+cd $WORKING_FOLDER

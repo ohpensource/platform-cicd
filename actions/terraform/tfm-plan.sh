@@ -51,4 +51,4 @@ else
     terraform plan -var-file="$TFVARS_FILE" -out="$TFPLAN_OUTPUT"
 fi
 
-cd "$WKDIR"
+cd $WORKING_FOLDER

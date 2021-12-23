@@ -1,4 +1,5 @@
 ## create-iac-artifact
+
 creates the iac artifact (.zip) for the provided iac folder
 | name                | description                                  | required |
 | ------------------- | -------------------------------------------- | -------- |
@@ -30,6 +31,7 @@ Example:
 - - -
 
 ## download-artifact
+
 downloads the artifact(s) of an application and stores them locally into a folder
 | name               | description                                  | required |
 | ------------------ | -------------------------------------------- | -------- |

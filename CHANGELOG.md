@@ -1,3 +1,12 @@
+# :confetti_ball: 2.7.0.0 (2022-01-10T10:10:17.097Z)
+- - -
+## :hammer: Features
+* SPT-148 Added new action nuget-pack-push
+## :newspaper: Others
+* chore: SPT-148 action minimal documentation
+* chore: SPT-148 Moved action documentation to the right place.
+- - -
+- - -
 # :confetti_ball: 2.6.0.0 (2021-12-23T11:06:17.680Z)
 - - -
 ## :hammer: Features

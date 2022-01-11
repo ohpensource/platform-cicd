@@ -21,7 +21,11 @@ inputs:
     required: false
     default: "./" 
   version-suffix:
-    description: "The version suffix to append to the package version. Defaults to empty string."
+    description: "The version suffix to append to the package version. This value will be ignored if the package Version is specified. Defaults to empty string."
+    required: false
+    default: ""
+  version:
+    description: "The package version. This value will override Version in *.csproj. Defaults to empty string."
     required: false
     default: ""
 runs: 
@@ -50,7 +54,7 @@ runs:
       shell: bash
 
     - name: Nuget Pack ${{ inputs.package-project }}
-      run: dotnet pack --configuration Release --output "/tmp" ${{ inputs.package-project }} --version-suffix "${{ inputs.version-suffix }}" --verbosity normal
+      run: dotnet pack --configuration Release --output "/tmp" ${{ inputs.package-project }} --version-suffix "${{ inputs.version-suffix }}" --verbosity normal $([ -z "${{ inputs.version }}" ] || echo "/p:version=${{ inputs.version }}")
       shell: bash       
       working-directory: ${{ inputs.package-folder }}
 

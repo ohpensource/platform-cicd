@@ -337,15 +337,16 @@ Example:
 
 ## nuget-pack-push
 Packages and pushes NuGet packages
-| name              | description                                                                    | required |
-| ----------------- | ------------------------------------------------------------------------------ | -------- |
-| nuget-feed-source | The source (repo) name of the NuGet feed to push to                            | true     |
-| nuget-feed-url    | The URL of the NuGet feed to push to                                           | true     |
-| username          | The username to use when reading/pushing to the NuGet feed                     | true     |
-| password          | The password/PAT to use when pushing to the NuGet feed                         | true     |
-| package-project   | The package name to push to the NuGet feed                                     | true     |
-| package-folder    | The folder prefix where the project file is. Defaults to ./                    | false    |
-| version-suffix    | The version suffix to append to the package version. Defaults to empty string. | false    |
+| name              | description                                                                                                                                    | required |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| nuget-feed-source | The source (repo) name of the NuGet feed to push to                                                                                            | true     |
+| nuget-feed-url    | The URL of the NuGet feed to push to                                                                                                           | true     |
+| username          | The username to use when reading/pushing to the NuGet feed                                                                                     | true     |
+| password          | The password/PAT to use when pushing to the NuGet feed                                                                                         | true     |
+| package-project   | The package name to push to the NuGet feed                                                                                                     | true     |
+| package-folder    | The folder prefix where the project file is. Defaults to ./                                                                                    | false    |
+| version-suffix    | The version suffix to append to the package version. This value will be ignored if the package Version is specified. Defaults to empty string. | false    |
+| version           | The package version. This value will override Version in *.csproj. Defaults to empty string.                                                   | false    |
 Example:
 ````
 - uses: ohpensource/platform-cicd/actions/packages/nuget/nuget-pack-push@2.0.1.0
@@ -357,6 +358,7 @@ Example:
       package-project: <your-input>
       package-folder: <your-input>
       version-suffix: <your-input>
+      version: <your-input>
 
 ````
   

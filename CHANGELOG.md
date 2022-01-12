@@ -1,3 +1,9 @@
+# :confetti_ball: 2.7.0.1 (2022-01-12T10:49:52.426Z)
+- - -
+## :newspaper: Others
+* ci: INT-1367 Allow overriding nuget package version in nuget-pack-push (#44)
+- - -
+- - -
 # :confetti_ball: 2.7.0.0 (2022-01-10T10:10:17.097Z)
 - - -
 ## :hammer: Features

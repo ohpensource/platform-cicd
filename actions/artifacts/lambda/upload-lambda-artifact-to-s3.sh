@@ -17,12 +17,13 @@ set_up_aws_user_credentials() {
 }
 
 assume_role() {
-    AWS_ACCOUNT_ID=$1
-    ROLE_NAME=$2
-
-    ROLE_ARN="arn:aws:iam::$AWS_ACCOUNT_ID:role/$ROLE_NAME"
     CREDENTIALS_FILE_NAME="aws-credentials.json"
-    aws sts assume-role --role-arn $ROLE_ARN --role-session-name github-session >> $CREDENTIALS_FILE_NAME
+	if [[ ! -f "$CREDENTIALS_FILE_NAME" ]]; then
+		AWS_ACCOUNT_ID=$1
+        ROLE_NAME=$2
+		ROLE_ARN="arn:aws:iam::$AWS_ACCOUNT_ID:role/$ROLE_NAME"
+    	aws sts assume-role --role-arn $ROLE_ARN --role-session-name github-session > $CREDENTIALS_FILE_NAME
+	fi
 
     export AWS_ACCESS_KEY_ID=$(jq -r '.Credentials.AccessKeyId' $CREDENTIALS_FILE_NAME)
     export AWS_SECRET_ACCESS_KEY=$(jq -r '.Credentials.SecretAccessKey' $CREDENTIALS_FILE_NAME)
@@ -57,3 +58,5 @@ ARTIFACT_PATH="$WORKING_FOLDER/$ARTIFACT_FOLDER/$SERVICE_NAME-$VERSION-$FUNCTION
 S3_DESTINATION="s3://$BUCKET_NAME/artifacts/$SERVICE_NAME/$VERSION/$SERVICE_NAME-$VERSION-$FUNCTION_PROJECT_NAME.zip"
 log_key_value_pair "s3-destination" $S3_DESTINATION
 aws s3 cp $ARTIFACT_PATH $S3_DESTINATION
+
+echo "::set-output name=s3_destination_key::${S3_DESTINATION}"

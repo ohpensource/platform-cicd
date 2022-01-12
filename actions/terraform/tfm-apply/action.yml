@@ -22,8 +22,13 @@ inputs:
   terraform-outputs-file:
     description: "File where terraform will print the configuration outputs"
     required: false
+outputs:
+  outputs-file:
+    description: 'outputs file'
+    value: ${{ steps.tfm-apply.outputs.outputs_file }}
 runs:
   using: "composite"
   steps:
-    - run: ${{ github.action_path }}/../tfm-apply.sh ${{ inputs.region }} ${{ inputs.access-key }} ${{ inputs.secret-key }} ${{ inputs.terraform-folder }} ${{ inputs.backend-configuration }} ${{ inputs.terraform-plan-file }} ${{ inputs.terraform-outputs-file }}
+    - id: tfm-apply
+      run: ${{ github.action_path }}/../tfm-apply.sh ${{ inputs.region }} ${{ inputs.access-key }} ${{ inputs.secret-key }} ${{ inputs.terraform-folder }} ${{ inputs.backend-configuration }} ${{ inputs.terraform-plan-file }} ${{ inputs.terraform-outputs-file }}
       shell: bash

@@ -1,5 +1,4 @@
 ## create-iac-artifact
-
 creates the iac artifact (.zip) for the provided iac folder
 | name                | description                                  | required |
 | ------------------- | -------------------------------------------- | -------- |
@@ -31,7 +30,6 @@ Example:
 - - -
 
 ## download-artifact
-
 downloads the artifact(s) of an application and stores them locally into a folder
 | name               | description                                  | required |
 | ------------------ | -------------------------------------------- | -------- |
@@ -132,18 +130,18 @@ Example:
 
 ## upload-lambda-artifact-to-s3
 
-| name                  | description | required |
-| --------------------- | ----------- | -------- |
-| region                |             | true     |
-| access-key            |             | true     |
-| secret-key            |             | true     |
-| account               |             | true     |
-| role-name             |             | true     |
-| version               |             | true     |
-| service-name          |             | true     |
-| function-project-name |             | true     |
-| artifact-folder       |             | true     |
-| s3-bucket             |             | true     |
+| name                  | description                             | required |
+| --------------------- | --------------------------------------- | -------- |
+| region                | aws region name                         | true     |
+| access-key            | access key                              | true     |
+| secret-key            | secret key                              | true     |
+| account               | aws account id                          | true     |
+| role-name             | role to assume                          | true     |
+| version               | version of the lambda                   | true     |
+| service-name          | name of the service                     | true     |
+| function-project-name | name of the function                    | true     |
+| artifact-folder       | artifact folder                         | true     |
+| s3-bucket             | bucket name where to store the artifact | true     |
 Example:
 ````
 - uses: ohpensource/platform-cicd/actions/artifacts/lambda/upload-lambda-artifact-to-s3@2.0.1.0

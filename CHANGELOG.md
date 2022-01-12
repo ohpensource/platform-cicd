@@ -1,3 +1,14 @@
+# :confetti_ball: 2.8.0.0 (2022-01-12T21:01:34.165Z)
+- - -
+## :hammer: Features
+* LANZ-1454 add generic zip artifact up/download (#40)
+## :bug: Fixes
+* GMP-393 - improve and fix some scripts and provide some output custom actions parameters
+* GMP-393 - improve and fix some scripts and provide some output custom actions parameters
+## :newspaper: Others
+* style: GMP-393 - reformat assume_role function in scripts
+- - -
+- - -
 # :confetti_ball: 2.7.0.1 (2022-01-12T10:49:52.426Z)
 - - -
 ## :newspaper: Others

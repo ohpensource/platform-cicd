@@ -1,3 +1,9 @@
+# :confetti_ball: 2.9.1.0 (2022-01-13T16:04:39.719Z)
+- - -
+## :bug: Fixes
+* INT-1365 Put the content of temp.zip dir into archive, not the dir itself (#46)
+- - -
+- - -
 # :confetti_ball: 2.9.0.0 (2022-01-13T12:30:28.134Z)
 - - -
 ## :hammer: Features

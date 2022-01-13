@@ -52,8 +52,11 @@ assume_role $ACCOUNT_ID $ROLE_NAME
 DESTINATION_ZIP="./$SERVICE_NAME-$VERSION.zip"
 log_key_value_pair "destination-zip" $DESTINATION_ZIP
 zip -r $DESTINATION_ZIP "./temp.zip"
-S3_DESTINATION="s3://$BUCKET_NAME/artifacts/$SERVICE_NAME/$VERSION/$SERVICE_NAME-$VERSION.zip"
+S3_KEY="artifacts/$SERVICE_NAME/$VERSION/$SERVICE_NAME-$VERSION.zip"
+S3_DESTINATION="s3://$BUCKET_NAME/$S3_KEY"
 log_key_value_pair "s3-destination" $S3_DESTINATION
 aws s3 cp $DESTINATION_ZIP $S3_DESTINATION
 
+echo "::set-output name=s3_destination_key::$S3_DESTINATION"
+echo "::set-output name=s3_object_key::$S3_KEY"
 cd $WORKING_FOLDER

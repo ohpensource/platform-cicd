@@ -1,3 +1,11 @@
+# :confetti_ball: 2.9.0.0 (2022-01-13T12:30:28.134Z)
+- - -
+## :hammer: Features
+* INT-1365 Add s3-destination-key and s3-object-key outputs to upload-zip-artifact action
+## :bug: Fixes
+* INT-1365 Fix typos in upload-zip-artifact
+- - -
+- - -
 # :confetti_ball: 2.8.0.0 (2022-01-12T21:01:34.165Z)
 - - -
 ## :hammer: Features

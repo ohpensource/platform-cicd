@@ -172,7 +172,7 @@ creates an artifact (.zip) for the provided folder
 | role-name           | role to assume to grant access to the bucket | true     |
 | version             | service version                              | true     |
 | service-name        | service name                                 | true     |
-| butcket-name        | bucket name                                  | true     |
+| bucket-name         | bucket name                                  | true     |
 Example:
 ````
 - uses: ohpensource/platform-cicd/actions/artifacts/upload-zip-artifact@2.0.1.0
@@ -184,7 +184,7 @@ Example:
       role-name: <your-input>
       version: <your-input>
       service-name: <your-input>
-      butcket-name: <your-input>
+      bucket-name: <your-input>
 
 ````
   

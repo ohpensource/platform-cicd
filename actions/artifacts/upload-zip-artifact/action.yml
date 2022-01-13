@@ -22,11 +22,19 @@ inputs:
   service-name:
     description: "service name"
     required: true
-  butcket-name:
+  bucket-name:
     description: "bucket name"
     required: true
+outputs:
+  s3-destination-key:
+    description: 'full s3 scheme URI to the artifact in the S3 bucket'
+    value: ${{ steps.upload-zip-artifact.outputs.s3_destination_key }}
+  s3-object-key:
+    description: 'artifact object key in the S3 bucket'
+    value: ${{ steps.upload-zip-artifact.outputs.s3_object_key }}
 runs:
   using: "composite"
   steps:
-    - run: ${{ github.action_path }}/../upload-zip-artifact.sh ${{ inputs.region }} ${{ inputs.access-key }} ${{ inputs.secret-key }} ${{ inputs.destination-account }} ${{ inputs.role-name }} ${{ inputs.version }} ${{ inputs.service-name }} ${{ inputs.butcket-name }}
+    - id: upload-zip-artifact
+      run: ${{ github.action_path }}/../upload-zip-artifact.sh ${{ inputs.region }} ${{ inputs.access-key }} ${{ inputs.secret-key }} ${{ inputs.destination-account }} ${{ inputs.role-name }} ${{ inputs.version }} ${{ inputs.service-name }} ${{ inputs.bucket-name }}
       shell: bash

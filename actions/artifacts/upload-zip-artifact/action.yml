@@ -22,11 +22,11 @@ inputs:
   service-name:
     description: "service name"
     required: true
-  butcket-name:
+  bucket-name:
     description: "bucket name"
     required: true
 runs:
   using: "composite"
   steps:
-    - run: ${{ github.action_path }}/../upload-zip-artifact.sh ${{ inputs.region }} ${{ inputs.access-key }} ${{ inputs.secret-key }} ${{ inputs.destination-account }} ${{ inputs.role-name }} ${{ inputs.version }} ${{ inputs.service-name }} ${{ inputs.butcket-name }}
+    - run: ${{ github.action_path }}/../upload-zip-artifact.sh ${{ inputs.region }} ${{ inputs.access-key }} ${{ inputs.secret-key }} ${{ inputs.destination-account }} ${{ inputs.role-name }} ${{ inputs.version }} ${{ inputs.service-name }} ${{ inputs.bucket-name }}
       shell: bash

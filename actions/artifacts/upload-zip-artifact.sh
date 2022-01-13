@@ -43,7 +43,7 @@ VERSION=$(echo "$6"|tr '/' '-')
 log_key_value_pair "version" $VERSION
 SERVICE_NAME=$7
 log_key_value_pair "service-name" $SERVICE_NAME
-BUCKET_NAME=$9
+BUCKET_NAME=$8
 log_key_value_pair "bucket-name" $BUCKET_NAME
 
 set_up_aws_user_credentials $REGION $ACCESS_KEY $SECRET_KEY

@@ -51,7 +51,15 @@ assume_role $ACCOUNT_ID $ROLE_NAME
 
 DESTINATION_ZIP="./$SERVICE_NAME-$VERSION.zip"
 log_key_value_pair "destination-zip" $DESTINATION_ZIP
-zip -r $DESTINATION_ZIP "./temp.zip"
+
+if pushd temp.zip; then
+  zip -r ../$DESTINATION_ZIP ./
+  popd
+else
+  echo "::error::temp.zip directory must be created in the current directory before the action is called"
+  exit 1
+fi
+
 S3_KEY="artifacts/$SERVICE_NAME/$VERSION/$SERVICE_NAME-$VERSION.zip"
 S3_DESTINATION="s3://$BUCKET_NAME/$S3_KEY"
 log_key_value_pair "s3-destination" $S3_DESTINATION

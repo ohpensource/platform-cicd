@@ -398,7 +398,6 @@ plans a terraform configuration
 | region                | aws region name                                                                | true     |
 | access-key            | access key                                                                     | true     |
 | secret-key            | secret key                                                                     | true     |
-| account               | aws account id                                                                 | true     |
 | terraform-folder      | folder where your terraform configuration is                                   | true     |
 | backend-configuration | file with additional backend configuration                                     | true     |
 | terraform-var-file    | file with the terraform variables (.tfvars or .tfvars.json)                    | true     |
@@ -411,7 +410,6 @@ Example:
       region: <your-input>
       access-key: <your-input>
       secret-key: <your-input>
-      account: <your-input>
       terraform-folder: <your-input>
       backend-configuration: <your-input>
       terraform-var-file: <your-input>

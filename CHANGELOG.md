@@ -1,3 +1,9 @@
+# :confetti_ball: 2.10.0.0 (2022-01-20T12:56:04.774Z)
+- - -
+## :hammer: Features
+* SPT-1 - fixed tfm plan (#48)
+- - -
+- - -
 # :confetti_ball: 2.9.1.0 (2022-01-13T16:04:39.719Z)
 - - -
 ## :bug: Fixes

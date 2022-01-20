@@ -1,0 +1,26 @@
+name: "delete-stack"
+description: "deletes a stack"
+inputs:
+  region:
+    description: "aws region name"
+    required: true
+  access-key:
+    description: "access key"
+    required: true
+  secret-key:
+    description: "secret key"
+    required: true
+  account:
+    description: "aws account id where the stack is deployed"
+    required: true
+  role-name:
+    description: "role to assume"
+    required: true
+  stack-name:
+    description: "name of the stack to delete"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: ${{ github.action_path }}/../delete-stack.sh ${{ inputs.region }} ${{ inputs.access-key }} ${{ inputs.secret-key }} ${{ inputs.account }} ${{ inputs.role-name }} ${{ inputs.stack-name }}
+      shell: bash

@@ -7,6 +7,8 @@ Repository containing Ohpen's Github actions. An easy-to-setup set of scripts an
   - [semver-and-changelog](#semver-and-changelog)
   - [check-conventional-commits](#check-conventional-commits)
   - [check-jira-tickets-commits](#check-jira-tickets-commits)
+- [cloudformation-actions](#cloudformation)
+  - [delete-stack](#delete-stack)
 - [terraform-actions](#terraform)
   - [validate](#validate)
   - [plan](#plan)
@@ -138,6 +140,29 @@ jobs:
 ```
 
 The action essentially scans your commit messages [looking](https://stackoverflow.com/questions/19322669/regular-expression-for-a-jira-identifier) for JIRA tickets. In case a commit has no ticket, the action will fail.
+
+## cloudformation
+
+### delete-stack
+
+This action deletes the cloudformation stack specified in the input. If the stack does not exist, no action is performed.
+Here is an example of how to use it in your own repository:
+
+```yaml
+jobs:
+  delete-your-stack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ohpensource/platform-cicd/actions/aws/cloudformation/delete-stack@main
+        name: Delete the specified stack
+        with:
+          region: $REGION
+          access-key: $COR_AWS_ACCESS_KEY_ID
+          secret-key: $COR_AWS_SECRET_ACCESS_KEY
+          account: $DESTINATION_ACCOUNT_ID
+          role-name: $DESTINATION_CICD_ROLE_NAME
+          stack-name: "your-stack-name"
+```
 
 ## terraform
 

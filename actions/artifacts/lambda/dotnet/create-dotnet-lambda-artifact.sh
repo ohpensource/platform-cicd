@@ -21,7 +21,7 @@ assume_role() {
     if [[ ! -f "$CREDENTIALS_FILE_NAME" ]]; then
         local AWS_ACCOUNT_ID=$1
         local ROLE_NAME=$2
-        localROLE_ARN="arn:aws:iam::$AWS_ACCOUNT_ID:role/$ROLE_NAME"
+        local ROLE_ARN="arn:aws:iam::$AWS_ACCOUNT_ID:role/$ROLE_NAME"
         aws sts assume-role --role-arn $ROLE_ARN --role-session-name github-session > $CREDENTIALS_FILE_NAME
     fi
 

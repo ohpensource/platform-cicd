@@ -21,7 +21,7 @@ assume_role() {
     if [[ ! -f "$CREDENTIALS_FILE_NAME" ]]; then
         local AWS_ACCOUNT_ID=$1
         local ROLE_NAME=$2
-        localROLE_ARN="arn:aws:iam::$AWS_ACCOUNT_ID:role/$ROLE_NAME"
+        local ROLE_ARN="arn:aws:iam::$AWS_ACCOUNT_ID:role/$ROLE_NAME"
         aws sts assume-role --role-arn $ROLE_ARN --role-session-name github-session > $CREDENTIALS_FILE_NAME
     fi
 
@@ -44,9 +44,9 @@ VERSION=$(echo "$6"|tr '/' '-')
 log_key_value_pair "version" $VERSION
 SERVICE_NAME=$7
 log_key_value_pair "service-name" $SERVICE_NAME
-BUCKET_NAME=$9
+BUCKET_NAME=$8
 log_key_value_pair "bucket-name" $BUCKET_NAME
-DESTINATION_FOLDER=${10}
+DESTINATION_FOLDER=$9
 DESTINATION_FOLDER="$WORKING_FOLDER/$DESTINATION_FOLDER"
 log_key_value_pair "destination-folder" $DESTINATION_FOLDER
 

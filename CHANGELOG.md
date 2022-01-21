@@ -1,3 +1,9 @@
+# :confetti_ball: 2.10.1.0 (2022-01-21T13:08:54.156Z)
+- - -
+## :bug: Fixes
+* INT-1368 Handle the credentials file properly to avoid clashing between different actions
+- - -
+- - -
 # :confetti_ball: 2.10.0.0 (2022-01-20T12:56:04.774Z)
 - - -
 ## :hammer: Features

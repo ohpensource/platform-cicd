@@ -17,13 +17,13 @@ set_up_aws_user_credentials() {
 }
 
 assume_role() {
-    CREDENTIALS_FILE_NAME="aws-credentials.json"
-	if [[ ! -f "$CREDENTIALS_FILE_NAME" ]]; then
-		AWS_ACCOUNT_ID=$1
-        ROLE_NAME=$2
-		ROLE_ARN="arn:aws:iam::$AWS_ACCOUNT_ID:role/$ROLE_NAME"
-    	aws sts assume-role --role-arn $ROLE_ARN --role-session-name github-session > $CREDENTIALS_FILE_NAME
-	fi
+    local CREDENTIALS_FILE_NAME="aws-credentials-$(basename "$0").json"
+    if [[ ! -f "$CREDENTIALS_FILE_NAME" ]]; then
+        local AWS_ACCOUNT_ID=$1
+        local ROLE_NAME=$2
+        local ROLE_ARN="arn:aws:iam::$AWS_ACCOUNT_ID:role/$ROLE_NAME"
+        aws sts assume-role --role-arn $ROLE_ARN --role-session-name github-session > $CREDENTIALS_FILE_NAME
+    fi
 
     export AWS_ACCESS_KEY_ID=$(jq -r '.Credentials.AccessKeyId' $CREDENTIALS_FILE_NAME)
     export AWS_SECRET_ACCESS_KEY=$(jq -r '.Credentials.SecretAccessKey' $CREDENTIALS_FILE_NAME)

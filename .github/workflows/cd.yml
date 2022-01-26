@@ -9,14 +9,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: update readme.md
-        run: |
-          date > generated.txt
-          cd ./scripts
-          npm install
-          npm run render-readme
-          cd ..
-          git add README.md
       - name: semver & changelog
         run: |
           date > generated.txt

@@ -1,3 +1,9 @@
+# :confetti_ball: 2.10.1.3 (2022-01-26T11:29:02.947Z)
+- - -
+## :newspaper: Others
+* docs: LANZ-1518 add check-conventional-commits in README.md (#54)
+- - -
+- - -
 # :confetti_ball: 2.10.1.2 (2022-01-26T10:07:30.164Z)
 - - -
 ## :newspaper: Others

@@ -38,7 +38,7 @@ The action will:
 
 - Analyse the commits from the pull request that has been merged to main branch and extract the necessary information.
 
-:warning: Attention! You need to merge pull requests so their commits are present in the merge commit. To do so, merge your pull request as "squash".
+:warning: Attention! You need to merge pull requests in a way their commits are present in the merge commit. To do so, merge your pull request as "squash".
 
 - Summarise all the pull request changes into you CHANGELOG.md file.
 - Deduce the new version from those commits (your commits must follow conventional-commits! Check out the _check-conventional-commits_ action).

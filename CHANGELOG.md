@@ -1,3 +1,9 @@
+# :confetti_ball: 2.10.1.2 (2022-01-26T10:07:30.164Z)
+- - -
+## :newspaper: Others
+* docs: LANZ-1518 add semver-and-changelog in README.md (#51)
+- - -
+- - -
 # :confetti_ball: 2.10.1.1 (2022-01-26T10:02:52.907Z)
 - - -
 ## :newspaper: Others

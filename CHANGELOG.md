@@ -1,3 +1,9 @@
+# :confetti_ball: 2.10.1.4 (2022-01-26T14:42:33.325Z)
+- - -
+## :newspaper: Others
+* test: LANZ-1518 forcing cd workflow (#56)
+- - -
+- - -
 # :confetti_ball: 2.10.1.3 (2022-01-26T11:29:02.947Z)
 - - -
 ## :newspaper: Others

@@ -4,6 +4,7 @@ Repository containing Ohpen's Github actions. An easy-to-setup set of scripts an
 
 - [semver-and-changelog](#semver-and-changelog)
 - [check-conventional-commits](#check-conventional-commits)
+- [check-jira-tickets-commits](#check-jira-tickets-commits)
 
 ## semver-and-changelog
 
@@ -45,7 +46,7 @@ The action will:
 
 ## check-conventional-commits
 
-This action checks that ALL commits present in a pull request your commits in a pull follow [conventional-commits](https://www.conventionalcommits.org/en/v1.0.0/). Here you have an example of a complete workflow:
+This action checks that ALL commits present in a pull request follow [conventional-commits](https://www.conventionalcommits.org/en/v1.0.0/). Here you have an example of a complete workflow:
 
 ```
 name: CI
@@ -72,3 +73,28 @@ The action currently accepts the following prefixes:
 - **feat:** --> updates the MINOR semver number. Used when changes that add new functionality are introduced in your code. A commit message example could be "_feat: endpoint GET /parties V2 is now available_".
 - **fix:** --> updates the PATCH semver number. Used when changes that solve bugs are introduced in your code. A commit message example could be "_fix: properly manage contact-id parameter in endpoint GET /parties V2_".
 - **build:**, **chore:**, **ci:**, **docs:**, **style:**, **refactor:**, **perf:**, **test:** --> There are scenarios where you are not affecting any of the previous semver numbers. Those could be: refactoring your code, reducing building time of your code, adding unit tests, improving documentation, ... For these cases, conventional-commits allows for more granular prefixes.
+
+## check-jira-tickets-commits
+
+This action checks that ALL commits present in a pull request include a JIRA ticket. Useful for teams that require an extra level of traceability on their work and tasks. Here is an example:
+
+```
+name: CI
+on:
+  pull_request:
+    branches: ["main"]
+jobs:
+  check-jira-tickets-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: ohpensource/platform-cicd/actions/git/ensure-commits-message-jira-ticket@0.6.0.0
+        name: Ensure Jira ticket in all commits
+        with:
+          base-branch: $GITHUB_BASE_REF
+          pr-branch: $GITHUB_HEAD_REF
+```
+
+The action essentially scans your commit messages [looking](https://stackoverflow.com/questions/19322669/regular-expression-for-a-jira-identifier) for JIRA tickets. In case a commit has no ticket, the action will fail.

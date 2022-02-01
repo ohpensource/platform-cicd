@@ -4,6 +4,8 @@ const git = require("./git.js");
 const logger = require("./logging.js");
 const files = require("./file-tools.js");
 
+const skipGitCommit = process.argv[2];
+
 const featPreffix = "feat:";
 const fixPreffix = "fix:";
 const breakPreffix = "break:";
@@ -46,7 +48,10 @@ logger.logAction("UPDATING CHANGELOG FILE");
 updateChangelogFile(newVersion, changes);
 
 logger.logAction("COMMITTING AND TAGGING");
-commitAndTag(newVersion);
+
+if (skipGitCommit !== 'true') {
+	commitAndTag(newVersion);
+}
 
 // --------------------- //
 // ----- FUNCTIONS ----- //

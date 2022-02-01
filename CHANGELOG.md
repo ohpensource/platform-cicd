@@ -1,3 +1,9 @@
+# :confetti_ball: 2.11.0.0 (2022-02-01T09:10:59.573Z)
+- - -
+## :hammer: Features
+* SPT-1 - only generate version and change version.json file - do not yet commit as we want to change multiple files in one commit (#57)
+- - -
+- - -
 # :confetti_ball: 2.10.1.4 (2022-01-26T14:42:33.325Z)
 - - -
 ## :newspaper: Others

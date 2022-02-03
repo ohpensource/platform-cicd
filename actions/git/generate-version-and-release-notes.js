@@ -82,14 +82,10 @@ function getUpdatedVersion(version, changes) {
     newMajor = major;
     newMinor = minor + 1;
     newPatch = 0;
-  } else if (changes.some((change) => change.type === "fix")) {
-    newMajor = major;
-    newMinor = minor;
-    newPatch = patch + 1;
   } else {
     newMajor = major;
     newMinor = minor;
-    newPatch = patch;
+    newPatch = patch + 1;
   }
 
   return `${newMajor}.${newMinor}.${newPatch}`;

@@ -10,6 +10,7 @@ Repository containing Ohpen's Github actions. An easy-to-setup set of scripts an
 
 ## code-of-conduct
 
+
 Go crazy on the pull requests :) ! The only requirements are:
 
 > - Use [conventional-commits](#check-conventional-commits).

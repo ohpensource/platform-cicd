@@ -18,7 +18,6 @@ Go crazy on the pull requests :) ! The only requirements are:
 
 ## available-actions
 
-
 ### semver-and-changelog
 
 This repository includes an action to semantically version your repository once a merge happens to the main branch. All inputs are mandatory and this is an example on how to use the action in your own repository:

@@ -19,3 +19,22 @@ jobs:
           fetch-depth: 0
       - name: ensure-jira-tickets-commits
         run: node ./actions/git/ensure-commits-message-jira-ticket.js $GITHUB_BASE_REF $GITHUB_HEAD_REF
+  documentation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v14.3
+        with:
+          files: "README.md"
+      - name: ensure-documentation-is-added
+        if: steps.changed-files.outputs.any_modified == 'false'
+        uses: actions/github-script@v3
+        with:
+          script: |
+              core.setFailed('Include documentation in the README.md file!')
+
+          

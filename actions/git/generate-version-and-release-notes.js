@@ -89,7 +89,7 @@ function getUpdatedVersion(version, changes) {
     newMinor = minor + 1;
     newPatch = 0;
     newSecondary = 0;
-  } else if (changes.some((change) => change.type === "fix")) {
+  } else if ((changes.some((change) => change.type === "fix")) || versionFileContent.length === 3) {
     newMajor = major;
     newMinor = minor;
     newPatch = patch + 1;
@@ -101,7 +101,11 @@ function getUpdatedVersion(version, changes) {
     newSecondary = secondary + 1;
   }
 
-  return `${newMajor}.${newMinor}.${newPatch}.${newSecondary}`;
+  if (versionFileContent.length === 3) {
+    return `${newMajor}.${newMinor}.${newPatch}`;
+  } else {
+    return `${newMajor}.${newMinor}.${newPatch}.${newSecondary}`;
+  }
 }
 function getChange(line) {
   if (line.startsWith(featPreffix)) {
@@ -131,7 +135,7 @@ function getPreviousVersionAsText(versionFileContent) {
   if (versionFileContent.version) {
     previousVersion = versionFileContent.version;
   } else {
-    previousVersion = "0.0.0.0";
+    previousVersion = "0.0.0";
   }
   return previousVersion;
 }

@@ -1,3 +1,9 @@
+# :confetti_ball: 2.11.0.2 (2022-02-03T17:17:40.157Z)
+- - -
+## :newspaper: Others
+* ci: LANZ-1622 enforce documentation before merging PR (#59)
+- - -
+- - -
 # :confetti_ball: 2.11.0.1 (2022-02-03T15:08:41.520Z)
 - - -
 ## :newspaper: Others

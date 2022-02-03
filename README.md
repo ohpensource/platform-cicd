@@ -2,11 +2,23 @@
 
 Repository containing Ohpen's Github actions. An easy-to-setup set of scripts and actions to help teams (and everybody that needs it) start working with their repositories and abstract as much cognitive load from them.
 
-- [semver-and-changelog](#semver-and-changelog)
-- [check-conventional-commits](#check-conventional-commits)
-- [check-jira-tickets-commits](#check-jira-tickets-commits)
+- [code-of-conduct](#code-of-conduct)
+- [available-actions](#available-actions)
+  - [semver-and-changelog](#semver-and-changelog)
+  - [check-conventional-commits](#check-conventional-commits)
+  - [check-jira-tickets-commits](#check-jira-tickets-commits)
 
-## semver-and-changelog
+## code-of-conduct
+
+Go crazy on the pull requests :) ! The only requirements are:
+
+- Use [conventional-commits](#check-conventional-commits).
+- Include [jira-tickets](#check-jira-tickets-commits) in your commits.
+- Create/Update the documentation of the use case you are creating, improving or fixing. **'Boy scout' rules apply**. That means, for example, if you fix an already existing workflow, please include the necessary documentation to help everybody. The rule of thumb is: _leave the place (just a little bit)better than when you came_.
+
+## available-actions
+
+#### semver-and-changelog
 
 This repository includes an action to semantically version your repository once a merge happens to the main branch. All inputs are mandatory and this is an example on how to use the action in your own repository:
 
@@ -44,7 +56,7 @@ The action will:
 - Deduce the new version from those commits (your commits must follow conventional-commits! Check out the _check-conventional-commits_ action).
 - Tag your repository with the new version.
 
-## check-conventional-commits
+#### check-conventional-commits
 
 This action checks that ALL commits present in a pull request follow [conventional-commits](https://www.conventionalcommits.org/en/v1.0.0/). Here you have an example of a complete workflow:
 
@@ -74,7 +86,7 @@ The action currently accepts the following prefixes:
 - **fix:** --> updates the PATCH semver number. Used when changes that solve bugs are introduced in your code. A commit message example could be "_fix: properly manage contact-id parameter in endpoint GET /parties V2_".
 - **build:**, **chore:**, **ci:**, **docs:**, **style:**, **refactor:**, **perf:**, **test:** --> There are scenarios where you are not affecting any of the previous semver numbers. Those could be: refactoring your code, reducing building time of your code, adding unit tests, improving documentation, ... For these cases, conventional-commits allows for more granular prefixes.
 
-## check-jira-tickets-commits
+#### check-jira-tickets-commits
 
 This action checks that ALL commits present in a pull request include a JIRA ticket. Useful for teams that require an extra level of traceability on their work and tasks. Here is an example:
 

@@ -36,5 +36,3 @@ jobs:
         with:
           script: |
               core.setFailed('Include documentation in the README.md file!')
-
-          

@@ -1,3 +1,9 @@
+# :confetti_ball: 2.11.0.1 (2022-02-03T15:08:41.520Z)
+- - -
+## :newspaper: Others
+* SPT-1 - generate only three number versions to adhere to semantic: MAJOR.MINOR.PATCH (#58)
+- - -
+- - -
 # :confetti_ball: 2.11.0.0 (2022-02-01T09:10:59.573Z)
 - - -
 ## :hammer: Features

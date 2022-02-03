@@ -1,3 +1,9 @@
+# :confetti_ball: 2.11.0.4 (2022-02-03T20:32:21.079Z)
+- - -
+## :newspaper: Others
+* ci: LANZ-1622 force cd workflow (#63)
+- - -
+- - -
 # :confetti_ball: 2.11.0.1 (2022-02-03T15:08:41.520Z)
 - - -
 ## :newspaper: Others

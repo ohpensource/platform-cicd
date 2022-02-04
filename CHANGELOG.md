@@ -1,3 +1,9 @@
+# :confetti_ball: 2.11.0.5 (2022-02-04T07:37:34.966Z)
+- - -
+## :newspaper: Others
+* docs: LANZ-1622 include boy scout rule link in README.md file (#64)
+- - -
+- - -
 # :confetti_ball: 2.11.0.4 (2022-02-03T20:32:21.079Z)
 - - -
 ## :newspaper: Others

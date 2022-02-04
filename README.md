@@ -21,7 +21,7 @@ Go crazy on the pull requests :) ! The only requirements are:
 
 ### semver-and-changelog
 
-This repository includes an action to semantically version your repository once a merge happens to the main branch. All inputs are mandatory and this is an example on how to use the action in your own repository:
+This repository includes an action to semantically version your repository once a merge happens to the main branch. This is an example on how to use the action in your own repository:
 
 ```
 name: CD
@@ -40,7 +40,6 @@ jobs:
         name: semver & changelog
         with:
           user-email: "user@email.com"
-          user-name: "GitHub Actions"
       - id: semver
         run: echo "::set-output name=service-version::$(cat ./version.json | jq -r '.version')"
     outputs:
@@ -55,7 +54,14 @@ The action will:
 
 - Summarise all the pull request changes into you CHANGELOG.md file.
 - Deduce the new version from those commits (your commits must follow conventional-commits! Check out the _check-conventional-commits_ action).
-- Tag your repository with the new version.
+- Commit, tag and push changes in version.json and CHANGELOG.md (you can skip this part by setting parameter _skip-git-commit_ to true, for example when you want to change more files and push changes in one commit by yourself)
+- You can also set up name to sign the commit with parameter: _user-name_. Default value is _GitHub Actions_
+- The action will, by default, use MAJOR.MINOR.PATCH semantics to generate version number, if you want to use MAJOR.MINOR.PATCH.SECONDARY versioning, the version.json file in the root of you project have to contain 4 numbers separated by dot. For new applications it can look like this:
+```yaml
+{
+  "version": "0.0.0.0"
+}
+``` 
 
 ### check-conventional-commits
 

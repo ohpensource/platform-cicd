@@ -1,3 +1,9 @@
+# :confetti_ball: 2.11.0.6 (2022-02-07T11:49:49.923Z)
+- - -
+## :newspaper: Others
+* docs: SPT-1 - updated documentation for the semver action
+- - -
+- - -
 # :confetti_ball: 2.11.0.5 (2022-02-04T07:37:34.966Z)
 - - -
 ## :newspaper: Others

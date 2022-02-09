@@ -68,6 +68,7 @@ The action will:
 - There are 2 optional parameters in this action:
 
 > **skip-commit**: use it with value "true" if you want to prevent the action from commiting.
+
 > **version-prefix**: use with a value different than an empty string ("beta-" or "v" for example) to have tags in the form of '{version-prefix}M.m.p'
 
 ### check-conventional-commits

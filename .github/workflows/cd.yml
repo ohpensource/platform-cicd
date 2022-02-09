@@ -15,4 +15,4 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
                                                                  # skip-commit version-prefix 
-          node ./actions/git/generate-version-and-release-notes.js "false"     "beta-"
+          node ./actions/git/generate-version-and-release-notes.js "false"     ""

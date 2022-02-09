@@ -1,3 +1,9 @@
+# :confetti_ball: 2.12.0.0 (2022-02-09T15:24:08.239Z)
+- - -
+## :hammer: Features
+* LANZ-1664 add versionPrefix input to semver (#66)
+- - -
+- - -
 # :confetti_ball: 2.11.0.6 (2022-02-07T11:49:49.923Z)
 - - -
 ## :newspaper: Others

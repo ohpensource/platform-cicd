@@ -10,7 +10,6 @@ Repository containing Ohpen's Github actions. An easy-to-setup set of scripts an
 
 ## code-of-conduct
 
-
 Go crazy on the pull requests :) ! The only requirements are:
 
 > - Use [conventional-commits](#check-conventional-commits).
@@ -40,6 +39,8 @@ jobs:
         name: semver & changelog
         with:
           user-email: "user@email.com"
+          skip-commit: "true" # This is for testing so you don't polute your git history. Default value is false.
+          version-prefix: "v" # useful for repos that terraform modules where the versions are like "v0.2.4".
       - id: semver
         run: echo "::set-output name=service-version::$(cat ./version.json | jq -r '.version')"
     outputs:
@@ -57,11 +58,17 @@ The action will:
 - Commit, tag and push changes in version.json and CHANGELOG.md (you can skip this part by setting parameter _skip-git-commit_ to true, for example when you want to change more files and push changes in one commit by yourself)
 - You can also set up name to sign the commit with parameter: _user-name_. Default value is _GitHub Actions_
 - The action will, by default, use MAJOR.MINOR.PATCH semantics to generate version number, if you want to use MAJOR.MINOR.PATCH.SECONDARY versioning, the version.json file in the root of your project have to contain 4 numbers separated by dot. For new applications it can look like this:
+
 ```yaml
 {
   "version": "0.0.0.0"
 }
-``` 
+```
+
+- There are 2 optional parameters in this action:
+
+> **skip-commit**: use it with value "true" if you want to prevent the action from commiting.
+> **version-prefix**: use with a value different than an empty string ("beta-" or "v" for example) to have tags in the form of '{version-prefix}M.m.p'
 
 ### check-conventional-commits
 

@@ -1,3 +1,9 @@
+# :confetti_ball: 2.12.0.1 (2022-02-09T15:27:01.607Z)
+- - -
+## :newspaper: Others
+* ci: LANZ-1664 remove version-prefix from current repo versioning (#67)
+- - -
+- - -
 # :confetti_ball: 2.12.0.0 (2022-02-09T15:24:08.239Z)
 - - -
 ## :hammer: Features

@@ -12,6 +12,10 @@ inputs:
     description: "Specify if git commit should be skipped for changed files. Default is false - meaning, files are committed and commit is tagged and pushed"
     required: false
     default: "false"
+  version-prefix:
+    description: "Prefix to put immediately before the version number when tagging. Example: v0.1.4, beta-1.4.2"
+    required: false
+    default: ""
 outputs:
   service-version:
     description: 'Service version'
@@ -22,7 +26,7 @@ runs:
     - run: |
         git config user.email ${{ inputs.user-email }}
         git config user.name ${{ inputs.user-name }}
-        node ${{ github.action_path }}/../generate-version-and-release-notes.js ${{ inputs.skip-git-commit }}
+        node ${{ github.action_path }}/../generate-version-and-release-notes.js ${{ inputs.skip-git-commit }} ${{ inputs.version-prefix }}
       shell: bash
     - id: service-version
       run: echo "::set-output name=service-version::$(cat ./version.json | jq -r '.version')"

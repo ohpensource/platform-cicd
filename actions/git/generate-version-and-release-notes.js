@@ -5,6 +5,7 @@ const logger = require("./logging.js");
 const files = require("./file-tools.js");
 
 const skipGitCommit = process.argv[2];
+const versionPrefix = process.argv[3];
 
 const featPreffix = "feat:";
 const fixPreffix = "fix:";
@@ -47,10 +48,9 @@ files.saveJsonTo(
 logger.logAction("UPDATING CHANGELOG FILE");
 updateChangelogFile(newVersion, changes);
 
-logger.logAction("COMMITTING AND TAGGING");
-
-if (skipGitCommit !== 'true') {
-	commitAndTag(newVersion);
+if (skipGitCommit !== "true") {
+  logger.logAction("COMMITTING AND TAGGING");
+  commitAndTag(`${versionPrefix}${newVersion}`);
 }
 
 // --------------------- //
@@ -89,7 +89,10 @@ function getUpdatedVersion(version, changes) {
     newMinor = minor + 1;
     newPatch = 0;
     newSecondary = 0;
-  } else if ((changes.some((change) => change.type === "fix")) || versionFileContent.length === 3) {
+  } else if (
+    changes.some((change) => change.type === "fix") ||
+    versionFileContent.length === 3
+  ) {
     newMajor = major;
     newMinor = minor;
     newPatch = patch + 1;
@@ -181,14 +184,10 @@ function updateChangelogFile(newVersion, changes) {
   }
   fs.writeFileSync(changelogFile, `${changelog}${previousChangelog}`);
 }
-function commitAndTag(newVersionAsText) {
+function commitAndTag(tagContent) {
   child.execSync(`git add ${versionFile}`);
   child.execSync(`git add ${changelogFile}`);
-  child.execSync(
-    `git commit -m "[skip ci] Bump to version ${newVersionAsText}"`
-  );
-  child.execSync(
-    `git tag -a -m "Tag for version ${newVersionAsText}" ${newVersionAsText}`
-  );
+  child.execSync(`git commit -m "[skip ci] Bump to version ${tagContent}"`);
+  child.execSync(`git tag -a -m "Tag for version ${tagContent}" ${tagContent}`);
   child.execSync(`git push --follow-tags`);
 }

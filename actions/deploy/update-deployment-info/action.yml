@@ -10,6 +10,7 @@ inputs:
   service-group:
     description: "Service group"
     required: true
+    default: ""
   software-version:
     description: "Software version"
     required: true

@@ -5,7 +5,12 @@ ENVIRONMENT=$2
 SERVICE_GROUP=$3
 SOFTWARE_VERSION=$4
 
-DEPLOY_INFO_FILE=${{ github.workspace }}/configuration/$CUSTOMER/$ENVIRONMENT/deploy-$SERVICE_GROUP.info
+FILE_SUFFIX=""
+if [ "$SERVICE_GROUP" != "" ]; then
+    FILE_SUFFIX="-$SERVICE_GROUP"
+fi
+
+DEPLOY_INFO_FILE=${{ github.workspace }}/configuration/$CUSTOMER/$ENVIRONMENT/deploy$FILE_SUFFIX.info
 echo "Deployment info file path: $DEPLOY_INFO_FILE"
 
 TIME_STAMP="$(date +%R-%d-%m-%Y)"

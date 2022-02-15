@@ -1,0 +1,20 @@
+name: "update-deployment-info"
+description: "updates deploy.info file to have info about current version deployed and history of deployments in git"
+inputs:
+  environment:
+    description: "Environment"
+    required: true
+  customer:
+    description: "Code of customer (ohp, adax, rnhb, etc. )"
+    required: true
+  service-group:
+    description: "Service group"
+    required: true
+  software-version:
+    description: "Software version"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: node ${{ github.action_path }}/../ensure-commits-message-jira-ticket.js ${{ inputs.base-branch }} ${{ inputs.pr-branch }}
+      shell: bash

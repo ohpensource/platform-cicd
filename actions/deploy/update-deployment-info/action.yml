@@ -16,5 +16,5 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: node ${{ github.action_path }}/../ensure-commits-message-jira-ticket.js ${{ inputs.base-branch }} ${{ inputs.pr-branch }}
+    - run: ${{ github.action_path }}/../update-deployment-info.sh ${{ inputs.environment }} ${{ inputs.customer }} ${{ inputs.service-group }} ${{ inputs.software-version }}
       shell: bash

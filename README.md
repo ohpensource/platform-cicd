@@ -125,3 +125,8 @@ jobs:
 ```
 
 The action essentially scans your commit messages [looking](https://stackoverflow.com/questions/19322669/regular-expression-for-a-jira-identifier) for JIRA tickets. In case a commit has no ticket, the action will fail.
+
+### update-deployment-info
+
+Action ensures that performed deployments are document in git repository by creating deploy(-service-group).info files with current deployed version and date of deployment.
+It creates file by convention in the folder: configuration/$CUSTOMER/$ENVIRONMENT/

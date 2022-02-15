@@ -1,3 +1,14 @@
+# :confetti_ball: 2.13.0.0 (2022-02-15T15:51:02.587Z)
+- - -
+## :hammer: Features
+* SPT-1 - added new action for creating deployment info file
+* SPT-1 - added new action for creating deployment info file
+* SPT-1 - make service group optional
+* SPT-1 - added output
+## :newspaper: Others
+* docs: SPT-1 - action for creating deploy.info files
+- - -
+- - -
 # :confetti_ball: 2.12.0.1 (2022-02-09T15:27:01.607Z)
 - - -
 ## :newspaper: Others

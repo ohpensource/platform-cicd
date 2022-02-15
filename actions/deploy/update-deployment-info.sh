@@ -32,3 +32,5 @@ if [ -n "$(git status --porcelain)" ]; then
 else
   echo "no change detected";
 fi
+
+echo "::set-output name=deployment_info_file::${DEPLOY_INFO_FILE}"

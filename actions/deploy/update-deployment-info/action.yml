@@ -14,8 +14,13 @@ inputs:
   software-version:
     description: "Software version"
     required: true
+outputs:
+  deploy-info-file:
+    description: 'outputs name of the updated file'
+    value: ${{ steps.update-deployment-info.outputs.deployment_info_file }}
 runs:
   using: "composite"
   steps:
-    - run: ${{ github.action_path }}/../update-deployment-info.sh ${{ inputs.environment }} ${{ inputs.customer }} ${{ inputs.service-group }} ${{ inputs.software-version }}
+    - id: update-deployment-info
+      run: ${{ github.action_path }}/../update-deployment-info.sh "${{ inputs.environment }}" "${{ inputs.customer }}" "${{ inputs.service-group }}" "${{ inputs.software-version }}"
       shell: bash

@@ -1,3 +1,9 @@
+# :confetti_ball: 2.13.3.0 (2022-02-17T16:25:07.759Z)
+- - -
+## :bug: Fixes
+* SPT-1 - order of params (#71)
+- - -
+- - -
 # :confetti_ball: 2.13.2.0 (2022-02-17T16:05:49.602Z)
 - - -
 ## :bug: Fixes

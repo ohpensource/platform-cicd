@@ -1,3 +1,9 @@
+# :confetti_ball: 2.13.2.0 (2022-02-17T16:05:49.602Z)
+- - -
+## :bug: Fixes
+* SPT-1 - send github context parameters to bash script (#70)
+- - -
+- - -
 # :confetti_ball: 2.13.1.0 (2022-02-17T11:43:43.462Z)
 - - -
 ## :bug: Fixes

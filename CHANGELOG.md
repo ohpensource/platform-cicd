@@ -1,3 +1,9 @@
+# :confetti_ball: 2.13.1.0 (2022-02-17T11:43:43.462Z)
+- - -
+## :bug: Fixes
+* SPT-1 - made file executable (#69)
+- - -
+- - -
 # :confetti_ball: 2.13.0.0 (2022-02-15T15:51:02.587Z)
 - - -
 ## :hammer: Features

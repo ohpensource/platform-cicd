@@ -22,5 +22,5 @@ runs:
   using: "composite"
   steps:
     - id: update-deployment-info
-      run: ${{ github.action_path }}/../update-deployment-info.sh "${{ inputs.environment }}" "${{ inputs.customer }}" "${{ inputs.service-group }}" "${{ inputs.software-version }}"
+      run: ${{ github.action_path }}/../update-deployment-info.sh "${{ inputs.environment }}" "${{ inputs.customer }}" "${{ inputs.service-group }}" "${{ inputs.software-version }}" "${{ github.workspace }}" "${{ github.actor }}"
       shell: bash

@@ -4,13 +4,15 @@ CUSTOMER=$1
 ENVIRONMENT=$2
 SERVICE_GROUP=$3
 SOFTWARE_VERSION=$4
+WORKSPACE=$5
+USER=$6
 
 FILE_SUFFIX=""
 if [ "$SERVICE_GROUP" != "" ]; then
     FILE_SUFFIX="-$SERVICE_GROUP"
 fi
 
-DEPLOY_INFO_FILE=${{ github.workspace }}/configuration/$CUSTOMER/$ENVIRONMENT/deploy$FILE_SUFFIX.info
+DEPLOY_INFO_FILE="$WORKSPACE/configuration/$CUSTOMER/$ENVIRONMENT/deploy$FILE_SUFFIX.info"
 echo "Deployment info file path: $DEPLOY_INFO_FILE"
 
 TIME_STAMP="$(date +%R-%d-%m-%Y)"
@@ -23,7 +25,7 @@ echo "version=$SOFTWARE_VERSION" > $DEPLOY_INFO_FILE
 echo "time=$TIME_STAMP UTC" >> $DEPLOY_INFO_FILE
 
 git config user.email "github-svc@ohpen.com"
-git config user.name "${{ github.actor }}"
+git config user.name "$USER"
 
 if [ -n "$(git status --porcelain)" ]; then
   git add "$DEPLOY_INFO_FILE"

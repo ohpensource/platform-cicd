@@ -111,25 +111,25 @@ function getUpdatedVersion(version, changes) {
   }
 }
 function getChange(line) {
-  if (line.startsWith(featPreffix)) {
+  const convRegex =
+    /(?<type>feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(?<scope>\([a-z,]+\))?(?<breaking>!)?(?<colon>:{1})(?<space> {1})(?<subject>.*)/;
+
+  const { type, breaking, subject } = line.match(convRegex).groups;
+
+  if (breaking) {
     return {
-      type: featPreffix.replace(":", ""),
-      content: line.replace(featPreffix, "").trim(),
+      type: "break",
+      content: subject,
     };
-  } else if (line.startsWith(fixPreffix)) {
+  } else if (type === "feat" || type === "fix") {
     return {
-      type: fixPreffix.replace(":", ""),
-      content: line.replace(fixPreffix, "").trim(),
-    };
-  } else if (line.startsWith(breakPreffix)) {
-    return {
-      type: breakPreffix.replace(":", ""),
-      content: line.replace(breakPreffix, "").trim(),
+      type: type,
+      content: subject,
     };
   } else {
     return {
       type: "none",
-      content: line.trim(),
+      content: subject,
     };
   }
 }

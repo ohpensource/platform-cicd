@@ -1,17 +1,21 @@
 const git = require("./git.js");
 const logger = require("./logging.js");
+
+const convRegex =
+  /(?<type>feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(?<scope>\([a-z,]+\))?(?<breaking>!)?(?<colon>:{1})(?<space> {1})(?<subject>.*)/gm;
+
 const acceptablePrefixes = [
-  "break:",
-  "fix:",
-  "feat:",
-  "build:",
-  "chore:",
-  "ci:",
-  "docs:",
-  "style:",
-  "refactor:",
-  "perf:",
-  "test:",
+  "feat",
+  "fix",
+  "docs",
+  "style",
+  "refactor",
+  "perf",
+  "test",
+  "build",
+  "ci",
+  "chore",
+  "revert",
 ];
 
 logger.logAction("ENSURING CONVENTIONAL COMMITS");
@@ -19,26 +23,26 @@ const baseBranch = process.argv[2];
 logger.logKeyValuePair("base-branch", baseBranch);
 const prBranch = process.argv[3];
 logger.logKeyValuePair("pr-branch", prBranch);
+
 let ok = git
   .getCommitsInsidePullRequest(baseBranch, `origin/${prBranch}`)
   .every((commit) => {
-    logger.logAction("EVALUATING COMMIT");
-    let commitMessageOk = acceptablePrefixes.some((prefix) =>
-      commit.subject.startsWith(prefix)
-    );
+    logger.logKeyValuePair("commit", commit);
+    const messageOk = convRegex.test(commit.subject);
+
     let result = {
-      message: commitMessageOk ? "OK" : "WRONG",
+      message: messageOk ? "OK" : "WRONG",
       documentation: "https://www.conventionalcommits.org/en/v1.0.0/",
       supportedPreffixes: acceptablePrefixes,
       examples: [
         "feat: awesome new feature",
-        "break: removing GET /ping endpoint",
+        "fix!: awesome new feature",
+        "feat(app)!: removing GET /ping endpoint",
       ],
     };
     logger.logKeyValuePair("result", result);
-    logger.logKeyValuePair("commit", commit);
 
-    return commitMessageOk;
+    return messageOk;
   });
 
 if (!ok) {

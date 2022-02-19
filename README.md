@@ -60,9 +60,7 @@ The action will:
 - The action will, by default, use MAJOR.MINOR.PATCH semantics to generate version number, if you want to use MAJOR.MINOR.PATCH.SECONDARY versioning, the version.json file in the root of your project have to contain 4 numbers separated by dot. For new applications it can look like this:
 
 ```yaml
-{
-  "version": "0.0.0.0"
-}
+{ "version": "0.0.0.0" }
 ```
 
 - There are 2 optional parameters in this action:
@@ -94,12 +92,45 @@ jobs:
           pr-branch: $GITHUB_HEAD_REF
 ```
 
-The action currently accepts the following prefixes:
+#### Types:
 
-- **break:** --> updates the MAJOR semver number. Used when a breaking changes are introduced in your code. A commit message example could be "_break: deprecate endpoint GET /parties V1_".
-- **feat:** --> updates the MINOR semver number. Used when changes that add new functionality are introduced in your code. A commit message example could be "_feat: endpoint GET /parties V2 is now available_".
-- **fix:** --> updates the PATCH semver number. Used when changes that solve bugs are introduced in your code. A commit message example could be "_fix: properly manage contact-id parameter in endpoint GET /parties V2_".
-- **build:**, **chore:**, **ci:**, **docs:**, **style:**, **refactor:**, **perf:**, **test:** --> There are scenarios where you are not affecting any of the previous semver numbers. Those could be: refactoring your code, reducing building time of your code, adding unit tests, improving documentation, ... For these cases, conventional-commits allows for more granular prefixes.
+- feat: A new feature
+- fix: A bug fix
+- docs: Docume­ntation only changes
+- style: Changes that do not affect the meaning of the code (white­-space, format­ting, missing semi-c­olons, etc)
+- refactor: A code change that neither fixes a bug nor adds a feature
+- perf: A code change that improves perfor­mance
+- test: Adding missing tests or correcting existing tests
+- build: Changes that affect the build system or external depend­encies
+- ci: Changes to our CI config­uration files and scripts
+- chore: Other changes that don't modify src or test files
+- revert: Reverts a previous commit
+
+#### Specifications:
+
+- Commits MUST be prefixed with a type, which consists of a noun, feat, fix, etc., followed by the OPTIONAL scope, OPTIONAL !, and REQUIRED terminal colon and space.
+- A scope MAY be provided after a type. A scope MUST consist of a noun describing a section of the codebase surrounded by parenthesis, e.g., `fix(parser):`
+- A description MUST immediately follow the colon and space after the type/scope prefix. The description is a short summary of the code changes, e.g., `fix: array parsing issue when multiple spaces were contained in string`
+  -If included in the type/scope prefix, `breaking changes` MUST be indicated by a `!` immediately before the `:`.
+
+#### Examples
+
+```
+// Commit message with ! to draw attention to breaking change
+feat!: send an email to the customer when a product is shipped
+
+// Commit message with scope and ! to draw attention to breaking change
+feat(api)!: send an email to the customer when a product is shipped
+feat(apix,apiy)!: send an email to the customer when a product is shipped
+
+```
+
+#### The action currently accepts the following prefixes:
+
+- **!** --> updates the MAJOR semver number. Used when a breaking changes are introduced in your code. A commit message example could be "_feat!: deprecate endpoint GET /parties V1_".
+- **feat** --> updates the MINOR semver number. Used when changes that add new functionality are introduced in your code. A commit message example could be "_feat: endpoint GET /parties V2 is now available_".
+- **fix** --> updates the PATCH semver number. Used when changes that solve bugs are introduced in your code. A commit message example could be "_fix: properly manage contact-id parameter in endpoint GET /parties V2_".
+- **build**, **chore**, **ci**, **docs**, **style**, **refactor**, **perf**, **test** **revert** --> There are scenarios where you are not affecting any of the previous semver numbers. Those could be: refactoring your code, reducing building time of your code, adding unit tests, improving documentation, ... For these cases, conventional-commits allows for more granular prefixes.
 
 ### check-jira-tickets-commits
 

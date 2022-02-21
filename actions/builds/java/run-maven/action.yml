@@ -5,7 +5,7 @@ inputs:
     description: "Maven run phases: e.g. clean install"
     required: true
   profiles:
-    description: "Maven profiles passed to -P parameter, e.g.: -Pgithub"
+    description: "Maven profiles passed to -P parameter, e.g.: github"
     required: false
   parameters:
     description: "Maven parameters. e.g: -Dparam=value -Dparam2=value2"
@@ -52,7 +52,7 @@ runs:
       env:
         AWS_ACCESS_KEY: ${{ inputs.plugins-aws-access-key }}
         AWS_SECRET_ACCESS_KEY: ${{ inputs.plugins-aws-secret-key }}
-        AWS_ASSUME_ROLE_ARN: ${{ inputs.plugins-aws-access-key }}
+        AWS_ASSUME_ROLE_ARN: ${{ inputs.plugins-aws-role }}
 
     - name: Save Maven cache
       if: always() && inputs.save-cache == 'true'

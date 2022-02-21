@@ -1,8 +1,6 @@
 const git = require("./git.js");
 const logger = require("./logging.js");
-
-const convRegex =
-  /(?<type>feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(?<scope>\([a-z,]+\))?(?<breaking>!)?(?<colon>:{1})(?<space> {1})(?<subject>.*)/gm;
+const convRegex = require("./constants.js");
 
 const acceptablePrefixes = [
   "feat",
@@ -27,7 +25,6 @@ logger.logKeyValuePair("pr-branch", prBranch);
 let ok = git
   .getCommitsInsidePullRequest(baseBranch, `origin/${prBranch}`)
   .every((commit) => {
-    logger.logKeyValuePair("commit", commit);
     const messageOk = convRegex.test(commit.subject);
 
     let result = {
@@ -41,6 +38,7 @@ let ok = git
       ],
     };
     logger.logKeyValuePair("result", result);
+    logger.logKeyValuePair("commit", commit);
 
     return messageOk;
   });

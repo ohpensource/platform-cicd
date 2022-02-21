@@ -1,5 +1,6 @@
 const child = require("child_process");
 const fs = require("fs");
+const convRegex = require("./constants.js");
 const git = require("./git.js");
 const logger = require("./logging.js");
 const files = require("./file-tools.js");
@@ -111,9 +112,6 @@ function getUpdatedVersion(version, changes) {
   }
 }
 function getChange(line) {
-  const convRegex =
-    /(?<type>feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(?<scope>\([a-z,]+\))?(?<breaking>!)?(?<colon>:{1})(?<space> {1})(?<subject>.*)/;
-
   const { type, breaking, subject } = line.match(convRegex).groups;
 
   if (breaking) {

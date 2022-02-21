@@ -7,6 +7,9 @@ Repository containing Ohpen's Github actions. An easy-to-setup set of scripts an
   - [semver-and-changelog](#semver-and-changelog)
   - [check-conventional-commits](#check-conventional-commits)
   - [check-jira-tickets-commits](#check-jira-tickets-commits)
+- [Java actions](#Java actions)
+  - [setup-maven](#setup-maven)
+  - [run-maven](#run-maven)
 
 ## code-of-conduct
 
@@ -130,3 +133,38 @@ The action essentially scans your commit messages [looking](https://stackoverflo
 
 Action ensures that performed deployments are document in git repository by creating deploy(-service-group).info files with current deployed version and date of deployment.
 It creates file by convention in the folder: configuration/$CUSTOMER/$ENVIRONMENT/
+
+## Java actions
+
+### setup-maven
+
+Action prepares environment for running maven project for both runners: github and selfhosted. Includes restoring cache after build.
+
+```
+- uses: ohpensource/platform-cicd/actions/builds/setup-maven
+        name: Setup maven evnironment
+        with:
+          java-version: 11
+          restore-cache: true
+          maven-aws-access-key: <<AWS_ACCESS_KEY>>
+          maven-aws-secret-key: <<AWS_SECRET_KEY>>
+          s3-wagon-path: <<S3_WAGON_PATH>
+```
+
+### run-maven
+
+Action runs maven command with supplied parameters. Includes saving cache after build.
+
+```
+- uses: ohpensource/platform-cicd/actions/builds/run-maven
+        name: Run maven command
+        with:
+          phases: clean install
+          profiles: github
+          parameters: -DskipTests=true -Denable.deploy=false
+          threads: 1C
+          save-cache: true
+          maven-aws-access-key: <<AWS_ACCESS_KEY>>
+          maven-aws-secret-key: <<AWS_SECRET_KEY>>
+          maven-aws-role: <<AWS_ROLE_TO_ASSUME>>
+```

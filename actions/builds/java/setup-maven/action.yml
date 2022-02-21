@@ -18,7 +18,6 @@ inputs:
   s3-wagon-path:
     description: "Full S3 wagon path in format: s3://<<bucket_name>>/<<key>>"
     required: false
-    default: "s3://maven-release-repository-522044537874/nl/davinci/dvp/dvprodpom-s3-wagon/2.1.10/dvprodpom-s3-wagon-2.1.10-jar-with-dependencies.jar"
 
   changed-modules-enable:
     description: "Enable evaluating of changed maven modules and set in output variable: changed-modules"
@@ -81,7 +80,7 @@ runs:
         aws s3 cp ${{ inputs.s3-wagon-path }} ${{ steps.runner-specific.outputs.maven_ext_path }} --profile wagon
 
     - name: Setup Maven settings
-      run: cp ${{ github.action_path }}/settings.xml ${{ env.HOME }}/.m2/
+      run: cp ${{ github.action_path }}/../settings.xml ${{ env.HOME }}/.m2/
 
     - name: Restore Maven cache
       if: inputs.restore-cache == 'true'
@@ -93,7 +92,7 @@ runs:
       if: inputs.changed-modules-enable == 'true'
       id: maven_changed_modules
       run: |
-        bash ${{ github.action_path }}/changed-modules.sh \
+        bash ${{ github.action_path }}/../changed-modules.sh \
           -p "${{ github.event.before }}" \
           -a "${{ github.sha }}" \
           -i "${{ inputs.changed-modules-always-included }}"

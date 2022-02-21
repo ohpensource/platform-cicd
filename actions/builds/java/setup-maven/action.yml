@@ -9,10 +9,10 @@ inputs:
     required: false
     default: "true"
 
-  artifacts-aws-access-key:
+  maven-aws-access-key:
     description: "Access key for credentials for accessing maven S3 repository"
     required: true
-  artifacts-aws-secret-key:
+  maven-aws-secret-key:
     description: "Secret key for credentials for accessing maven S3 repository"
     required: true
   s3-wagon-path:
@@ -44,12 +44,12 @@ runs:
   steps:
     - name: Setup s3-artifacts credentials
       run: |
-        aws configure set aws_access_key_id ${{ inputs.artifacts-aws-access-key }} --profile s3-artifacts
-        aws configure set aws_secret_access_key ${{ inputs.artifacts-aws-secret-key }} --profile s3-artifacts
+        aws configure set aws_access_key_id ${{ inputs.maven-aws-access-key }} --profile s3-artifacts
+        aws configure set aws_secret_access_key ${{ inputs.maven-aws-secret-key }} --profile s3-artifacts
         aws configure set region ${{ env.AWS_REGION }} --profile s3-artifacts
 
-        echo MAVEN_AWS_ACCESS_KEY_ID="${{ inputs.artifacts-aws-access-key }}" >> $GITHUB_ENV
-        echo MAVEN_AWS_SECRET_ACCESS_KEY="${{ inputs.artifacts-aws-secret-key }}" >> $GITHUB_ENV
+        echo MAVEN_AWS_ACCESS_KEY_ID="${{ inputs.maven-aws-access-key }}" >> $GITHUB_ENV
+        echo MAVEN_AWS_SECRET_ACCESS_KEY="${{ inputs.maven-aws-secret-key }}" >> $GITHUB_ENV
 
     - name: Setup JDK
       uses: actions/setup-java@v2
@@ -78,7 +78,7 @@ runs:
     - name: Download Maven S3 repository extension
       run: |
         
-        aws s3 cp ${{ inputs.s3-wagon-path }} ${{ steps.runner-specific.outputs.maven_ext_path }} -- profile wagon
+        aws s3 cp ${{ inputs.s3-wagon-path }} ${{ steps.runner-specific.outputs.maven_ext_path }} --profile wagon
 
     - name: Setup Maven settings
       run: cp ${{ github.action_path }}/settings.xml ${{ env.HOME }}/.m2/

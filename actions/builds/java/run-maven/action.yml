@@ -23,13 +23,13 @@ inputs:
     required: false
     default: ""
 
-  plugins-aws-access-key:
+  maven-aws-access-key:
     description: "Aws access key for maven aws plugins."
     required: false
-  plugins-aws-secret-key:
+  maven-aws-secret-key:
     description: "Aws secret key for maven aws plugins."
     required: false
-  plugins-aws-role:
+  maven-aws-role:
     description: "Role to assume for maven aws plugins."
     required: false
 
@@ -50,9 +50,9 @@ runs:
           --fail-at-end \
         ${{ inputs.phases }}
       env:
-        AWS_ACCESS_KEY: ${{ inputs.plugins-aws-access-key }}
-        AWS_SECRET_ACCESS_KEY: ${{ inputs.plugins-aws-secret-key }}
-        AWS_ASSUME_ROLE_ARN: ${{ inputs.plugins-aws-role }}
+        AWS_ACCESS_KEY: ${{ inputs.maven-aws-access-key }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.maven-aws-secret-key }}
+        AWS_ASSUME_ROLE_ARN: ${{ inputs.maven-aws-role }}
 
     - name: Save Maven cache
       if: always() && inputs.save-cache == 'true'

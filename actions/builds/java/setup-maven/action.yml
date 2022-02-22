@@ -10,14 +10,19 @@ inputs:
     default: "true"
 
   maven-aws-access-key:
-    description: "Access key for credentials for accessing maven S3 repository"
+    description: "Access key for credentials for accessing maven artifacts S3 repositories"
     required: true
   maven-aws-secret-key:
-    description: "Secret key for credentials for accessing maven S3 repository"
+    description: "Secret key for credentials for accessing maven artifacts S3 repositories"
     required: true
-  s3-wagon-path:
-    description: "Full S3 wagon path in format: s3://<<bucket_name>>/<<key>>"
+  account-id:
+    description: "Account id where maven artifacts S3 repositories exist."
+    required: true
+
+  maven-wagon-version:
+    description: "Wagon version"
     required: false
+    default: "1.4.5"
 
   changed-modules-enable:
     description: "Enable evaluating of changed maven modules and set in output variable: changed-modules"
@@ -37,11 +42,13 @@ env:
   GITHUB_RUNNER_USER: "runner"
   SELF_HOSTED_RUNNER_MAVEN_VERSION: "3.8.2"
   AWS_REGION: "eu-west-1"
+  SNAPSHOT_BUCKET_PREFIX: maven-snapshot-repository
+  RELEASE_BUCKET_PREFIX: maven-release-repository
 
 runs:
   using: "composite"
   steps:
-    - name: Setup s3-artifacts credentials
+    - name: Setup maven artifact repository inputs
       run: |
         aws configure set aws_access_key_id ${{ inputs.maven-aws-access-key }} --profile s3-artifacts
         aws configure set aws_secret_access_key ${{ inputs.maven-aws-secret-key }} --profile s3-artifacts
@@ -49,6 +56,11 @@ runs:
 
         echo MAVEN_AWS_ACCESS_KEY_ID="${{ inputs.maven-aws-access-key }}" >> $GITHUB_ENV
         echo MAVEN_AWS_SECRET_ACCESS_KEY="${{ inputs.maven-aws-secret-key }}" >> $GITHUB_ENV
+
+        echo MAVEN_SNAPSHOT_URL="s3://${{ env.SNAPSHOT_BUCKET_PREFIX }}-${{ inputs.account-id }}" >> $GITHUB_ENV
+        echo MAVEN_RELEASE_URL="s3://${{ env.RELEASE_BUCKET_PREFIX }}-${{ inputs.account-id }}" >> $GITHUB_ENV
+        
+        echo MAVEN_WAGON_PATH="${MAVEN_RELEASE_URL}/com/ohpen/platform-cicd/s3-wagon/${{ inputs.maven-wagon-version }}/s3-wagon-${{ inputs.maven-wagon-version }}-jar-with-dependencies.jar" >> $GITHUB_ENV
 
     - name: Setup JDK
       uses: actions/setup-java@v2
@@ -70,14 +82,14 @@ runs:
           then
             MAVEN_EXT_PATH==/usr/share/apache-maven-*/lib/ext
           else
-            MAVEN_EXT_PATH={{ env.RUNNER_TOOL_CACHE }}/maven/${{ env.SELF_HOSTED_RUNNER_MAVEN_VERSION }}/x64/lib/ext
+            MAVEN_EXT_PATH=${{ env.RUNNER_TOOL_CACHE }}/maven/${{ env.SELF_HOSTED_RUNNER_MAVEN_VERSION }}/x64/lib/ext
         
         echo "::set-output name=maven_ext_path::${MAVEN_EXT_PATH}"
 
     - name: Download Maven S3 repository extension
       run: |
         
-        aws s3 cp ${{ inputs.s3-wagon-path }} ${{ steps.runner-specific.outputs.maven_ext_path }} --profile wagon
+        aws s3 cp ${{ env.MAVEN_WAGON_PATH }} ${{ steps.runner-specific.outputs.maven_ext_path }} --profile wagon
 
     - name: Setup Maven settings
       run: cp ${{ github.action_path }}/../settings.xml ${{ env.HOME }}/.m2/

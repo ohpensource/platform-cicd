@@ -148,7 +148,8 @@ Action prepares environment for running maven project for both runners: github a
           restore-cache: true
           maven-aws-access-key: <<AWS_ACCESS_KEY>>
           maven-aws-secret-key: <<AWS_SECRET_KEY>>
-          s3-wagon-path: <<S3_WAGON_PATH>
+          account-id: <<ACCOUNT_ID>>
+          maven-wagon-version: 1.4.5
 ```
 
 ### run-maven

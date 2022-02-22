@@ -19,7 +19,7 @@ inputs:
     required: false
     default: "true"
   build-modules:
-    description: "Comma separated list of submodules which should be build. E.g. only changed modules"
+    description: "Comma separated list of submodules which should be build (e.g. only changed modules), e.g: submodule,submodule/pom.xml"
     required: false
     default: ""
 

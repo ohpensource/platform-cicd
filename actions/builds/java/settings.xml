@@ -23,7 +23,7 @@
 				<repository>
 					<id>github-release</id>
 					<name>GitHub Release Packages</name>
-					<url>s3://maven-release-repository-522044537874</url>
+					<url>${env.MAVEN_RELEASE_URL}</url>
 					<releases>
 						<enabled>true</enabled>
 					</releases>
@@ -34,7 +34,7 @@
 				<repository>
 					<id>github-snapshot</id>
 					<name>GitHub Snapshot Packages</name>
-					<url>s3://maven-snapshot-repository-522044537874</url>
+					<url>${env.MAVEN_SNAPSHOT_URL}</url>
 					<releases>
 						<enabled>false</enabled>
 					</releases>
@@ -72,7 +72,7 @@
 				<pluginRepository>
 					<id>github-plugin-release</id>
 					<name>GitHub Plugin Release Packages</name>
-					<url>s3://maven-release-repository-522044537874</url>
+					<url>${env.MAVEN_RELEASE_URL}</url>
 					<releases>
 						<enabled>true</enabled>
 					</releases>
@@ -83,7 +83,7 @@
 				<pluginRepository>
 					<id>github-plugin-snapshot</id>
 					<name>GitHub Plugin Release Packages</name>
-					<url>s3://maven-snapshot-repository-522044537874</url>
+					<url>s${env.MAVEN_SNAPSHOT_URL}</url>
 					<releases>
 						<enabled>false</enabled>
 					</releases>

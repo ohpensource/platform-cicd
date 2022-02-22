@@ -93,7 +93,7 @@
 				</pluginRepository>
 			</pluginRepositories>
 			<properties>
-				<docker.registry>522044537874.dkr.ecr.eu-west-1.amazonaws.com</docker.registry>
+				<docker.registry>${env.DOCKER_REGISTRY}</docker.registry>
 			</properties>
 		</profile>
 	</profiles>

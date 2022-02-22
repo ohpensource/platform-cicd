@@ -61,6 +61,8 @@ runs:
         echo MAVEN_RELEASE_URL="s3://${{ env.RELEASE_BUCKET_PREFIX }}-${{ inputs.account-id }}" >> $GITHUB_ENV
         
         echo MAVEN_WAGON_PATH="${MAVEN_RELEASE_URL}/com/ohpen/platform-cicd/s3-wagon/${{ inputs.maven-wagon-version }}/s3-wagon-${{ inputs.maven-wagon-version }}-jar-with-dependencies.jar" >> $GITHUB_ENV
+        
+        echo DOCKER_REGISTRY="${{ inputs.account-id }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com" >> $GITHUB_ENV
 
     - name: Setup JDK
       uses: actions/setup-java@v2

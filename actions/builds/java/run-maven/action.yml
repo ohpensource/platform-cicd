@@ -37,7 +37,7 @@ runs:
   using: "composite"
   steps:
     - name: Run maven command
-      id: runner-specific
+      shell: bash
       run: |
         mvn \
           -P${{ inputs.profiles }} \

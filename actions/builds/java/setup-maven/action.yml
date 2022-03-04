@@ -22,7 +22,7 @@ inputs:
   maven-wagon-version:
     description: "Wagon version"
     required: false
-    default: "0.0.3"
+    default: "1.0.0"
 
   changed-modules-enable:
     description: "Enable evaluating of changed maven modules and set in output variable: changed-modules"
@@ -33,36 +33,45 @@ inputs:
     required: false
     default: ""
 
+  self-hosted-runner-maven-version:
+    description: "Maven version used in self hosted runners"
+    required: false
+    default: "3.8.2"
+
 outputs:
   changed-modules:
     description: "List of changed modules evaluated from last two commits if enabled"
     value: ${{ steps.maven_changed_modules.outputs.changed_modules }}
 
-env:
-  GITHUB_RUNNER_USER: "runner"
-  SELF_HOSTED_RUNNER_MAVEN_VERSION: "3.8.2"
-  AWS_REGION: "eu-west-1"
-  SNAPSHOT_BUCKET_PREFIX: maven-snapshot-repository
-  RELEASE_BUCKET_PREFIX: maven-release-repository
-
 runs:
   using: "composite"
   steps:
     - name: Setup maven artifact repository inputs
+      shell: bash
       run: |
-        aws configure set aws_access_key_id ${{ inputs.maven-aws-access-key }} --profile s3-artifacts
-        aws configure set aws_secret_access_key ${{ inputs.maven-aws-secret-key }} --profile s3-artifacts
-        aws configure set region ${{ env.AWS_REGION }} --profile s3-artifacts
+        sudo aws configure set aws_access_key_id ${{ inputs.maven-aws-access-key }} --profile s3-artifacts
+        sudo aws configure set aws_secret_access_key ${{ inputs.maven-aws-secret-key }} --profile s3-artifacts
+        sudo aws configure set region eu-west-1 --profile s3-artifacts
 
         echo MAVEN_AWS_ACCESS_KEY_ID="${{ inputs.maven-aws-access-key }}" >> $GITHUB_ENV
         echo MAVEN_AWS_SECRET_ACCESS_KEY="${{ inputs.maven-aws-secret-key }}" >> $GITHUB_ENV
 
-        echo MAVEN_SNAPSHOT_URL="s3://${{ env.SNAPSHOT_BUCKET_PREFIX }}-${{ inputs.account-id }}" >> $GITHUB_ENV
-        echo MAVEN_RELEASE_URL="s3://${{ env.RELEASE_BUCKET_PREFIX }}-${{ inputs.account-id }}" >> $GITHUB_ENV
+        echo MAVEN_SNAPSHOT_URL="s3://maven-snapshot-repository-${{ inputs.account-id }}" >> $GITHUB_ENV
+
+        MAVEN_RELEASE_URL="s3://maven-release-repository-${{ inputs.account-id }}"
+        echo MAVEN_RELEASE_URL="${MAVEN_RELEASE_URL}" >> $GITHUB_ENV
         
-        echo MAVEN_WAGON_PATH="${{ env.MAVEN_RELEASE_URL }}/com/ohpen/maven/s3-wagon/${{ inputs.maven-wagon-version }}/s3-wagon-${{ inputs.maven-wagon-version }}-jar-with-dependencies.jar" >> $GITHUB_ENV
+        echo MAVEN_WAGON_PATH="${MAVEN_RELEASE_URL}/com/ohpen/maven/s3-wagon/${{ inputs.maven-wagon-version }}/s3-wagon-${{ inputs.maven-wagon-version }}-jar-with-dependencies.jar" >> $GITHUB_ENV
         
-        echo DOCKER_REGISTRY="${{ inputs.account-id }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com" >> $GITHUB_ENV
+        echo DOCKER_REGISTRY="${{ inputs.account-id }}.dkr.ecr.eu-west-1.amazonaws.com" >> $GITHUB_ENV
+        
+        IS_SELF_HOSTED_RUNNER="false"
+        if [[ "$USER" == "ec2-user" ]];
+          then
+            IS_SELF_HOSTED_RUNNER="true"
+        fi
+                
+        echo IS_SELF_HOSTED_RUNNER="${IS_SELF_HOSTED_RUNNER}" >> $GITHUB_ENV
 
     - name: Setup JDK
       uses: actions/setup-java@v2
@@ -71,30 +80,33 @@ runs:
         distribution: temurin
         overwrite-settings: false
 
-    - name: [SELF_HOSTED] Install Maven
-      if: env.USER != env.GITHUB_RUNNER_USER
+    - name: "[SELF_HOSTED] Install Maven"
+      if: env.IS_SELF_HOSTED_RUNNER == 'true'
       uses: stCarolas/setup-maven@v4.2  # when changing version of action, verify ext path in runner-specific step
       with:
-        maven-version: ${{ env.SELF_HOSTED_RUNNER_MAVEN_VERSION }}
+        maven-version: ${{ inputs.self-hosted-runner-maven-version }}
 
     - name: Evaluate runner specific information
       id: runner-specific
+      shell: bash
       run: |
-        if [[ "${{ env.USER }}" == "${{ env.GITHUB_RUNNER_USER }}" ]];
+        if [[ "${{ env.IS_SELF_HOSTED_RUNNER }}" == "false" ]];
           then
-            MAVEN_EXT_PATH==/usr/share/apache-maven-*/lib/ext
+            MAVEN_EXT_PATH=/usr/share/apache-maven-*/lib/ext
           else
-            MAVEN_EXT_PATH=${{ env.RUNNER_TOOL_CACHE }}/maven/${{ env.SELF_HOSTED_RUNNER_MAVEN_VERSION }}/x64/lib/ext
-        
+            MAVEN_EXT_PATH=${RUNNER_TOOL_CACHE}/maven/${{ inputs.self-hosted-runner-maven-version }}/x64/lib/ext
+        fi
         echo "::set-output name=maven_ext_path::${MAVEN_EXT_PATH}"
 
     - name: Download Maven S3 repository extension
+      shell: bash
       run: |
         
-        aws s3 cp ${{ env.MAVEN_WAGON_PATH }} ${{ steps.runner-specific.outputs.maven_ext_path }} --profile wagon
+        sudo aws s3 cp ${{ env.MAVEN_WAGON_PATH }} ${{ steps.runner-specific.outputs.maven_ext_path }} --profile s3-artifacts
 
     - name: Setup Maven settings
-      run: cp ${{ github.action_path }}/../settings.xml ${{ env.HOME }}/.m2/
+      shell: bash
+      run: cp ${{ github.action_path }}/../settings.xml ${HOME}/.m2/
 
     - name: Restore Maven cache
       if: inputs.restore-cache == 'true'
@@ -105,6 +117,7 @@ runs:
     - name: Find maven changed modules
       if: inputs.changed-modules-enable == 'true'
       id: maven_changed_modules
+      shell: bash
       run: |
         bash ${{ github.action_path }}/../changed-modules.sh \
           -p "${{ github.event.before }}" \

@@ -83,7 +83,7 @@
 				<pluginRepository>
 					<id>github-plugin-snapshot</id>
 					<name>GitHub Plugin Release Packages</name>
-					<url>s${env.MAVEN_SNAPSHOT_URL}</url>
+					<url>${env.MAVEN_SNAPSHOT_URL}</url>
 					<releases>
 						<enabled>false</enabled>
 					</releases>
@@ -99,6 +99,11 @@
 	</profiles>
 
 	<servers>
+		<server>
+			<id>github</id>
+			<username>${MAVEN_GITHUB_USERNAME}</username>
+			<password>${MAVEN_GITHUB_TOKEN}</password>
+		</server>
 		<server>
 			<id>github-release</id>
 			<username>${env.MAVEN_AWS_ACCESS_KEY_ID}</username>

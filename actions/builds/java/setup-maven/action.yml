@@ -1,0 +1,112 @@
+name: "setup-maven"
+description: "Setup runner environment (Github or self hosted runners) to be able build maven projects"
+inputs:
+  java-version:
+    description: "Java version"
+    required: true
+  restore-cache:
+    description: "If cache should be restored"
+    required: false
+    default: "true"
+
+  maven-aws-access-key:
+    description: "Access key for credentials for accessing maven artifacts S3 repositories"
+    required: true
+  maven-aws-secret-key:
+    description: "Secret key for credentials for accessing maven artifacts S3 repositories"
+    required: true
+  account-id:
+    description: "Account id where maven artifacts S3 repositories exist."
+    required: true
+
+  maven-wagon-version:
+    description: "Wagon version"
+    required: false
+    default: "0.0.3"
+
+  changed-modules-enable:
+    description: "Enable evaluating of changed maven modules and set in output variable: changed-modules"
+    required: false
+    default: "false"
+  changed-modules-always-included:
+    description: "Set always included modules if changed-module is enabled"
+    required: false
+    default: ""
+
+outputs:
+  changed-modules:
+    description: "List of changed modules evaluated from last two commits if enabled"
+    value: ${{ steps.maven_changed_modules.outputs.changed_modules }}
+
+env:
+  GITHUB_RUNNER_USER: "runner"
+  SELF_HOSTED_RUNNER_MAVEN_VERSION: "3.8.2"
+  AWS_REGION: "eu-west-1"
+  SNAPSHOT_BUCKET_PREFIX: maven-snapshot-repository
+  RELEASE_BUCKET_PREFIX: maven-release-repository
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup maven artifact repository inputs
+      run: |
+        aws configure set aws_access_key_id ${{ inputs.maven-aws-access-key }} --profile s3-artifacts
+        aws configure set aws_secret_access_key ${{ inputs.maven-aws-secret-key }} --profile s3-artifacts
+        aws configure set region ${{ env.AWS_REGION }} --profile s3-artifacts
+
+        echo MAVEN_AWS_ACCESS_KEY_ID="${{ inputs.maven-aws-access-key }}" >> $GITHUB_ENV
+        echo MAVEN_AWS_SECRET_ACCESS_KEY="${{ inputs.maven-aws-secret-key }}" >> $GITHUB_ENV
+
+        echo MAVEN_SNAPSHOT_URL="s3://${{ env.SNAPSHOT_BUCKET_PREFIX }}-${{ inputs.account-id }}" >> $GITHUB_ENV
+        echo MAVEN_RELEASE_URL="s3://${{ env.RELEASE_BUCKET_PREFIX }}-${{ inputs.account-id }}" >> $GITHUB_ENV
+        
+        echo MAVEN_WAGON_PATH="${{ env.MAVEN_RELEASE_URL }}/com/ohpen/maven/s3-wagon/${{ inputs.maven-wagon-version }}/s3-wagon-${{ inputs.maven-wagon-version }}-jar-with-dependencies.jar" >> $GITHUB_ENV
+        
+        echo DOCKER_REGISTRY="${{ inputs.account-id }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com" >> $GITHUB_ENV
+
+    - name: Setup JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: ${{ inputs.java-version }}
+        distribution: temurin
+        overwrite-settings: false
+
+    - name: [SELF_HOSTED] Install Maven
+      if: env.USER != env.GITHUB_RUNNER_USER
+      uses: stCarolas/setup-maven@v4.2  # when changing version of action, verify ext path in runner-specific step
+      with:
+        maven-version: ${{ env.SELF_HOSTED_RUNNER_MAVEN_VERSION }}
+
+    - name: Evaluate runner specific information
+      id: runner-specific
+      run: |
+        if [[ "${{ env.USER }}" == "${{ env.GITHUB_RUNNER_USER }}" ]];
+          then
+            MAVEN_EXT_PATH==/usr/share/apache-maven-*/lib/ext
+          else
+            MAVEN_EXT_PATH=${{ env.RUNNER_TOOL_CACHE }}/maven/${{ env.SELF_HOSTED_RUNNER_MAVEN_VERSION }}/x64/lib/ext
+        
+        echo "::set-output name=maven_ext_path::${MAVEN_EXT_PATH}"
+
+    - name: Download Maven S3 repository extension
+      run: |
+        
+        aws s3 cp ${{ env.MAVEN_WAGON_PATH }} ${{ steps.runner-specific.outputs.maven_ext_path }} --profile wagon
+
+    - name: Setup Maven settings
+      run: cp ${{ github.action_path }}/../settings.xml ${{ env.HOME }}/.m2/
+
+    - name: Restore Maven cache
+      if: inputs.restore-cache == 'true'
+      uses: skjolber/maven-cache-github-action@v1
+      with:
+        step: restore
+
+    - name: Find maven changed modules
+      if: inputs.changed-modules-enable == 'true'
+      id: maven_changed_modules
+      run: |
+        bash ${{ github.action_path }}/../changed-modules.sh \
+          -p "${{ github.event.before }}" \
+          -a "${{ github.sha }}" \
+          -i "${{ inputs.changed-modules-always-included }}"

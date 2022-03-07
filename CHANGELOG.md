@@ -1,3 +1,9 @@
+# :confetti_ball: 2.14.0.2 (2022-03-07T12:44:10.043Z)
+- - -
+## :newspaper: Others
+* docs: LANZ-1775 include terraform actions documentation (#76)
+- - -
+- - -
 # :confetti_ball: 2.14.0.1 (2022-03-07T12:00:08.835Z)
 - - -
 ## :newspaper: Others

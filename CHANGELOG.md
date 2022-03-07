@@ -1,3 +1,11 @@
+# :confetti_ball: 2.14.0.1 (2022-03-07T12:00:08.835Z)
+- - -
+## :newspaper: Others
+* ci: LANZ-1775 include token during cloning for semver step in cd workflow
+* docs: LANZ-1775 fix table-of-contents for java-actions section
+* ci: LANZ-1775 reset semver to latest tag 2.14.0.0
+- - -
+- - -
 # :confetti_ball: 2.13.3.0 (2022-02-17T16:25:07.759Z)
 - - -
 ## :bug: Fixes

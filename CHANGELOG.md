@@ -1,3 +1,9 @@
+# :confetti_ball: 2.13.4.0 (2022-03-07T11:22:35.655Z)
+- - -
+## :bug: Fixes
+* GMP-449 removed environment variables defined in composite action (#74)
+- - -
+- - -
 # :confetti_ball: 2.13.3.0 (2022-02-17T16:25:07.759Z)
 - - -
 ## :bug: Fixes

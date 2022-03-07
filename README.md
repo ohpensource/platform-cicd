@@ -138,23 +138,24 @@ It creates file by convention in the folder: configuration/$CUSTOMER/$ENVIRONMEN
 
 ### setup-maven
 
-Action prepares environment for running maven project for both runners: github and selfhosted. Includes restoring cache after build.
+Action prepares environment for running maven project for both runners: github and selfhosted. 
+Includes restoring cache before build (can be disabled by restore-cache parameter).
 
 ```
 - uses: ohpensource/platform-cicd/actions/builds/setup-maven
         name: Setup maven evnironment
         with:
           java-version: 11
-          restore-cache: true
+          restore-cache: false
           maven-aws-access-key: <<AWS_ACCESS_KEY>>
           maven-aws-secret-key: <<AWS_SECRET_KEY>>
           account-id: <<ACCOUNT_ID>>
-          maven-wagon-version: 1.4.5
 ```
 
 ### run-maven
 
-Action runs maven command with supplied parameters. Includes saving cache after build.
+Action runs maven command with supplied parameters. Includes saving cache after build. In case that build needs to
+assume aws role use optional parameter: maven-aws-role.
 
 ```
 - uses: ohpensource/platform-cicd/actions/builds/run-maven
@@ -162,7 +163,9 @@ Action runs maven command with supplied parameters. Includes saving cache after 
         with:
           phases: clean install
           profiles: github
-          parameters: -DskipTests=true -Denable.deploy=false
+          parameters: >- 
+            -DuseGitHub=true
+            -Denable.deploy=false
           threads: 1C
           save-cache: true
           maven-aws-access-key: <<AWS_ACCESS_KEY>>

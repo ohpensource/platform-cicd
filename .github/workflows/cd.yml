@@ -9,6 +9,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+          token: ${{ secrets.CICD_GITHUB_REPOSITORY_TOKEN }}
       - name: semver & changelog
         run: |
           date > generated.txt

@@ -3,10 +3,16 @@
 Repository containing Ohpen's Github actions. An easy-to-setup set of scripts and actions to help teams (and everybody that needs it) start working with their repositories and abstract as much cognitive load from them.
 
 - [code-of-conduct](#code-of-conduct)
-- [available-actions](#available-actions)
+- [git-actions](#git)
   - [semver-and-changelog](#semver-and-changelog)
   - [check-conventional-commits](#check-conventional-commits)
   - [check-jira-tickets-commits](#check-jira-tickets-commits)
+- [terraform-actions](#terraform)
+  - [validate](#validate)
+  - [plan](#plan)
+  - [apply](#apply)
+- [post-deployment-actions](#post-deployment)
+  - [update-deployment-info](#update-deployment-info)
 - [java-actions](#java-actions)
   - [setup-maven](#setup-maven)
   - [run-maven](#run-maven)
@@ -19,13 +25,13 @@ Go crazy on the pull requests :) ! The only requirements are:
 > - Include [jira-tickets](#check-jira-tickets-commits) in your commits.
 > - Create/Update the documentation of the use case you are creating, improving or fixing. **[Boy scout](https://biratkirat.medium.com/step-8-the-boy-scout-rule-robert-c-martin-uncle-bob-9ac839778385) rules apply**. That means, for example, if you fix an already existing workflow, please include the necessary documentation to help everybody. The rule of thumb is: _leave the place (just a little bit)better than when you came_.
 
-## available-actions
+## git
 
 ### semver-and-changelog
 
 This repository includes an action to semantically version your repository once a merge happens to the main branch. This is an example on how to use the action in your own repository:
 
-```
+```yaml
 name: CD
 on:
   push:
@@ -42,8 +48,8 @@ jobs:
         name: semver & changelog
         with:
           user-email: "user@email.com"
-          skip-commit: "true" # This is for testing so you don't polute your git history. Default value is false.
-          version-prefix: "v" # useful for repos that terraform modules where the versions are like "v0.2.4".
+          skip-commit: "true"  This is for testing so you don't polute your git history. Default value is false.
+          version-prefix: "v"  useful for repos that terraform modules where the versions are like "v0.2.4".
       - id: semver
         run: echo "::set-output name=service-version::$(cat ./version.json | jq -r '.version')"
     outputs:
@@ -62,7 +68,7 @@ The action will:
 - You can also set up name to sign the commit with parameter: _user-name_. Default value is _GitHub Actions_
 - The action will, by default, use MAJOR.MINOR.PATCH semantics to generate version number, if you want to use MAJOR.MINOR.PATCH.SECONDARY versioning, the version.json file in the root of your project have to contain 4 numbers separated by dot. For new applications it can look like this:
 
-```yaml
+```json
 {
   "version": "0.0.0.0"
 }
@@ -71,14 +77,13 @@ The action will:
 - There are 2 optional parameters in this action:
 
 > **skip-commit**: use it with value "true" if you want to prevent the action from commiting.
-
 > **version-prefix**: use with a value different than an empty string ("beta-" or "v" for example) to have tags in the form of '{version-prefix}M.m.p'
 
 ### check-conventional-commits
 
 This action checks that ALL commits present in a pull request follow [conventional-commits](https://www.conventionalcommits.org/en/v1.0.0/). Here you have an example of a complete workflow:
 
-```
+```yaml
 name: CI
 on:
   pull_request:
@@ -102,13 +107,15 @@ The action currently accepts the following prefixes:
 - **break:** --> updates the MAJOR semver number. Used when a breaking changes are introduced in your code. A commit message example could be "_break: deprecate endpoint GET /parties V1_".
 - **feat:** --> updates the MINOR semver number. Used when changes that add new functionality are introduced in your code. A commit message example could be "_feat: endpoint GET /parties V2 is now available_".
 - **fix:** --> updates the PATCH semver number. Used when changes that solve bugs are introduced in your code. A commit message example could be "_fix: properly manage contact-id parameter in endpoint GET /parties V2_".
-- **build:**, **chore:**, **ci:**, **docs:**, **style:**, **refactor:**, **perf:**, **test:** --> There are scenarios where you are not affecting any of the previous semver numbers. Those could be: refactoring your code, reducing building time of your code, adding unit tests, improving documentation, ... For these cases, conventional-commits allows for more granular prefixes.
+- **build:**, **chore:**, **ci:**, **docs:**, **style:**, **refactor:**, **perf:**, **test:** --> There are scenarios where you are not affecting any of the previous semver numbers. Those could be: refactoring your code, reducing building time of your code, adding unit tests, improving documentation, ... For these cases, conventional-commits allows for more granular prefixes. A commit message example could be "docs: improve readme with examples".
+
+:warning: Attention! If you set your action to work with 3 numbers, these prefixes will update the PATCH number.
 
 ### check-jira-tickets-commits
 
 This action checks that ALL commits present in a pull request include a JIRA ticket. Useful for teams that require an extra level of traceability on their work and tasks. Here is an example:
 
-```
+```yaml
 name: CI
 on:
   pull_request:
@@ -129,6 +136,128 @@ jobs:
 
 The action essentially scans your commit messages [looking](https://stackoverflow.com/questions/19322669/regular-expression-for-a-jira-identifier) for JIRA tickets. In case a commit has no ticket, the action will fail.
 
+## terraform
+
+### validate
+
+This action performs a [_terraform validate_](https://www.terraform.io/cli/commands/validate) on the IAC that is specified. The (required) inputs are _terraform-folder_ and _use-backend_. Here is an example:
+
+```yaml
+name: CI
+on:
+  pull_request:
+    branches: ["main"]
+jobs:
+  validate-iac:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ohpensource/platform-cicd/actions/terraform/tfm-validate@2.2.0.0
+        name: validate-terraform
+        with:
+          terraform-folder: "terraform"
+          use-backend: "false"
+```
+
+### plan
+
+This action performs a [_terraform plan_](https://www.terraform.io/cli/commands/plan) on the IAC that is specified. The (required) inputs are:
+
+- _region_: aws region name.
+- _access-key_: user access key to be used.
+- _secret-key_: user secret key to be used.
+- _terraform-folder_: folder where the terraform configuration is.
+- _backend-configuration_: path of the tfvars file with backend configuration.
+- _terraform-var-file_: tfvars file to use as variables input.
+- _terraform-state-file_: File where terraform will write down the plan.
+
+⚠️ Attention! Terraform will try to assume the deployment role in the destination AWS account. Such deployment will fail if the user is not allowed to assume such role.
+
+Here is an example:
+
+```yaml
+name: CI
+on:
+  pull_request:
+    branches: ["main"]
+jobs:
+  plan-team-branch-deployment:
+    needs: [configure-team-branch-environment, download-artifacts]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: deployment-folder
+          path: deployment-folder
+      - uses: actions/download-artifact@v2
+        with:
+          name: deployment-team-branch-conf
+          path: deployment-team-branch-conf
+      - uses: ohpensource/platform-cicd/actions/terraform/tfm-plan@2.3.0.0
+        name: terraform plan
+        with:
+          region: $REGION
+          access-key: $COR_AWS_ACCESS_KEY_ID
+          secret-key: $COR_AWS_SECRET_ACCESS_KEY
+          terraform-folder: "deployment-folder/terraform"
+          backend-configuration: "deployment-team-branch-conf/backend.tfvars"
+          terraform-var-file: "deployment-team-branch-conf/terraform.tfvars"
+          terraform-state-file: "deployment-team-branch-plan/tfplan"
+```
+
+### apply
+
+This action performs a [_terraform apply_](https://www.terraform.io/cli/commands/apply) on the IAC that is specified. The (required) inputs are:
+
+- _region_: aws region name.
+- _access-key_: user access key to be used.
+- _secret-key_: user secret key to be used.
+- _terraform-folder_: folder where the terraform configuration is.
+- _backend-configuration_: path of the tfvars file with backend configuration.
+- _terraform-plan-file_: terraform plan previously generated by 'plan' job.
+- _terraform-outputs-file_: File where terraform will write down the outputs after applying.
+
+⚠️ Attention! Terraform will try to assume the deployment role in the destination AWS account. Such deployment will fail if the user is not allowed to assume such role.
+
+Here is an example:
+
+```yaml
+name: CI
+on:
+  pull_request:
+    branches: ["main"]
+jobs:
+  apply-team-branch-plan:
+    needs: [plan-team-branch-deployment]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: deployment-folder
+          path: deployment-folder
+      - uses: actions/download-artifact@v2
+        with:
+          name: deployment-team-branch-plan
+          path: deployment-team-branch-plan
+      - uses: actions/download-artifact@v2
+        with:
+          name: deployment-team-branch-conf
+          path: deployment-team-branch-conf
+      - uses: ohpensource/platform-cicd/actions/terraform/tfm-apply@2.2.3.0
+        name: terraform apply
+        with:
+          region: $REGION
+          access-key: $COR_AWS_ACCESS_KEY_ID
+          secret-key: $COR_AWS_SECRET_ACCESS_KEY
+          terraform-folder: "deployment-folder/terraform"
+          backend-configuration: "deployment-team-branch-conf/backend.tfvars"
+          terraform-plan-file: "deployment-team-branch-plan/tfplan"
+          terraform-outputs-file: "deployment-team-branch-outputs/outputs.json"
+```
+
+## post-deployment
+
 ### update-deployment-info
 
 Action ensures that performed deployments are document in git repository by creating deploy(-service-group).info files with current deployed version and date of deployment.
@@ -138,10 +267,10 @@ It creates file by convention in the folder: configuration/$CUSTOMER/$ENVIRONMEN
 
 ### setup-maven
 
-Action prepares environment for running maven project for both runners: github and selfhosted. 
+Action prepares environment for running maven project for both runners: github and selfhosted.
 Includes restoring cache before build (can be disabled by restore-cache parameter).
 
-```
+```yaml
 - uses: ohpensource/platform-cicd/actions/builds/setup-maven
         name: Setup maven evnironment
         with:
@@ -157,7 +286,7 @@ Includes restoring cache before build (can be disabled by restore-cache paramete
 Action runs maven command with supplied parameters. Includes saving cache after build. In case that build needs to
 assume aws role use optional parameter: maven-aws-role.
 
-```
+```yaml
 - uses: ohpensource/platform-cicd/actions/builds/run-maven
         name: Run maven command
         with:

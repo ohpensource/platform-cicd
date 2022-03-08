@@ -13,9 +13,12 @@ Repository containing Ohpen's Github actions. An easy-to-setup set of scripts an
   - [apply](#apply)
 - [post-deployment-actions](#post-deployment)
   - [update-deployment-info](#update-deployment-info)
-- [java-actions](#java-actions)
-  - [setup-maven](#setup-maven)
-  - [run-maven](#run-maven)
+- [build-actions](#build-actions)
+  - [dotnet](#dotnet)
+    - [build-dotnet-app](#build-dotnet-app)
+  - [java](#java)
+    - [setup-maven](#setup-maven)
+    - [run-maven](#run-maven)
 
 ## code-of-conduct
 
@@ -263,9 +266,35 @@ jobs:
 Action ensures that performed deployments are document in git repository by creating deploy(-service-group).info files with current deployed version and date of deployment.
 It creates file by convention in the folder: configuration/$CUSTOMER/$ENVIRONMENT/
 
-## java-actions
+## build-actions
 
-### setup-maven
+### dotnet
+
+#### build-dotnet-app
+
+This action performs a _dotnet build_ on any solution (.sln file) inside the specified folder. The (required) input is _app-path_. Here is an example:
+
+```yaml
+name: CI
+on:
+  pull_request:
+    branches: ["main"]
+jobs:
+    build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Add Dotnet NuGet Sources
+        run: dotnet nuget add source ${{ secrets.COR_CICD_NUGET_FEED }} -n "GitHubPackages" -u ohp-github-svc -p ${{ secrets.CICD_GITHUB_PACKAGES_TOKEN }} --store-password-in-clear-text
+      - uses: ohpensource/platform-cicd/actions/builds/dotnet/build-dotnet-app@0.6.0.0
+        name: Build dotnet application
+        with:
+          app-path: "src"
+```
+
+### java
+
+#### setup-maven
 
 Action prepares environment for running maven project for both runners: github and selfhosted.
 Includes restoring cache before build (can be disabled by restore-cache parameter).
@@ -281,7 +310,7 @@ Includes restoring cache before build (can be disabled by restore-cache paramete
           account-id: <<ACCOUNT_ID>>
 ```
 
-### run-maven
+#### run-maven
 
 Action runs maven command with supplied parameters. Includes saving cache after build. In case that build needs to
 assume aws role use optional parameter: maven-aws-role.

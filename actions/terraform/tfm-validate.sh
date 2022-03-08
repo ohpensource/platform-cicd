@@ -1,5 +1,5 @@
 set -e 
-WORKING_FOLDER=$(pwd)
+working_folder=$(pwd)
 
 log_action() {
     echo "${1^^} ..."
@@ -10,14 +10,19 @@ log_key_value_pair() {
 }
 
 log_action "validating terraform"
-TFM_PATH=$1
-log_key_value_pair "tfm-path" $TFM_PATH
-BACKEND=$2
-log_key_value_pair "use-backend" $BACKEND
 
-cd $WORKING_FOLDER/$TFM_PATH
+while getopts t:b: flag
+do
+    case "${flag}" in
+       t) tfm_path=${OPTARG};;
+       b) backend=${OPTARG};;
+    esac
+done
 
-terraform init -backend=$BACKEND
-terraform validate -no-color
+log_key_value_pair "tfm-path" $tfm_path
+log_key_value_pair "use-backend" $backend
 
-cd $WORKING_FOLDER
+cd "$working_folder/$tfm_path"
+    terraform init -backend=$backend
+    terraform validate -no-color
+cd "$working_folder"

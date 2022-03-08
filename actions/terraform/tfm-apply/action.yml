@@ -30,5 +30,13 @@ runs:
   using: "composite"
   steps:
     - id: tfm-apply
-      run: ${{ github.action_path }}/../tfm-apply.sh ${{ inputs.region }} ${{ inputs.access-key }} ${{ inputs.secret-key }} ${{ inputs.terraform-folder }} ${{ inputs.backend-configuration }} ${{ inputs.terraform-plan-file }} ${{ inputs.terraform-outputs-file }}
+      run: |
+        ${{ github.action_path }}/../tfm-apply.sh \
+          -r "${{ inputs.region }}" \
+          -a "${{ inputs.access-key }}" \
+          -s ${{ inputs.secret-key }} \
+          -t ${{ inputs.terraform-folder }} \
+          -b ${{ inputs.backend-configuration }} \
+          -p ${{ inputs.terraform-plan-file }} \
+          -o ${{ inputs.terraform-outputs-file }}
       shell: bash

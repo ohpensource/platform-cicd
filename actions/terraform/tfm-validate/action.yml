@@ -12,5 +12,8 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: ${{ github.action_path }}/../tfm-validate.sh ${{ inputs.terraform-folder }} ${{ inputs.use-backend }}
+    - run: |
+        ${{ github.action_path }}/../tfm-validate.sh \
+          -t "${{ inputs.terraform-folder }}" \
+          -b "${{ inputs.use-backend }}"
       shell: bash

@@ -38,6 +38,17 @@ inputs:
     required: false
     default: "3.8.2"
 
+  maven-github-username:
+    description: "Username for maven github server. E.g. used for using git from maven scm plugin."
+    required: false
+  maven-github-token:
+    description: "Token for maven github server. E.g. used for using git from maven scm plugin."
+    required: false
+  aws-region:
+    description: "Aws region associated with workflow."
+    required: false
+    default: "eu-west-1"
+
 outputs:
   changed-modules:
     description: "List of changed modules evaluated from last two commits if enabled"
@@ -49,7 +60,8 @@ runs:
     - name: Setup maven artifact repository inputs
       shell: bash
       run: |
-        AWS_REGION="eu-west-1"
+        AWS_REGION=${{ inputs.aws-region }}
+        echo AWS_REGION="${AWS_REGION}" >> $GITHUB_ENV
 
         sudo aws configure set aws_access_key_id ${{ inputs.maven-aws-access-key }} --profile s3-artifacts
         sudo aws configure set aws_secret_access_key ${{ inputs.maven-aws-secret-key }} --profile s3-artifacts
@@ -74,6 +86,9 @@ runs:
         fi
                 
         echo IS_SELF_HOSTED_RUNNER="${IS_SELF_HOSTED_RUNNER}" >> $GITHUB_ENV
+
+        echo MAVEN_GITHUB_USERNAME="${{ inputs.maven-github-username }}" >> $GITHUB_ENV
+        echo MAVEN_GITHUB_TOKEN="${{ inputs.maven-github-token }}" >> $GITHUB_ENV
 
     - name: Setup JDK
       uses: actions/setup-java@v2

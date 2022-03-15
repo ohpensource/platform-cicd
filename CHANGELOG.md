@@ -1,3 +1,9 @@
+# :confetti_ball: 2.15.0.0 (2022-03-15T08:27:31.855Z)
+- - -
+## :hammer: Features
+* GMP-471 added support for setting github token, enhanced some default parameters\
+- - -
+- - -
 # :confetti_ball: 2.14.0.3 (2022-03-08T16:15:40.006Z)
 - - -
 ## :newspaper: Others

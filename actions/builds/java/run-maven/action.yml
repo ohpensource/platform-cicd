@@ -40,8 +40,10 @@ runs:
       shell: bash
       run: |
         mvn \
-          -P${{ inputs.profiles }} \
+          -Pgithub,${{ inputs.profiles }} \
           ${{ inputs.parameters }} \
+          -Duser.timezone="Europe/Amsterdam" \
+          -DuseGitHub=true \
           --also-make-dependents \
           --projects "${{ inputs.build-modules }}" \
           --threads ${{ inputs.threads }} \

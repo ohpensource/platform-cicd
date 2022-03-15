@@ -296,8 +296,9 @@ jobs:
 
 #### setup-maven
 
-Action prepares environment for running maven project for both runners: github and selfhosted.
-Includes restoring cache before build (can be disabled by restore-cache parameter).
+* Action prepares environment for running maven project for both runners: github and selfhosted.
+* Includes restoring cache before build (can be disabled by restore-cache parameter).
+* Action sets AWS_REGION env variable with default: eu-west-1
 
 ```yaml
 - uses: ohpensource/platform-cicd/actions/builds/setup-maven
@@ -312,8 +313,9 @@ Includes restoring cache before build (can be disabled by restore-cache paramete
 
 #### run-maven
 
-Action runs maven command with supplied parameters. Includes saving cache after build. In case that build needs to
-assume aws role use optional parameter: maven-aws-role.
+* Action runs maven command with supplied parameters. 
+* Includes saving cache after build. 
+* In case that build needs to assume aws role use optional parameter: maven-aws-role.
 
 ```yaml
 - uses: ohpensource/platform-cicd/actions/builds/run-maven

@@ -1,3 +1,9 @@
+# :confetti_ball: 2.15.0.1 (2022-03-21T12:12:15.616Z)
+- - -
+## :newspaper: Others
+* update tfplan (#79)
+- - -
+- - -
 # :confetti_ball: 2.15.0.0 (2022-03-15T08:27:31.855Z)
 - - -
 ## :hammer: Features

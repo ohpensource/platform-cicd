@@ -54,8 +54,8 @@ folder="$working_folder/$tfm_folder"
 cd $folder
     terraform init -backend-config="$backend_config_file"
     if [ "$destroy_mode" = "true" ]; then 
-        terraform plan -no-color -destroy -var-file="$tfvars_file" -out="$tfplan_output"
+        terraform plan -destroy -var-file="$tfvars_file" -out="$tfplan_output"
     else
-        terraform plan -no-color -var-file="$tfvars_file" -out="$tfplan_output"
+        terraform plan -var-file="$tfvars_file" -out="$tfplan_output"
     fi
 cd "$working_folder"

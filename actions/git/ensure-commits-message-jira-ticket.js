@@ -1,5 +1,6 @@
-const git = require("./git.js");
-const logger = require("./logging.js");
+import * as git from "./git.js";
+import * as logger from "./logging.js";
+
 const reverse = (str) => str.split("").reverse().join("");
 
 logger.logAction("ENSURING JIRA TICKETS INTO COMMIT MESSAGES");

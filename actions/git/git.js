@@ -1,4 +1,6 @@
-const child = require("child_process");
+import child from "child_process";
+import { regex } from "./ensure-conventional-commits/constants.js";
+
 const splitText = "<#@112358@#>";
 const prettyFormat = [
   "%h",
@@ -16,7 +18,7 @@ const prettyFormat = [
   "",
 ];
 
-const getCommitsInsidePullRequest = (destinationBranchName, branchName) => {
+export const getCommitsInsidePullRequest = (destinationBranchName, branchName) => {
   let mergeBaseCommit = child
     .execSync(`git merge-base origin/${destinationBranchName} ${branchName}`)
     .toString("utf-8")
@@ -33,17 +35,38 @@ const getCommitsInsidePullRequest = (destinationBranchName, branchName) => {
 
   return commits;
 };
-const getLastCommit = () => {
+
+export const getLastCommit = () => {
   let commit = child
     .execSync(
-      `git log HEAD^1..HEAD --pretty=format:"${prettyFormat.join(splitText)}"`
+      `git log HEAD~1..HEAD --pretty=format:"${prettyFormat.join(splitText)}"`
     )
     .toString("utf-8")
     .split(`${splitText}\n`)
     .map((commitInfoText) => getCommitInfo(commitInfoText))[0];
 
-  return commit;
+    return commit;
+  };
+
+export const getConventionalCommitFields = (commit) => {
+  const { subject: message, body } = commit;
+
+  const commitObj = {
+    message,
+    body,
+    subject: null,
+    type: null,
+    scope: null,
+    breaking: null,
+  };
+
+  if (message.match(regex)) {
+    const { type, scope, breaking, subject } = message.match(regex).groups;
+    return { ...commitObj, type, scope, breaking, subject };
+  }
+  return commitObj;
 };
+
 const getCommitInfo = (commitToParse) => {
   let commitInfoAsArray = commitToParse.split(`${splitText}`);
   var branchAndTags = commitInfoAsArray[commitInfoAsArray.length - 1]
@@ -72,9 +95,4 @@ const getCommitInfo = (commitToParse) => {
     branch,
     tags,
   };
-};
-
-module.exports = {
-  getCommitsInsidePullRequest,
-  getLastCommit,
 };

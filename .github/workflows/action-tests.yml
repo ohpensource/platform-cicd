@@ -1,0 +1,26 @@
+name: continuous-integration
+on:
+  push
+
+jobs:
+  test-git-node-actions:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: actions/git
+    steps:
+      - uses: actions/checkout@v2
+      - name: cache node_modules
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-v2-${{ hashFiles('**/package-lock.json') }}
+      - name: Use NodeJS
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - name: install dependencies
+        run: npm ci
+      - name: testing
+        run: npm run test

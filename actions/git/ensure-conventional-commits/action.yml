@@ -1,14 +1,17 @@
 name: "ensure-conventional-commits"
-description: "checks that the commits in a pull request follow conventional commits"
+description: "Checks that the commits in a pull request follow conventional commits"
 inputs:
   base-branch:
-    description: "name of the branch where the pull request goes to"
+    description: "Name of the branch where the pull request goes to"
     required: true
   pr-branch:
-    description: "name of the branch where the pull request comes from"
+    description: "Name of the branch where the pull request comes from"
     required: true
+  allowed-types:
+    description: "Comma separated list of the allowed types"
+    required: false
 runs:
   using: "composite"
   steps:
-    - run: node ${{ github.action_path }}/../ensure-conventional-commits.js ${{ inputs.base-branch }} ${{ inputs.pr-branch }}
+    - run: node ${{ github.action_path }}/../ensure-conventional-commits.js ${{ inputs.base-branch }} ${{ inputs.pr-branch }} ${{ inputs.allowed-types }}
       shell: bash

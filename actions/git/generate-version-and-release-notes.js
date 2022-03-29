@@ -1,9 +1,9 @@
-const child = require("child_process");
-const fs = require("fs");
-const convRegex = require("./constants.js");
-const git = require("./git.js");
-const logger = require("./logging.js");
-const files = require("./file-tools.js");
+import * as child from "child_process";
+import * as fs from "fs";
+import { convRegex } from "./constants.js";
+import * as git from "./git.js";
+import * as logger from "./logging.js";
+import * as files from "./file-tools.js";
 
 const skipGitCommit = process.argv[2];
 const versionPrefix = process.argv[3];
@@ -112,8 +112,18 @@ function getUpdatedVersion(version, changes) {
   }
 }
 function getChange(line) {
-  const { type, breaking, subject } = line.match(convRegex).groups;
+  let matchResult = line.match(convRegex);
+  let changeFields = {
+    type: null,
+    breaking: null,
+    subject: null
+  }
 
+  if (matchResult)
+    changeFields = matchResult.groups;
+
+  const { type, breaking, subject } = changeFields;
+  
   if (breaking) {
     return {
       type: "break",

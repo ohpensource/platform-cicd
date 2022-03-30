@@ -1,0 +1,68 @@
+name: "get-properties-from-json"
+description: "get and set properties from ohpen cfn json conf files"
+inputs:
+  account-name:
+    description: "aws account name"
+    required: true
+  json-file-path:
+    description: "path to json file"
+    required: true
+outputs:
+  environment:
+    description: "environment value from account json element"
+    value: ${{ steps.get-properties.outputs.environment }}
+  account_id:
+    description: "account id value from account json element"
+    value: ${{ steps.get-properties.outputs.account_id }}
+  account_name:
+    description: "account name value from account json element"
+    value: ${{ steps.get-properties.outputs.account_name }}
+  cfn_main_file:
+    description: "cfn_main_file value from main json element"
+    value: ${{ steps.get-properties.outputs.cfn_main_file }}
+  stack_name:
+    description: "stack_name value from main json element"
+    value: ${{ steps.get-properties.outputs.stack_name }}
+  capabilities:
+    description: "stack_name value from main json element"
+    value: ${{ steps.get-properties.outputs.capabilities }}
+runs:
+  using: "composite"
+  steps:
+    - id: get-properties
+      shell: bash    
+      run: |
+        ACCOUNT=${{ inputs.account-name }}
+        JSONPATH=${{ inputs.json-file-path }}
+        echo $ACCOUNT
+          
+        cfn_main_file=$(jq '.cfn_main_file' ./$JSONPATH | tr '\"' ' ' | xargs)
+        stack_name=$(jq '.stack_name' ./$JSONPATH | tr '\"' ' ' | xargs)
+        capabilities=$(jq '.capabilities' ./$JSONPATH | tr '\"' ' ' | xargs)
+
+        environment=""
+        account_name=""
+        account_id=""
+
+        jq -c '.accounts[]' ./$JSONPATH | while read i; do
+
+          account_name=$(echo $i | jq '.account_name' | tr '\"' ' ' | xargs)
+
+          if [ $ACCOUNT = $account_name ]
+          then
+              environment=$(echo $i | jq '.environment' | tr '\"' ' ' | xargs)
+              account_name=$(echo $i | jq '.account_name' | tr '\"' ' ' | xargs)
+              account_id=$(echo $i | jq '.account_id' | tr '\"' ' ' | xargs)
+              echo "FINAL"
+              echo "ENV: " $environment 
+              echo "ACCOUNT NAME: " $account_name 
+              echo "ACCOUNT_ID: " $account_id      
+              echo "::set-output name=environment::$environment"
+              echo "::set-output name=account_name::$account_name"
+              echo "::set-output name=account_id::$account_id"
+          fi
+        done
+
+        echo "::set-output name=cfn_main_file::$cfn_main_file"
+        echo "::set-output name=stack_name::$stack_name"
+        echo "::set-output name=capabilities::$capabilities"

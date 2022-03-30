@@ -2,23 +2,26 @@
 
 Repository containing Ohpen's Github actions. An easy-to-setup set of scripts and actions to help teams (and everybody that needs it) start working with their repositories and abstract as much cognitive load from them.
 
-- [code-of-conduct](#code-of-conduct)
-- [git-actions](#git)
-  - [semver-and-changelog](#semver-and-changelog)
-  - [check-conventional-commits](#check-conventional-commits)
-  - [check-jira-tickets-commits](#check-jira-tickets-commits)
-- [terraform-actions](#terraform)
-  - [validate](#validate)
-  - [plan](#plan)
-  - [apply](#apply)
-- [post-deployment-actions](#post-deployment)
-  - [update-deployment-info](#update-deployment-info)
-- [build-actions](#build-actions)
-  - [dotnet](#dotnet)
-    - [build-dotnet-app](#build-dotnet-app)
-  - [java](#java)
-    - [setup-maven](#setup-maven)
-    - [run-maven](#run-maven)
+- [PLATFORM-CICD](#platform-cicd)
+  - [code-of-conduct](#code-of-conduct)
+  - [git](#git)
+    - [semver-and-changelog](#semver-and-changelog)
+    - [check-conventional-commits](#check-conventional-commits)
+    - [check-jira-tickets-commits](#check-jira-tickets-commits)
+  - [terraform](#terraform)
+    - [validate](#validate)
+    - [plan](#plan)
+    - [apply](#apply)
+  - [cloudformation](#cloudformation)
+    - [get-properties-from-json](#get-properties-from-json)
+  - [post-deployment](#post-deployment)
+    - [update-deployment-info](#update-deployment-info)
+  - [build-actions](#build-actions)
+    - [dotnet](#dotnet)
+      - [build-dotnet-app](#build-dotnet-app)
+    - [java](#java)
+      - [setup-maven](#setup-maven)
+      - [run-maven](#run-maven)
 
 ## code-of-conduct
 
@@ -259,6 +262,75 @@ jobs:
           terraform-outputs-file: "deployment-team-branch-outputs/outputs.json"
 ```
 
+## cloudformation
+
+### get-properties-from-json
+
+This actions will parse input json file based on input parameter *json-file-path* and search for element matching input parameter *account-name* and exposes following outputs:
+
+- environment
+- account_id
+- account_name
+- cfn_main_file
+- stack_name
+- capabilities
+
+expected json file format is following:
+
+```json
+{
+    "cfn_main_file": "main.yaml",
+    "stack_name": "awesome_stack",
+    "capabilities": "CAPABILITY_AUTO_EXPAND,CAPABILITY_NAMED_IAM",
+    "accounts": [
+        {
+            "environment": "acc",
+            "account_name": "client-acc",
+            "account_id": "012345678900"
+        },
+        {
+            "environment": "acc",
+            "account_name": "internal-acc",
+            "account_id": "012345678901"
+        },
+        {
+            "environment": "acc",
+            "account_name": "external-acc",
+            "account_id": "012345678902"
+        }
+    ]
+}
+```
+
+example usage:
+
+```yaml
+name: CI
+on:
+  pull_request:
+    branches: ["main"]
+jobs:
+    build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get Properties From Json
+        id: get-properties
+        uses: ohpensource/platform-cicd/actions/aws/cloudformation/get-properties-from-json@2.15.0.x
+        with:
+          account-name: "account-name-you-need"
+          json-file-path: ./params/matrix.json
+      - name: output usage
+        run: |
+          echo ${{steps.get-properties.outputs.account_id}}
+          echo ${{steps.get-properties.outputs.account_name}}
+          echo ${{steps.get-properties.outputs.environment}}
+          echo ${{steps.get-properties.outputs.cfn_main_file}}
+          echo ${{steps.get-properties.outputs.stack_name}}
+          echo ${{steps.get-properties.outputs.capabilities}}
+```
+
+
 ## post-deployment
 
 ### update-deployment-info
@@ -291,6 +363,7 @@ jobs:
         with:
           app-path: "src"
 ```
+
 
 ### java
 

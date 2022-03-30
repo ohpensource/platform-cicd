@@ -1,3 +1,9 @@
+# :confetti_ball: 2.16.0.0 (2022-03-30T13:14:28.174Z)
+- - -
+## :hammer: Features
+* LANZ-2154 add action to process cfn json conf files (#80)
+- - -
+- - -
 # :confetti_ball: 2.15.0.1 (2022-03-21T12:12:15.616Z)
 - - -
 ## :newspaper: Others

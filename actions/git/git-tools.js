@@ -39,7 +39,7 @@ export const getCommitsInsidePullRequest = (destinationBranchName, branchName) =
 export const getLastCommit = () => {
   let commit = child
     .execSync(
-      `git log HEAD~1..HEAD --pretty=format:"${prettyFormat.join(splitText)}"`
+      `git log HEAD^1..HEAD --pretty=format:"${prettyFormat.join(splitText)}"`
     )
     .toString("utf-8")
     .split(`${splitText}\n`)

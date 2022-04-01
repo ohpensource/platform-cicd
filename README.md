@@ -93,6 +93,8 @@ jobs:
 ```
 
 #### Types:
+The conventional commits specification only specifies the types "feat" and "fix", but it allows the user to extend the list of allowed types.
+The types below are the ones accepted by default, if you don't specify the parameter `allowed-types`:
 
 - feat: A new feature
 - fix: A bug fix
@@ -114,7 +116,7 @@ jobs:
 - A description MUST immediately follow the colon and space after the type/scope prefix. The description is a short summary of the code changes, e.g., `fix: array parsing issue when multiple spaces were contained in string`
   -If included in the type/scope prefix, `breaking changes` MUST be indicated by a `!` immediately before the `:`.
 
-#### Examples
+#### Examples of commits
 
 ```
 // Commit message with ! to draw attention to breaking change
@@ -126,13 +128,37 @@ feat(apix,apiy)!: send an email to the customer when a product is shipped
 
 ```
 
-#### The action currently accepts the following prefixes:
+#### Expected behavior of the currently accepted types:
 
 - **!** --> updates the MAJOR semver number. Used when a breaking changes are introduced in your code. A commit message example could be "_feat!: deprecate endpoint GET /parties V1_".
 - **feat** --> updates the MINOR semver number. Used when changes that add new functionality are introduced in your code. A commit message example could be "_feat: endpoint GET /parties V2 is now available_".
 - **fix** --> updates the PATCH semver number. Used when changes that solve bugs are introduced in your code. A commit message example could be "_fix: properly manage contact-id parameter in endpoint GET /parties V2_".
 - **build**, **chore**, **ci**, **docs**, **style**, **refactor**, **perf**, **test** **revert** --> There are scenarios where you are not affecting any of the previous semver numbers. Those could be: refactoring your code, reducing building time of your code, adding unit tests, improving documentation, ... For these cases, conventional-commits allows for more granular prefixes.
-- **break (deprecated)** --> deprecated, you should use **!**. Updates the MAJOR semver number. Used when a breaking changes are introduced in your code. A commit message example could be "_feat!: deprecate endpoint GET /parties V1_".
+- **break (deprecated)** :warning: --> deprecated, you should use **!**. Updates the MAJOR semver number. Used when a breaking changes are introduced in your code. A commit message example could be "_feat!: deprecate endpoint GET /parties V1_".
+
+#### Changing the list of allowed types
+In case you want to specify a different list you need to pass a third parameter to the action
+```
+name: CI
+on:
+  pull_request:
+    branches: ["main"]
+jobs:
+  check-conventional-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: ohpensource/platform-cicd/actions/git/ensure-conventional-commits@0.6.0.0
+        name: Ensure conventional commits
+        with:
+          base-branch: $GITHUB_BASE_REF
+          pr-branch: $GITHUB_HEAD_REF
+          allowed-types: feat,refactor
+```
+The action above will accept commits with the types "feat", "fix" and "refactor".
+Even though fix is not mentioned, because the types "feat" and "fix" are built-in types, they will always be accepted.
 
 ### check-jira-tickets-commits
 

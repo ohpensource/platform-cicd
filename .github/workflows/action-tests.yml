@@ -1,6 +1,8 @@
-name: continuous-integration
+name: continuous-integration-tests
 on:
-  push
+  push:
+    paths:
+    - 'actions/**'
 
 jobs:
   test-git-node-actions:

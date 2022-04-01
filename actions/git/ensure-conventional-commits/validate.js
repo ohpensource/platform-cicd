@@ -1,6 +1,6 @@
-import { regex } from "./constants.js";
+import { convRegex } from "./constants.js";
 import { logAction, logError, logWarning } from "../logging.js";
-import { getConventionalCommitFields } from "../git.js";
+import { getConventionalCommitFields } from "../git-tools.js";
 import { builtInTypes } from "./constants.js";
 import { defaultTypes } from "./default-types.js"
 
@@ -8,9 +8,9 @@ export const validateCommit = (commit, allowedTypes) => {
   const { type, message } = getConventionalCommitFields(commit);
 
   const isValidCommit =
-    regex.test(message) && checkType(type, allowedTypes);
+    convRegex.test(message) && checkType(type, allowedTypes);
 
-  logCommit(message, isValidCommit);
+  logCommit(commit.shortHash, message, isValidCommit);
 
   return isValidCommit;
 };
@@ -33,7 +33,7 @@ export const getAllowedTypes = (types) => {
 
 export const checkType = (type, allowedTypes) => allowedTypes.includes(type);
 
-const logCommit = (message, isValid) =>
+const logCommit = (shortHash, message, isValid) =>
   isValid
-    ? logAction(`Commit: ${message}`)
-    : logError(`Incorrect commit: ${message}`);
+    ? logAction(`${shortHash}: ${message}`)
+    : logError(`Invalid ${shortHash}: ${message}`);

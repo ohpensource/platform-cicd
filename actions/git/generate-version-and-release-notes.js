@@ -1,16 +1,18 @@
 import * as child from "child_process";
 import * as fs from "fs";
-import { convRegex } from "./constants.js";
-import * as git from "./git.js";
+import { convRegex } from "./ensure-conventional-commits/constants.js";
+import * as git from "./git-tools.js";
 import * as logger from "./logging.js";
 import * as files from "./file-tools.js";
+import { featType } from "./ensure-conventional-commits/constants.js";
+import { fixType } from "./ensure-conventional-commits/constants.js";
+import { breakType } from "./ensure-conventional-commits/default-types.js";
+
+const noneType = "none";
 
 const skipGitCommit = process.argv[2];
 const versionPrefix = process.argv[3];
 
-const featPreffix = "feat:";
-const fixPreffix = "fix:";
-const breakPreffix = "break:";
 const versionFile = "version.json";
 const changelogFile = "CHANGELOG.md";
 
@@ -80,18 +82,18 @@ function getUpdatedVersion(version, changes) {
   let newMinor = 0;
   let newPatch = 0;
   let newSecondary = 0;
-  if (changes.some((change) => change.type === "break")) {
+  if (changes.some((change) => change.type === breakType)) {
     newMajor = major + 1;
     newMinor = 0;
     newPatch = 0;
     newSecondary = 0;
-  } else if (changes.some((change) => change.type === "feat")) {
+  } else if (changes.some((change) => change.type === featType)) {
     newMajor = major;
     newMinor = minor + 1;
     newPatch = 0;
     newSecondary = 0;
   } else if (
-    changes.some((change) => change.type === "fix") ||
+    changes.some((change) => change.type === fixType) ||
     versionFileContent.length === 3
   ) {
     newMajor = major;
@@ -124,19 +126,19 @@ function getChange(line) {
 
   const { type, breaking, subject } = changeFields;
   
-  if (breaking) {
+  if (type === breakType || breaking) {
     return {
-      type: "break",
+      type: breakType,
       content: subject,
     };
-  } else if (type === "feat" || type === "fix") {
+  } else if (type === featType || type === fixType) {
     return {
       type: type,
       content: subject,
     };
   } else {
     return {
-      type: "none",
+      type: noneType,
       content: subject,
     };
   }
@@ -157,28 +159,28 @@ function updateChangelogFile(newVersion, changes) {
     changelog,
     "## :boom: BREAKING CHANGES\n",
     changes
-      .filter((change) => change.type == "break")
+      .filter((change) => change.type == breakType)
       .map((change) => `* ${change.content}\n`)
   );
   changelog = updateChangelogWith(
     changelog,
     "## :hammer: Features\n",
     changes
-      .filter((change) => change.type == "feat")
+      .filter((change) => change.type == featType)
       .map((change) => `* ${change.content}\n`)
   );
   changelog = updateChangelogWith(
     changelog,
     "## :bug: Fixes\n",
     changes
-      .filter((change) => change.type == "fix")
+      .filter((change) => change.type == fixType)
       .map((change) => `* ${change.content}\n`)
   );
   changelog = updateChangelogWith(
     changelog,
     "## :newspaper: Others\n",
     changes
-      .filter((change) => change.type == "none")
+      .filter((change) => change.type == noneType)
       .map((change) => `* ${change.content}\n`)
   );
   changelog += "- - -\n";

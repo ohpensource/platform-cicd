@@ -1,6 +1,6 @@
 import { argv } from "process";
 import { areCommitsValid, getAllowedTypes } from "./validate.js";
-import { getCommitsInsidePullRequest } from "../git.js";
+import { getCommitsInsidePullRequest } from "../git-tools.js";
 import { logError, logKeyValuePair, logAction } from "../logging.js";
 
 const [base, head, types] = argv.slice(2);

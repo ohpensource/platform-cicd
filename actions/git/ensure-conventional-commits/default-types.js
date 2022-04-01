@@ -7,9 +7,15 @@
 /**
  * The default commit types accepted. (See point 4 from {@link https://www.conventionalcommits.org/en/v1.0.0/|Conventional Commits 1.0.0})
  */
- export const defaultTypes = [
-    "feat",
-    "fix",
+import { featType } from "./constants.js";
+import { fixType } from "./constants.js";
+
+export const breakType = "break";
+
+export const defaultTypes = [
+    breakType,
+    featType,
+    fixType,
     "docs",
     "style",
     "refactor",

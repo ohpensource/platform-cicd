@@ -4,6 +4,7 @@ import { validateCommit } from "../ensure-conventional-commits/validate.js";
 
 describe("Conventional commits with default types", () => {
   const allowedCommits = [
+    "break: this is a new feature",
     "feat!: add coventional commit script",
     "fix(shell): expect allowed and not allowed commits",
     "test: add testing packages and scripts",
@@ -15,7 +16,6 @@ describe("Conventional commits with default types", () => {
   ];
 
   const notAllowedCommits = [
-    "break: this is a new feature",
     "docu: documentation added",
     "feat:! new feature with breaking change",
     "fix:new ligin fix",
@@ -46,8 +46,9 @@ describe("Conventional commits with default types", () => {
 });
 
 describe("Conventional commits with custom types", () => {
-  const customTypes = ["feat", "fix", "test", "ci", "css"];
+  const customTypes = ["break", "feat", "fix", "test", "ci", "css"];
   const allowedCommits = [
+    "break: this is a new feature",
     "feat!: add coventional commit script",
     "fix(shell): expect allowed and not allowed commits",
     "test: add testing packages and scripts",
@@ -56,7 +57,6 @@ describe("Conventional commits with custom types", () => {
   ];
 
   const notAllowedCommits = [
-    "break: this is a new feature",
     "docs: documentation added",
     "refactor: code refactored",
     "chore: regex changed",

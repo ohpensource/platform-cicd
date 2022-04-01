@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { getConventionalCommitFields } from "../git.js";
+import { getConventionalCommitFields } from "../git-tools.js";
 
 describe("Git", () => {
   it("should return conventional commits fields if the commit is correct", () => {

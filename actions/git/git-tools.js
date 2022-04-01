@@ -1,5 +1,5 @@
 import child from "child_process";
-import { regex } from "./ensure-conventional-commits/constants.js";
+import { convRegex } from "./ensure-conventional-commits/constants.js";
 
 const splitText = "<#@112358@#>";
 const prettyFormat = [
@@ -60,8 +60,8 @@ export const getConventionalCommitFields = (commit) => {
     breaking: null,
   };
 
-  if (message.match(regex)) {
-    const { type, scope, breaking, subject } = message.match(regex).groups;
+  if (message.match(convRegex)) {
+    const { type, scope, breaking, subject } = message.match(convRegex).groups;
     return { ...commitObj, type, scope, breaking, subject };
   }
   return commitObj;

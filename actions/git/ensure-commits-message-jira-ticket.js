@@ -1,4 +1,4 @@
-import * as git from "./git.js";
+import * as git from "./git-tools.js";
 import * as logger from "./logging.js";
 
 const reverse = (str) => str.split("").reverse().join("");

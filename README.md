@@ -105,6 +105,7 @@ jobs:
 - ci: Changes to our CI config­uration files and scripts
 - chore: Other changes that don't modify src or test files
 - revert: Reverts a previous commit
+- break (deprecated): Deprecated type, you should use **!**. A breaking change commit
 
 #### Specifications:
 
@@ -131,6 +132,7 @@ feat(apix,apiy)!: send an email to the customer when a product is shipped
 - **feat** --> updates the MINOR semver number. Used when changes that add new functionality are introduced in your code. A commit message example could be "_feat: endpoint GET /parties V2 is now available_".
 - **fix** --> updates the PATCH semver number. Used when changes that solve bugs are introduced in your code. A commit message example could be "_fix: properly manage contact-id parameter in endpoint GET /parties V2_".
 - **build**, **chore**, **ci**, **docs**, **style**, **refactor**, **perf**, **test** **revert** --> There are scenarios where you are not affecting any of the previous semver numbers. Those could be: refactoring your code, reducing building time of your code, adding unit tests, improving documentation, ... For these cases, conventional-commits allows for more granular prefixes.
+- **break (deprecated)** --> deprecated, you should use **!**. Updates the MAJOR semver number. Used when a breaking changes are introduced in your code. A commit message example could be "_feat!: deprecate endpoint GET /parties V1_".
 
 ### check-jira-tickets-commits
 

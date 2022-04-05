@@ -16,7 +16,7 @@ export const validateCommit = (commit, allowedTypes) => {
 };
 
 export const areCommitsValid = (commits, allowedTypes) => {
-  if (!commits || commits.length == 0 || (commits.length == 1 && !(commits[0].message))) {
+  if (!commits || commits.length == 0) {
     logWarning("No commits found.")
     return true;
   }
@@ -35,5 +35,5 @@ export const checkType = (type, allowedTypes) => allowedTypes.includes(type);
 
 const logCommit = (shortHash, message, isValid) =>
   isValid
-    ? logAction(`${shortHash}: ${message}`)
-    : logError(`Invalid ${shortHash}: ${message}`);
+    ? logAction(`Valid commit (${shortHash}): ${message}`)
+    : logError(`Invalid commit (${shortHash}): ${message}`);

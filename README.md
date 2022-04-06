@@ -22,6 +22,7 @@ Repository containing Ohpen's Github actions. An easy-to-setup set of scripts an
       - [run-maven](#run-maven)
     - [aws](#aws)
       - [cloudformation](#cloudformation)
+      - [s3](#s3)
 
 ## code-of-conduct
 
@@ -346,3 +347,9 @@ cloudformation actions have been moved to separate repositories:
 - https://github.com/ohpensource/create-or-update-cfn-stack-gh-action
 - https://github.com/ohpensource/validate-cloudformation-gh-action
 - https://github.com/ohpensource/get-properties-from-json-gh-action
+
+#### s3
+
+create-s3-bucket action was moved to:
+
+- https://github.com/ohpensource/create-s3-bucket-gh-action

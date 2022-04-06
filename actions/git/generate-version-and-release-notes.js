@@ -11,7 +11,9 @@ import { breakType } from "./ensure-conventional-commits/default-types.js";
 const noneType = "none";
 
 const skipGitCommit = process.argv[2];
-const versionPrefix = process.argv[3];
+const versionPrefix = !(process.argv[3])
+                        ? ""
+                        : process.argv[3];
 
 const versionFile = "version.json";
 const changelogFile = "CHANGELOG.md";

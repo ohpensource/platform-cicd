@@ -1,5 +1,5 @@
 set -e 
-WORKING_FOLDER=$(pwd)
+working_folder=$(pwd)
 
 log_action() {
     echo "${1^^} ..."
@@ -17,37 +17,41 @@ set_up_aws_user_credentials() {
 }
 
 log_action "planning terraform"
-REGION=$1
-log_key_value_pair "region" $REGION
-ACCESS_KEY=$2
-log_key_value_pair "access-key" $ACCESS_KEY
-SECRET_KEY=$3
-TFM_FOLDER=$4
-log_key_value_pair "terraform-folder" $TFM_FOLDER
-BACKEND_CONFIG_FILE=$5
-log_key_value_pair "backend-config-file" $BACKEND_CONFIG_FILE
-TERRAFORM_PLAN_FILE=$6
-log_key_value_pair "terraform-plan-file" $TERRAFORM_PLAN_FILE
-TERRAFORM_OUTPUTS_FILE=$7
-log_key_value_pair "terraform-outputs-file" $TERRAFORM_OUTPUTS_FILE
 
-set_up_aws_user_credentials $REGION $ACCESS_KEY $SECRET_KEY
+while getopts r:a:s:t:b:p:o: flag
+do
+    case "${flag}" in
+       r) region=${OPTARG};;
+       a) access_key=${OPTARG};;
+       s) secret_key=${OPTARG};;
+       t) tfm_folder=${OPTARG};;
+       b) backend_config_file=${OPTARG};;
+       p) tfm_plan=${OPTARG};;
+       o) tfm_outputs=${OPTARG};;
+    esac
+done
 
-BACKEND_CONFIG_FILE="$WORKING_FOLDER/$BACKEND_CONFIG_FILE"
-PLAN="$WORKING_FOLDER/$TERRAFORM_PLAN_FILE"
+log_key_value_pair "region" $region
+log_key_value_pair "access-key" $access_key
+log_key_value_pair "terraform-folder" $tfm_folder
+log_key_value_pair "backend-config-file" $backend_config_file
+log_key_value_pair "terraform-plan-file" $tfm_plan
+log_key_value_pair "terraform-outputs-file" $tfm_outputs
 
-FOLDER="$WORKING_FOLDER/$TFM_FOLDER"
-cd $FOLDER
+set_up_aws_user_credentials $region $access_key $secret_key
 
-terraform init -backend-config="$BACKEND_CONFIG_FILE"
-terraform apply "$PLAN"
+backend_config_file="$working_folder/$backend_config_file"
+tfm_plan="$working_folder/$tfm_plan"
 
-if [ "$TERRAFORM_OUTPUTS_FILE" != "" ]; then 
-    TERRAFORM_OUTPUTS_FILE="$WORKING_FOLDER/$TERRAFORM_OUTPUTS_FILE"
-    mkdir -p $(dirname $TERRAFORM_OUTPUTS_FILE)
-    terraform output -json >> $TERRAFORM_OUTPUTS_FILE
-fi
+folder="$working_folder/$tfm_folder"
+cd $folder
+    terraform init -backend-config="$backend_config_file"
+    terraform apply "$tfm_plan"
+    if [ "$tfm_outputs" != "" ]; then 
+        tfm_outputs="$working_folder/$tfm_outputs"
+        mkdir -p $(dirname $tfm_outputs)
+        terraform output -json >> $tfm_outputs
+    fi
+cd "$working_folder"
 
-cd "$WORKING_FOLDER"
-
-echo "::set-output name=outputs_file::${TERRAFORM_OUTPUTS_FILE}"
+echo "::set-output name=outputs_file::${tfm_outputs}"

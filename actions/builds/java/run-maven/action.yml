@@ -1,0 +1,63 @@
+name: "run-maven"
+description: "Run maven command"
+inputs:
+  phases:
+    description: "Maven run phases: e.g. clean install"
+    required: true
+  profiles:
+    description: "Maven profiles passed to -P parameter, e.g.: github"
+    required: false
+  parameters:
+    description: "Maven parameters. e.g: -Dparam=value -Dparam2=value2"
+    required: false
+  threads:
+    description: "Maven thread parameter: eg. 1.5C, 1C, 4. Default 1 thread pre CPU core"
+    required: false
+    default: "1C"
+  save-cache:
+    description: "If cache should be saved after maven run"
+    required: false
+    default: "true"
+  build-modules:
+    description: "Comma separated list of submodules which should be build (e.g. only changed modules), e.g: submodule,submodule/pom.xml"
+    required: false
+    default: ""
+
+  maven-aws-access-key:
+    description: "Aws access key for maven aws plugins."
+    required: false
+  maven-aws-secret-key:
+    description: "Aws secret key for maven aws plugins."
+    required: false
+  maven-aws-role:
+    description: "Role to assume for maven aws plugins."
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run maven command
+      shell: bash
+      run: |
+        mvn \
+          -Pgithub,${{ inputs.profiles }} \
+          ${{ inputs.parameters }} \
+          -Duser.timezone="Europe/Amsterdam" \
+          -DuseGitHub=true \
+          --also-make-dependents \
+          --projects "${{ inputs.build-modules }}" \
+          --threads ${{ inputs.threads }} \
+          --update-snapshots \
+          --batch-mode \
+          --fail-at-end \
+        ${{ inputs.phases }}
+      env:
+        AWS_ACCESS_KEY: ${{ inputs.maven-aws-access-key }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.maven-aws-secret-key }}
+        AWS_ASSUME_ROLE_ARN: ${{ inputs.maven-aws-role }}
+
+    - name: Save Maven cache
+      if: always() && inputs.save-cache == 'true'
+      uses: skjolber/maven-cache-github-action@v1
+      with:
+        step: save

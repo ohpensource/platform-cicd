@@ -1,0 +1,132 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+		  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+	<activeProfiles>
+		<activeProfile>github</activeProfile>
+	</activeProfiles>
+
+	<profiles>
+		<profile>
+			<id>github</id>
+			<repositories>
+				<!-- ======================================= Central repositories ======================================= -->
+				<repository>
+					<id>central</id>
+					<name>Central</name>
+					<url>https://repo.maven.apache.org/maven2</url>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+				<!-- ======================================= OHPEN S3 repositories ======================================= -->
+				<repository>
+					<id>github-release</id>
+					<name>GitHub Release Packages</name>
+					<url>${env.MAVEN_RELEASE_URL}</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+				<repository>
+					<id>github-snapshot</id>
+					<name>GitHub Snapshot Packages</name>
+					<url>${env.MAVEN_SNAPSHOT_URL}</url>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</repository>
+				<!-- ======================================= External repositories ======================================= -->
+				<repository>
+					<id>jboss</id>
+					<name>JBoss</name>
+					<url>https://repository.jboss.org/nexus/content/groups/public/</url>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+				<repository>
+					<id>jbossthird</id>
+					<name>JBossThirdParty</name>
+					<url>https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/</url>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+				<repository>
+					<id>jenkins</id>
+					<name>Jenkins</name>
+					<url>https://repo.jenkins-ci.org/releases/</url>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>github-plugin-release</id>
+					<name>GitHub Plugin Release Packages</name>
+					<url>${env.MAVEN_RELEASE_URL}</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</pluginRepository>
+				<pluginRepository>
+					<id>github-plugin-snapshot</id>
+					<name>GitHub Plugin Release Packages</name>
+					<url>${env.MAVEN_SNAPSHOT_URL}</url>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</pluginRepository>
+			</pluginRepositories>
+			<properties>
+				<docker.registry>${env.DOCKER_REGISTRY}</docker.registry>
+			</properties>
+		</profile>
+	</profiles>
+
+	<servers>
+		<server>
+			<id>github</id>
+			<username>${env.MAVEN_GITHUB_USERNAME}</username>
+			<password>${env.MAVEN_GITHUB_TOKEN}</password>
+		</server>
+		<server>
+			<id>github-release</id>
+			<username>${env.MAVEN_AWS_ACCESS_KEY_ID}</username>
+			<password>${env.MAVEN_AWS_SECRET_ACCESS_KEY}</password>
+			<filePermissions>AuthenticatedRead</filePermissions>
+		</server>
+		<server>
+			<id>github-snapshot</id>
+			<username>${env.MAVEN_AWS_ACCESS_KEY_ID}</username>
+			<password>${env.MAVEN_AWS_SECRET_ACCESS_KEY}</password>
+			<filePermissions>AuthenticatedRead</filePermissions>
+		</server>
+		<server>
+			<id>github-plugin-release</id>
+			<username>${env.MAVEN_AWS_ACCESS_KEY_ID}</username>
+			<password>${env.MAVEN_AWS_SECRET_ACCESS_KEY}</password>
+			<filePermissions>AuthenticatedRead</filePermissions>
+		</server>
+		<server>
+			<id>github-plugin-snapshot</id>
+			<username>${env.MAVEN_AWS_ACCESS_KEY_ID}</username>
+			<password>${env.MAVEN_AWS_SECRET_ACCESS_KEY}</password>
+			<filePermissions>AuthenticatedRead</filePermissions>
+		</server>
+	</servers>
+</settings>

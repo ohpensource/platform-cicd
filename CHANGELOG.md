@@ -1,3 +1,41 @@
+# :confetti_ball: 2.16.0.0 (2022-03-30T13:14:28.174Z)
+- - -
+## :hammer: Features
+* LANZ-2154 add action to process cfn json conf files (#80)
+- - -
+- - -
+# :confetti_ball: 2.15.0.1 (2022-03-21T12:12:15.616Z)
+- - -
+## :newspaper: Others
+* update tfplan (#79)
+- - -
+- - -
+# :confetti_ball: 2.15.0.0 (2022-03-15T08:27:31.855Z)
+- - -
+## :hammer: Features
+* GMP-471 added support for setting github token, enhanced some default parameters\
+- - -
+- - -
+# :confetti_ball: 2.14.0.3 (2022-03-08T16:15:40.006Z)
+- - -
+## :newspaper: Others
+* refactor: LANZ-1576 enhance terraform scripts to better manage inputs (#77)
+- - -
+- - -
+# :confetti_ball: 2.14.0.2 (2022-03-07T12:44:10.043Z)
+- - -
+## :newspaper: Others
+* docs: LANZ-1775 include terraform actions documentation (#76)
+- - -
+- - -
+# :confetti_ball: 2.14.0.1 (2022-03-07T12:00:08.835Z)
+- - -
+## :newspaper: Others
+* ci: LANZ-1775 include token during cloning for semver step in cd workflow
+* docs: LANZ-1775 fix table-of-contents for java-actions section
+* ci: LANZ-1775 reset semver to latest tag 2.14.0.0
+- - -
+- - -
 # :confetti_ball: 2.13.3.0 (2022-02-17T16:25:07.759Z)
 - - -
 ## :bug: Fixes

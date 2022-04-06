@@ -1,5 +1,5 @@
 set -e 
-WORKING_FOLDER=$(pwd)
+working_folder=$(pwd)
 
 log_action() {
     echo "${1^^} ..."
@@ -17,38 +17,45 @@ set_up_aws_user_credentials() {
 }
 
 log_action "planning terraform"
-REGION="$1"
-log_key_value_pair "region" "$REGION"
-ACCESS_KEY="$2"
-log_key_value_pair "access-key" "$ACCESS_KEY"
-SECRET_KEY="$3"
-TFM_FOLDER=$4
-log_key_value_pair "terraform-folder" $TFM_FOLDER
-BACKEND_CONFIG_FILE=$5
-log_key_value_pair "backend-config-file" $BACKEND_CONFIG_FILE
-TFVARS_FILE=$6
-log_key_value_pair "tfvars-file" $TFVARS_FILE
-TFPLAN_OUTPUT=$7
-log_key_value_pair "tfplan-output" $TFPLAN_OUTPUT
-DESTROY_MODE=$8
-log_key_value_pair "destroy-mode" $DESTROY_MODE
 
-set_up_aws_user_credentials $REGION $ACCESS_KEY $SECRET_KEY
-
-BACKEND_CONFIG_FILE="$WORKING_FOLDER/$BACKEND_CONFIG_FILE"
-TFVARS_FILE="$WORKING_FOLDER/$TFVARS_FILE"
-TFPLAN_OUTPUT="$WORKING_FOLDER/$TFPLAN_OUTPUT"
-mkdir -p $(dirname $TFPLAN_OUTPUT)
-
-FOLDER="$WORKING_FOLDER/$TFM_FOLDER"
-cd $FOLDER
-
-terraform init -backend-config="$BACKEND_CONFIG_FILE"
-
-if [ "$DESTROY_MODE" = "true" ]; then 
-    terraform plan -no-color -destroy -var-file="$TFVARS_FILE" -out="$TFPLAN_OUTPUT"
-else
-    terraform plan -no-color -var-file="$TFVARS_FILE" -out="$TFPLAN_OUTPUT"
+while getopts r:a:s:t:b:v:p:d: flag
+do
+    case "${flag}" in
+       r) region=${OPTARG};;
+       a) access_key=${OPTARG};;
+       s) secret_key=${OPTARG};;
+       t) tfm_folder=${OPTARG};;
+       b) backend_config_file=${OPTARG};;
+       v) tfvars_file=${OPTARG};;
+       p) tfplan_output=${OPTARG};;
+       d) destroy_mode=${OPTARG};; 
+    esac
+done
+if [[ "${destroy_mode}" == '' ]]; then
+  destroy_mode='false'
 fi
 
-cd "$WORKING_FOLDER"
+log_key_value_pair "region" "$region"
+log_key_value_pair "access-key" "$access_key"
+log_key_value_pair "terraform-folder" "$tfm_folder"
+log_key_value_pair "backend-config-file" "$backend_config_file"
+log_key_value_pair "tfvars-file" "$tfvars_file"
+log_key_value_pair "tfplan-output" "$tfplan_output"
+log_key_value_pair "destroy-mode" "$destroy_mode"
+
+set_up_aws_user_credentials "$region" "$access_key" "$secret_key"
+
+backend_config_file="$working_folder/$backend_config_file"
+tfvars_file="$working_folder/$tfvars_file"
+tfplan_output="$working_folder/$tfplan_output"
+mkdir -p $(dirname $tfplan_output)
+
+folder="$working_folder/$tfm_folder"
+cd $folder
+    terraform init -backend-config="$backend_config_file"
+    if [ "$destroy_mode" = "true" ]; then 
+        terraform plan -destroy -var-file="$tfvars_file" -out="$tfplan_output"
+    else
+        terraform plan -var-file="$tfvars_file" -out="$tfplan_output"
+    fi
+cd "$working_folder"

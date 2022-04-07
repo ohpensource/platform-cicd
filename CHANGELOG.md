@@ -1,3 +1,15 @@
+# :confetti_ball: 4.0.0.0 (2022-04-06T12:44:15.472Z)
+- - -
+## :boom: BREAKING CHANGES
+* LANZ-2213 remove create-s3-bucket action (#83)
+- - -
+- - -
+# :confetti_ball: 3.0.0.0 (2022-04-06T12:09:58.523Z)
+- - -
+## :boom: BREAKING CHANGES
+* LANZ-2212 remove cloudformation actions (#82)
+- - -
+- - -
 # :confetti_ball: 2.16.0.0 (2022-03-30T13:14:28.174Z)
 - - -
 ## :hammer: Features

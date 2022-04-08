@@ -274,28 +274,10 @@ It creates file by convention in the folder: configuration/$CUSTOMER/$ENVIRONMEN
 
 ### dotnet
 
-#### build-dotnet-app
+dotnet actions have been moved to separate repositories:
 
-This action performs a _dotnet build_ on any solution (.sln file) inside the specified folder. The (required) input is _app-path_. Here is an example:
-
-```yaml
-name: CI
-on:
-  pull_request:
-    branches: ["main"]
-jobs:
-    build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Add Dotnet NuGet Sources
-        run: dotnet nuget add source ${{ secrets.COR_CICD_NUGET_FEED }} -n "GitHubPackages" -u ohp-github-svc -p ${{ secrets.CICD_GITHUB_PACKAGES_TOKEN }} --store-password-in-clear-text
-      - uses: ohpensource/platform-cicd/actions/builds/dotnet/build-dotnet-app@0.6.0.0
-        name: Build dotnet application
-        with:
-          app-path: "src"
-```
-
+- [dotnet-build-gh-action](https://github.com/ohpensource/dotnet-build-gh-action)
+- [dotnet-test-gh-action](https://github.com/ohpensource/dotnet-test-gh-action)
 
 ### java
 

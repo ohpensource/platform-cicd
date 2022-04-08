@@ -283,42 +283,15 @@ dotnet actions have been moved to separate repositories:
 
 #### setup-maven
 
-* Action prepares environment for running maven project for both runners: github and selfhosted.
-* Includes restoring cache before build (can be disabled by restore-cache parameter).
-* Action sets AWS_REGION env variable with default: eu-west-1
+Moved to separate repositories:
 
-```yaml
-- uses: ohpensource/platform-cicd/actions/builds/setup-maven
-        name: Setup maven evnironment
-        with:
-          java-version: 11
-          restore-cache: false
-          maven-aws-access-key: <<AWS_ACCESS_KEY>>
-          maven-aws-secret-key: <<AWS_SECRET_KEY>>
-          account-id: <<ACCOUNT_ID>>
-```
+- [setup-maven-gh-action](https://github.com/ohpensource/setup-maven-gh-action)
 
 #### run-maven
 
-* Action runs maven command with supplied parameters. 
-* Includes saving cache after build. 
-* In case that build needs to assume aws role use optional parameter: maven-aws-role.
+Moved to separate repositories:
 
-```yaml
-- uses: ohpensource/platform-cicd/actions/builds/run-maven
-        name: Run maven command
-        with:
-          phases: clean install
-          profiles: github
-          parameters: >- 
-            -DuseGitHub=true
-            -Denable.deploy=false
-          threads: 1C
-          save-cache: true
-          maven-aws-access-key: <<AWS_ACCESS_KEY>>
-          maven-aws-secret-key: <<AWS_SECRET_KEY>>
-          maven-aws-role: <<AWS_ROLE_TO_ASSUME>>
-```
+- [run-maven-gh-action](https://github.com/ohpensource/run-maven-gh-action)
 
 ### aws 
 

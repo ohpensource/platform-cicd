@@ -1,3 +1,11 @@
+# :confetti_ball: 6.0.0.0 (2022-04-19T08:49:33.049Z)
+- - -
+## :boom: BREAKING CHANGES
+* LANZ-2275 migrate create-iac-artifact action to other repositories
+## :newspaper: Others
+* docs: LANZ-2275 create-iac-artifact included in README
+- - -
+- - -
 # :confetti_ball: 5.0.0.0 (2022-04-08T11:20:26.673Z)
 - - -
 ## :boom: BREAKING CHANGES

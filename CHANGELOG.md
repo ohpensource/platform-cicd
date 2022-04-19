@@ -1,3 +1,9 @@
+# :confetti_ball: 8.0.0.0 (2022-04-19T10:25:47.793Z)
+- - -
+## :boom: BREAKING CHANGES
+* LANZ-2278 remove create-dotnet-lambda-artifact gh action (#89)
+- - -
+- - -
 # :confetti_ball: 7.0.0.0 (2022-04-19T09:12:54.952Z)
 - - -
 ## :boom: BREAKING CHANGES

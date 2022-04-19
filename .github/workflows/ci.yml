@@ -9,16 +9,22 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: ensure-conventional-commits
-        run: node ./actions/git/ensure-conventional-commits.js $GITHUB_BASE_REF $GITHUB_HEAD_REF
+      - uses: ohpensource/ensure-conventional-commits-gh-action@v0.1.2
+        name: Ensure conventional commits
+        with:
+          base-branch: $GITHUB_BASE_REF
+          pr-branch: $GITHUB_HEAD_REF
   jira-tickets-commits:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: ensure-jira-tickets-commits
-        run: node ./actions/git/ensure-commits-message-jira-ticket.js $GITHUB_BASE_REF $GITHUB_HEAD_REF
+      - uses: ohpensource/ensure-commits-have-ticket@v0.0.2
+        name: Ensure Jira ticket in all commits
+        with:
+          base-branch: $GITHUB_BASE_REF
+          pr-branch: $GITHUB_HEAD_REF
   documentation:
     runs-on: ubuntu-latest
     steps:

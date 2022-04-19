@@ -1,9 +1,13 @@
 # PLATFORM-CICD
 
+> ⚠️ Don't find what you are looking for? Double check that the action you are looking for hasn't been migrated to a different repository.
+
 Repository containing Ohpen's Github actions. An easy-to-setup set of scripts and actions to help teams (and everybody that needs it) start working with their repositories and abstract as much cognitive load from them.
 
 - [PLATFORM-CICD](#platform-cicd)
   - [code-of-conduct](#code-of-conduct)
+  - [artifacts](#artifacts)
+    - [create-iac-artifact](#create-iac-artifact)
   - [git](#git)
     - [semver-and-changelog](#semver-and-changelog)
     - [check-conventional-commits](#check-conventional-commits)
@@ -28,6 +32,12 @@ Go crazy on the pull requests :) ! The only requirements are:
 > - Use [conventional-commits](#check-conventional-commits).
 > - Include [jira-tickets](#check-jira-tickets-commits) in your commits.
 > - Create/Update the documentation of the use case you are creating, improving or fixing. **[Boy scout](https://biratkirat.medium.com/step-8-the-boy-scout-rule-robert-c-martin-uncle-bob-9ac839778385) rules apply**. That means, for example, if you fix an already existing workflow, please include the necessary documentation to help everybody. The rule of thumb is: _leave the place (just a little bit)better than when you came_.
+
+## artifacts
+
+### create-iac-artifact
+
+This action has been migrated to [create-iac-artifact-gh-action](https://github.com/ohpensource/create-iac-artifact-gh-action).
 
 ## git
 

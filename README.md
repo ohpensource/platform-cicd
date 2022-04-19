@@ -8,6 +8,7 @@ Repository containing Ohpen's Github actions. An easy-to-setup set of scripts an
   - [code-of-conduct](#code-of-conduct)
   - [artifacts](#artifacts)
     - [create-iac-artifact](#create-iac-artifact)
+    - [download-artifact](#download-artifact)
   - [git](#git)
     - [semver-and-changelog](#semver-and-changelog)
     - [check-conventional-commits](#check-conventional-commits)
@@ -38,6 +39,10 @@ Go crazy on the pull requests :) ! The only requirements are:
 ### create-iac-artifact
 
 This action has been migrated to [create-iac-artifact-gh-action](https://github.com/ohpensource/create-iac-artifact-gh-action).
+
+### download-artifact
+
+This action has been migrated to [download-artifact-gh-action](https://github.com/ohpensource/download-artifact-gh-action).
 
 ## git
 

@@ -1,3 +1,9 @@
+# :confetti_ball: 7.0.0.0 (2022-04-19T09:12:54.952Z)
+- - -
+## :boom: BREAKING CHANGES
+* LANZ-2277 remove download-artifact gh action. Already in https://github.com/ohpensource/download-artifact-gh-action (#88)
+- - -
+- - -
 # :confetti_ball: 6.0.0.0 (2022-04-19T08:49:33.049Z)
 - - -
 ## :boom: BREAKING CHANGES

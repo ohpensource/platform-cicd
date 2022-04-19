@@ -9,6 +9,9 @@ Repository containing Ohpen's Github actions. An easy-to-setup set of scripts an
   - [artifacts](#artifacts)
     - [create-iac-artifact](#create-iac-artifact)
     - [download-artifact](#download-artifact)
+    - [lambda](#lambda)
+      - [dotnet](#dotnet)
+        - [create-dotnet-lambda-artifact](#create-dotnet-lambda-artifact)
   - [git](#git)
     - [semver-and-changelog](#semver-and-changelog)
     - [check-conventional-commits](#check-conventional-commits)
@@ -43,6 +46,14 @@ This action has been migrated to [create-iac-artifact-gh-action](https://github.
 ### download-artifact
 
 This action has been migrated to [download-artifact-gh-action](https://github.com/ohpensource/download-artifact-gh-action).
+
+### lambda
+
+#### dotnet
+
+##### create-dotnet-lambda-artifact
+
+This action has been migrated to [create-dotnet-lambda-artifact-gh-action](https://github.com/ohpensource/create-dotnet-lambda-artifact-gh-action).
 
 ## git
 

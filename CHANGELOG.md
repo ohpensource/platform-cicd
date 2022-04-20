@@ -1,3 +1,22 @@
+# :confetti_ball: 9.0.0.0 (2022-04-20T07:07:14.175Z)
+- - -
+## :boom: BREAKING CHANGES
+* LANZ-2325 remove download-unzip-artifact GH action. It is a not been used
+* LANZ-2325 remove upload-zip-artifact GH action. Migrated to repo https://github.com/ohpensource/create-and-upload-zip-artifact-gh-action
+* LANZ-2325 remove upload-lambda-artifact-to-s3 GH action. Migrated to https://github.com/ohpensource/upload-lambda-artifact-gh-action
+* LANZ-2325 remove update-deployment-info GH action. Migrated to https://github.com/ohpensource/update-deployment-info-gh-action
+* LANZ-2325 remove nuget-pack-push GH action. Migrated to https://github.com/ohpensource/nuget-pack-push-gh-action
+* LANZ-2325 remove ensure-commits-message-jira-ticket GH action. Migrated to https://github.com/ohpensource/ensure-commits-have-ticket-gh-action
+* LANZ-2325 remove ensure-conventional-commits GH action. Migrated to https://github.com/ohpensource/ensure-conventional-commits-gh-action
+* LANZ-2325 remove generate-version-and-release-notes GH action. Migrated to https://github.com/ohpensource/generate-version-and-release-notes-gh-action
+* LANZ-2325 remove dotnet-tests GH action. Migrated to https://github.com/ohpensource/dotnet-test-gh-action
+* LANZ-2325 remove build-dotnet-app GH action. Migrated to https://github.com/ohpensource/dotnet-build-gh-action
+* LANZ-2325 remove run-maven GH action. Migrated to https://github.com/ohpensource/run-maven-gh-action
+* LANZ-2325 remove setup-maven GH action. Migrated to https://github.com/ohpensource/setup-maven-gh-action
+* LANZ-2325 updated readme with the list of GH actions available
+* LANZ-2325 updated cicd gh actions
+- - -
+- - -
 # :confetti_ball: 8.0.0.0 (2022-04-19T10:25:47.793Z)
 - - -
 ## :boom: BREAKING CHANGES

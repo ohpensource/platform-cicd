@@ -10,10 +10,9 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.CICD_GITHUB_REPOSITORY_TOKEN }}
-      - name: semver & changelog
-        run: |
-          date > generated.txt
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-                                                                 # skip-commit version-prefix 
-          node ./actions/git/generate-version-and-release-notes.js "false"     ""
+      - uses: ohpensource/generate-version-and-release-notes-gh-action@v0.3.1
+        name: semver & changelog
+        with:
+          user-email: "github-actions@github.com"
+          user-name: "github-actions"
+          version-prefix: ""
